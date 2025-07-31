@@ -7,3 +7,5 @@ venv/
 *.sqlite3
 .DS_Store
 memory/*.json
+/auth/secrets/*
+!/auth/secrets/backups/
