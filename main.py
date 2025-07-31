@@ -9,6 +9,12 @@ if __name__ == "__main__":
     from core import loader
     loader.load_modules()
 
+    from core.db.schema import Base
+    from core.db.sessions import engine
+
+    # Crea las tablas en la base de datos
+    Base.metadata.create_all(bind=engine)
+
     brain = Brain()
     cli = CLI(brain)
     cli.run()
