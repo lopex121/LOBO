@@ -1,24 +1,28 @@
-# core/auth.py
-
 import getpass
-from utils.logger import logger
+import logging
+import sys
 
-# Contraseña maestra por ahora (en producción usar hash)
+# Contraseña maestra (idealmente deberías cifrarla y guardarla de forma segura)
 MASTER_PASSWORD = "loboseguro"
+MAX_ATTEMPTS = 3
 
 def authenticate():
-    logger.info("Autenticación requerida")
+    logging.info("Autenticación requerida")
+    attempts = 0
 
-    try:
-        password = getpass.getpass("🔐 Ingrese la contraseña de acceso: ")
-    except getpass.GetPassWarning:
-        print("⚠️ Advertencia: Su terminal no soporta ocultar la entrada. La contraseña puede ser visible.")
-        password = input("🔐 Ingrese la contraseña de acceso (visible): ")
+    while attempts < MAX_ATTEMPTS:
+        try:
+            password = getpass.getpass("🔐 Ingrese la contraseña de acceso: ")
+        except Exception as e:
+            logging.error(f"Error al capturar la contraseña: {e}")
+            sys.exit(1)
 
-    if password == MASTER_PASSWORD:
-        logger.info("Autenticación exitosa")
-        return True
-    else:
-        logger.info("Fallo en la autenticación")
-        print("❌ Contraseña incorrecta. Acceso denegado.")
-        return False
+        if password == MASTER_PASSWORD:
+            logging.info("Autenticación exitosa")
+            return True
+        else:
+            attempts += 1
+            logging.warning(f"Contraseña incorrecta ({attempts}/{MAX_ATTEMPTS})")
+
+    logging.error("Demasiados intentos fallidos. Cerrando el sistema.")
+    sys.exit(1)
