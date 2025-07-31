@@ -4,6 +4,10 @@ from utils.logger import get_logger
 
 logger = get_logger("LOADER")
 
+modules = {
+    "recordatorios": "modules.recordatorios"
+}
+
 def load_modules(modules_dir="modules"):
     logger.info("Buscando módulos en '%s'...", modules_dir)
     if not os.path.isdir(modules_dir):
