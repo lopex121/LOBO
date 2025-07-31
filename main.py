@@ -3,7 +3,7 @@ if __name__ == "__main__":
     from interface.cli import CLI
     from core import auth
 
-    if not auth.authenticate():
+    if not auth.verificar_clave():
         exit(1)
 
     from core import loader

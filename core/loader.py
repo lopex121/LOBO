@@ -1,6 +1,8 @@
 import os
 import importlib
-from utils.logger import logger
+from utils.logger import get_logger
+
+logger = get_logger("LOADER")
 
 def load_modules(modules_dir="modules"):
     logger.info("Buscando módulos en '%s'...", modules_dir)

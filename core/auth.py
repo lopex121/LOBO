@@ -1,28 +1,46 @@
-import getpass
-import logging
+import os
 import sys
+import getpass
+from utils.logger import get_logger
 
-# Contraseña maestra (idealmente deberías cifrarla y guardarla de forma segura)
-MASTER_PASSWORD = "loboseguro"
-MAX_ATTEMPTS = 3
+logger = get_logger(__name__)
 
-def authenticate():
-    logging.info("Autenticación requerida")
-    attempts = 0
+SECRET_PATH = os.path.join(os.path.dirname(__file__), 'secrets')
+KEY_FILE = os.path.join(SECRET_PATH, 'auth_key.txt')
 
-    while attempts < MAX_ATTEMPTS:
+
+def generar_clave_si_no_existe():
+    if not os.path.exists(SECRET_PATH):
+        os.makedirs(SECRET_PATH)
+
+    if not os.path.exists(KEY_FILE):
+        logger.info("No se encontró clave de acceso. Generando nueva clave.")
+        nueva_clave = input("🔐 Ingrese la nueva clave maestra: ").strip()
+
+        with open(KEY_FILE, 'w') as f:
+            f.write(nueva_clave)
+        logger.info("Clave generada y almacenada correctamente.")
+
+
+def verificar_clave():
+    generar_clave_si_no_existe()
+
+    with open(KEY_FILE, 'r') as f:
+        clave_correcta = f.read().strip()
+
+    intentos = 3
+
+    for intento in range(intentos):
         try:
-            password = getpass.getpass("🔐 Ingrese la contraseña de acceso: ")
-        except Exception as e:
-            logging.error(f"Error al capturar la contraseña: {e}")
-            sys.exit(1)
+            clave_ingresada = getpass.getpass("🔐 Ingrese la clave de acceso: ").strip()
+        except Exception:
+            clave_ingresada = input("🔐 Ingrese la clave de acceso: ").strip()
 
-        if password == MASTER_PASSWORD:
-            logging.info("Autenticación exitosa")
+        if clave_ingresada == clave_correcta:
+            logger.info("Autenticación exitosa.")
             return True
         else:
-            attempts += 1
-            logging.warning(f"Contraseña incorrecta ({attempts}/{MAX_ATTEMPTS})")
+            logger.warning(f"Clave incorrecta. Intentos restantes: {intentos - intento - 1}")
 
-    logging.error("Demasiados intentos fallidos. Cerrando el sistema.")
+    logger.critical("Demasiados intentos fallidos. Cerrando sistema.")
     sys.exit(1)
