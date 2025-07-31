@@ -1,12 +1,30 @@
 import os
 import sys
 import getpass
+import hashlib
+import shutil
+from datetime import datetime
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 SECRET_PATH = os.path.join(os.path.dirname(__file__), 'secrets')
 KEY_FILE = os.path.join(SECRET_PATH, 'auth_key.txt')
+
+def hash_clave(clave: str) -> str:
+    return hashlib.sha256(clave.encode('utf-8')).hexdigest()
+
+
+def hacer_backup_clave():
+    if os.path.exists(KEY_FILE):
+        backup_dir = os.path.join(SECRET_PATH, 'backups')
+        if not os.path.exists(backup_dir):
+            os.makedirs(backup_dir)
+
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        backup_file = os.path.join(backup_dir, f'auth_key_backup_{timestamp}.txt')
+        shutil.copy2(KEY_FILE, backup_file)
+        logger.info(f"Backup de clave creado en: {backup_file}")
 
 
 def generar_clave_si_no_existe():
@@ -16,9 +34,10 @@ def generar_clave_si_no_existe():
     if not os.path.exists(KEY_FILE):
         logger.info("No se encontró clave de acceso. Generando nueva clave.")
         nueva_clave = input("🔐 Ingrese la nueva clave maestra: ").strip()
+        hash_nueva_clave = hash_clave(nueva_clave)
 
         with open(KEY_FILE, 'w') as f:
-            f.write(nueva_clave)
+            f.write(hash_nueva_clave)
         logger.info("Clave generada y almacenada correctamente.")
 
 
@@ -36,7 +55,7 @@ def verificar_clave():
         except Exception:
             clave_ingresada = input("🔐 Ingrese la clave de acceso: ").strip()
 
-        if clave_ingresada == clave_correcta:
+        if hash_clave(clave_ingresada) == clave_correcta:
             logger.info("Autenticación exitosa.")
             return True
         else:
