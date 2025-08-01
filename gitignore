@@ -9,3 +9,4 @@ venv/
 memory/*.json
 /auth/secrets/*
 !/auth/secrets/backups/
+lobo.db
