@@ -2,7 +2,7 @@ if __name__ == "__main__":
     from core.brain import Brain
     from interface.cli import CLI
 
-    # 💥 Crear las tablas ANTES de todo
+    # 💥 Crear las tablas ANTES detodo
     from core.db.schema import Base
     from core.db.sessions import engine
 
