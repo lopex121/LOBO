@@ -14,6 +14,7 @@ class User(Base):
     hashed_password = Column(String, nullable=False)  # cambio de nombre
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    role = Column(String, default="visita")
 
     def __repr__(self):
         return f"<User(username='{self.username}', active={self.is_active})>"

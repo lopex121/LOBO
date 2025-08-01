@@ -1,3 +1,5 @@
+#core/loader.py
+
 import os
 import importlib
 from utils.logger import get_logger
@@ -5,7 +7,8 @@ from utils.logger import get_logger
 logger = get_logger("LOADER")
 
 modules = {
-    "recordatorios": "modules.recordatorios"
+    "recordatorios": "modules.recordatorios",
+    "usuarios": "modules.usuarios",
 }
 
 def load_modules(modules_dir="modules"):

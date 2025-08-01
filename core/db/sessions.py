@@ -1,4 +1,4 @@
-# core/db/session.py
+# core/db/sessions.py
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
