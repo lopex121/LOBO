@@ -1,5 +1,5 @@
 from modules.recordatorios.recordatorios import Recordatorios
-from modules.usuarios.usuarios import comando_nuevo_usuario
+from modules.usuarios.usuarios import comando_nuevo_usuario, comando_eliminar_usuario
 
 recordatorios = Recordatorios()
 
@@ -7,6 +7,7 @@ comandos = {
     "guardar": recordatorios.guardar,
     "recordar": recordatorios.recordar,
     "nuevo_usuario": comando_nuevo_usuario,
+    "eliminar_usuario": comando_eliminar_usuario
 }
 
 class Router:
