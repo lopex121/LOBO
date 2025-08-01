@@ -1,3 +1,6 @@
+#core/memory.py
+
+
 import sqlite3
 
 class Memory:
@@ -25,3 +28,18 @@ class Memory:
         else:
             self.cursor.execute('SELECT * FROM memory')
         return self.cursor.fetchall()
+
+    def delete(self, contenido: str, mem_type=None) -> bool:
+        cursor = self.conn.cursor()
+        if mem_type:
+            cursor.execute(
+                "DELETE FROM memory WHERE content = ? AND type = ?",
+                (contenido, mem_type),
+            )
+        else:
+            cursor.execute(
+                "DELETE FROM memory WHERE content = ?",
+                (contenido,),
+            )
+        self.conn.commit()
+        return cursor.rowcount > 0  # True si se eliminó algo
