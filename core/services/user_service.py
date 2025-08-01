@@ -2,7 +2,7 @@
 
 from core.db.schema import User
 from core.db.sessions import SessionLocal
-from core.security.auth import hash_password, verify_password
+from core.security.auth import hash_password, verificar_clave
 from sqlalchemy.exc import IntegrityError
 
 def create_user(username: str, password: str):
@@ -23,7 +23,7 @@ def authenticate_user(username: str, password: str):
     db = SessionLocal()
     try:
         user = db.query(User).filter(User.username == username).first()
-        if user and verify_password(password, user.hashed_password):
+        if user and verificar_clave(password, user.hashed_password):
             return {"success": True, "user": user}
         return {"success": False, "message": "Credenciales inválidas"}
     finally:
