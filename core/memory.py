@@ -2,6 +2,7 @@
 
 from core.db.sessions import SessionLocal
 from core.db.schema import MemoryNote
+from sqlalchemy import and_, func
 
 class Memory:
     def __init__(self):
@@ -18,10 +19,23 @@ class Memory:
         return self.db.query(MemoryNote).all()
 
     def delete(self, contenido: str, mem_type=None) -> bool:
-        query = self.db.query(MemoryNote).filter(MemoryNote.content == contenido)
-        if mem_type:
-            query = query.filter(MemoryNote.type == mem_type)
+        if mem_type is None:
+            print("[LOBO] Debes especificar la etiqueta para usar búsqueda parcial.")
+            return False
+
+        if len(contenido.split()) < 3:
+            print("[LOBO] Escribe al menos 3 palabras para eliminar con coincidencia parcial.")
+            return False
+
+        pattern = f"%{contenido.strip()}%"
+        query = self.db.query(MemoryNote).filter(
+            and_(
+                MemoryNote.type == mem_type,
+                func.lower(MemoryNote.content).like(pattern.lower())
+            )
+        )
         resultado = query.first()
+
         if resultado:
             self.db.delete(resultado)
             self.db.commit()
