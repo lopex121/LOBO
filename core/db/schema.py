@@ -18,3 +18,14 @@ class User(Base):
 
     def __repr__(self):
         return f"<User(username='{self.username}', active={self.is_active})>"
+
+class MemoryNote(Base):
+    __tablename__ = "memory"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    type = Column(String)
+    content = Column(String)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
+    def __repr__(self):
+        return f"<MemoryNote(type='{self.type}', content='{self.content}')>"

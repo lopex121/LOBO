@@ -1,45 +1,29 @@
-#core/memory.py
+# core/memory.py
 
-
-import sqlite3
+from core.db.sessions import SessionLocal
+from core.db.schema import MemoryNote
 
 class Memory:
-    def __init__(self, db_path='data/memory.db'):
-        self.conn = sqlite3.connect(db_path)
-        self.cursor = self.conn.cursor()
-        self.setup()
-
-    def setup(self):
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS memory (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            type TEXT,
-            content TEXT,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        )''')
-        self.conn.commit()
+    def __init__(self):
+        self.db = SessionLocal()
 
     def remember(self, content, mem_type="note"):
-        self.cursor.execute('INSERT INTO memory (type, content) VALUES (?, ?)', (mem_type, content))
-        self.conn.commit()
+        nota = MemoryNote(content=content, type=mem_type)
+        self.db.add(nota)
+        self.db.commit()
 
     def recall(self, mem_type=None):
         if mem_type:
-            self.cursor.execute("SELECT * FROM memory WHERE type=?", (mem_type,))
-        else:
-            self.cursor.execute('SELECT * FROM memory')
-        return self.cursor.fetchall()
+            return self.db.query(MemoryNote).filter_by(type=mem_type).all()
+        return self.db.query(MemoryNote).all()
 
     def delete(self, contenido: str, mem_type=None) -> bool:
-        cursor = self.conn.cursor()
+        query = self.db.query(MemoryNote).filter(MemoryNote.content == contenido)
         if mem_type:
-            cursor.execute(
-                "DELETE FROM memory WHERE content = ? AND type = ?",
-                (contenido, mem_type),
-            )
-        else:
-            cursor.execute(
-                "DELETE FROM memory WHERE content = ?",
-                (contenido,),
-            )
-        self.conn.commit()
-        return cursor.rowcount > 0  # True si se eliminó algo
+            query = query.filter(MemoryNote.type == mem_type)
+        resultado = query.first()
+        if resultado:
+            self.db.delete(resultado)
+            self.db.commit()
+            return True
+        return False

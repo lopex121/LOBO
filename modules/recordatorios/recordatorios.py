@@ -46,9 +46,8 @@ class Recordatorios:
         print(f"[LOBO] Últimas notas{tipo_info}:\n")
 
         for nota in reversed(notas[-10:]):
-            _, tipo, contenido, timestamp = nota
-            fecha = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
-            print(f" • [{tipo.upper()}] {fecha.strftime('%d/%m %H:%M')} → {contenido}")
+            fecha = nota.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            print(f" • [{nota.type.upper()}] {fecha} → {nota.content}")
 
     def eliminar(self, args):
         SESSION.assert_admin()
