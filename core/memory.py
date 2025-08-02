@@ -3,6 +3,7 @@
 from core.db.sessions import SessionLocal
 from core.db.schema import MemoryNote
 from sqlalchemy import and_, func
+from sqlalchemy.orm.exc import NoResultFound
 
 class Memory:
     def __init__(self):
@@ -41,3 +42,21 @@ class Memory:
             self.db.commit()
             return True
         return False
+
+    def buscar_por_contenido(self, texto: str, mem_type: str):
+        patron = f"%{texto}%"
+        return self.db.query(MemoryNote).filter(
+            and_(
+                MemoryNote.type == mem_type,
+                func.lower(MemoryNote.content).like(func.lower(patron))
+            )
+        ).all()
+
+    def eliminar_por_id(self, note_id: int) -> bool:
+        try:
+            nota = self.db.query(MemoryNote).filter(MemoryNote.id == note_id).one()
+            self.db.delete(nota)
+            self.db.commit()
+            return True
+        except NoResultFound:
+            return False
