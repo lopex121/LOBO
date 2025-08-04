@@ -29,3 +29,13 @@ class MemoryNote(Base):
 
     def __repr__(self):
         return f"<MemoryNote(type='{self.type}', content='{self.content}')>"
+
+class BitacoraRegistro(Base):
+    __tablename__ = "bitacora"
+
+    id = Column(Integer, primary_key=True, index=True)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    modulo = Column(String, nullable=False)
+    accion = Column(String, nullable=False)
+    descripcion = Column(String)
+    usuario = Column(String)
