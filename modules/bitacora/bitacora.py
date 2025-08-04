@@ -35,7 +35,8 @@ def comando_ver_bitacora(args):
 
     SESSION.assert_admin()
     bitacora = Bitacora()
-    limite = 10
+    limite = 100
+
     if args and args[0].isdigit():
         limite = int(args[0])
 
