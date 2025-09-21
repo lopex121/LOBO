@@ -1,38 +1,39 @@
 # core/context/session_logger.py
-from core.db.schema import User as DBUser
-from core.db.sessions import SessionLocal
-from modules.bitacora.bitacora import Bitacora
-bitacora = Bitacora()
+from core.context.logs import BITACORA
+import logging
+import inspect
 
-class SessionContext:
-    def __init__(self):
-        self.db = SessionLocal()
-        self.user: DBUser | None = None
+class SessionLogger:
+    def __init__(self, session_id="system"):
+        self.session_id = session_id
 
-    def login(self, username: str):
-        user = self.db.query(DBUser).filter_by(username=username).first()
-        if not user:
-            bitacora.registrar("session_logger", "Login fallido",
-                               "Se intento  acceder con un nombre de usuario inexistente",
-                               self.user.username)
-            raise ValueError("❌ Usuario no encontrado.")
-        self.user = user
-        bitacora.registrar("session_logger", "Login exitoso",
-                           "Se inicializó el programa",
-                           self.user.username)
-        print(f"🔑 Sesión iniciada como '{self.user.username}' ({self.user.role})")
+    logging.basicConfig(
+        filename="lobo.log",
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s"
+    )
 
-    def logout(self):
-        print(f"🔒 Sesión cerrada para '{self.user.username}'") if self.user else None
-        self.user = None
+    def log(self, nivel, mensaje, usuario="system"):
 
-    def is_admin(self):
-        return self.user and self.user.role == "admin"
+        # 🔹 Detectar automáticamente el origen
+        stack = inspect.stack()
+        # El frame 1 es quien llamó al logger (ej: brain, router, auth, etc.)
+        caller_module = inspect.getmodule(stack[1][0])
+        if caller_module and hasattr(caller_module, "__name__"):
+            origen = caller_module.__name__.upper()
+        else:
+            # Si no lo detecta, tratamos de deducir del stack
+            origen = stack[1].function.upper() if stack and len(stack) > 1 else "ROUTER"
 
-    def assert_admin(self):
-        if not self.is_admin():
-            print("⚠️ Solo el administrador puede acceder a esta interfaz.")
-            bitacora.registrar("session_logger", "Only Admin",
-                               "Se intento realizar una acción permitida solamente a administrador.",
-                               self.user.username)
-            exit(1)
+        # Guardar en archivo local
+        if nivel.upper() == "INFO":
+            logging.info(mensaje)
+        elif nivel.upper() == "WARNING":
+            logging.warning(mensaje)
+        elif nivel.upper() == "ERROR":
+            logging.error(mensaje)
+        else:
+            logging.debug(mensaje)
+
+        # Guardar en la base de datos (bitácora global)
+        BITACORA.registrar(origen, nivel, mensaje, usuario)

@@ -4,8 +4,7 @@ from core.db.sessions import SessionLocal
 from core.db.schema import MemoryNote
 from sqlalchemy import and_, func
 from sqlalchemy.orm.exc import NoResultFound
-from modules.bitacora.bitacora import Bitacora
-bitacora = Bitacora()
+from core.context.logs import BITACORA
 from core.context.global_session import SESSION
 
 class Memory:
@@ -13,7 +12,7 @@ class Memory:
         self.db = SessionLocal()
 
     def remember(self, content, mem_type="note"):
-        bitacora.registrar("recordatorios", "guardar", "Texto guardado", SESSION.user.username)
+        BITACORA.registrar("recordatorios", "guardar", "Texto guardado", SESSION.user.username)
         nota = MemoryNote(content=content, type=mem_type)
         self.db.add(nota)
         self.db.commit()

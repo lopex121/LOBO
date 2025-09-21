@@ -1,8 +1,7 @@
 #modules/recordatorios/recordatorios.py
 
 from core.memory import Memory
-from modules.bitacora.bitacora import Bitacora
-bitacora = Bitacora()
+from core.context.logs import BITACORA
 from core.context.global_session import SESSION
 
 class Recordatorios:
@@ -25,13 +24,13 @@ class Recordatorios:
             texto = " ".join(args)
 
         if not texto.strip():
-            bitacora.registrar("recordatorios", "guardar", "Se intento guardar un texto vacío"
+            BITACORA.registrar("recordatorios", "guardar", "Se intento guardar un texto vacío"
                                , SESSION.user.username)
             print("[LOBO] El texto de la nota no puede estar vacío.")
             return
 
         self.memoria.remember(texto, mem_type=etiqueta)
-        bitacora.registrar("recordatorios", "guardar", "Texto guardado", SESSION.user.username)
+        BITACORA.registrar("recordatorios", "guardar", "Texto guardado", SESSION.user.username)
         print(f"[LOBO] Nota guardada como '{etiqueta}': “{texto}”")
 
     def recordar(self, args):  # <= quitamos el valor por defecto
@@ -47,7 +46,7 @@ class Recordatorios:
             return
 
         tipo_info = f" de tipo '{tipo}'" if tipo else ""
-        bitacora.registrar("recordatorios", "recordar", "Recordatorios mostrados",
+        BITACORA.registrar("recordatorios", "recordar", "Recordatorios mostrados",
                            SESSION.user.username)
         print(f"[LOBO] Últimas notas{tipo_info}:\n")
 
@@ -65,7 +64,7 @@ class Recordatorios:
         etiquetas_validas = ["urgente", "importante", "idea", "nota"]
         posible_etiqueta = args[-1].lower()
         if posible_etiqueta not in etiquetas_validas:
-            bitacora.registrar("recordatorios", "eliminar", "Se intento eliminar un "
+            BITACORA.registrar("recordatorios", "eliminar", "Se intento eliminar un "
                                                             "recordatorio sin especificar su etiqueta",
                                SESSION.user.username)
             print("[LOBO] Debes especificar una etiqueta válida al final.")
@@ -75,7 +74,7 @@ class Recordatorios:
         texto = " ".join(args[:-1]).strip()
 
         if len(texto.split()) < 1:
-            bitacora.registrar("recordatorios", "buscar", "Se intentó eliminar un"
+            BITACORA.registrar("recordatorios", "buscar", "Se intentó eliminar un"
                                                             "recordatorio sin escribir las suficientes palabras para "
                                                             "buscarlo", SESSION.user.username)
             print("[LOBO] Escribe al menos 1 palabras para buscar coincidencias.")
@@ -85,7 +84,7 @@ class Recordatorios:
         coincidencias = self.memoria.buscar_por_contenido(texto, etiqueta)
 
         if not coincidencias:
-            bitacora.registrar("recordatorios", "buscar fallido", "No se encontraron "
+            BITACORA.registrar("recordatorios", "buscar fallido", "No se encontraron "
                                                                   "recordatorios con la descprición y/o etiqueta "
                                                                   "escrita", SESSION.user.username)
             print("⚠️ No se encontraron recordatorios con esa descripción y etiqueta.")
@@ -97,17 +96,17 @@ class Recordatorios:
             print(f"⚠️ ¿Estás seguro que deseas eliminar: “{seleccionado.content}”?")
             confirm = input("[Y/N]: ").strip().upper()
             if confirm != "Y":
-                bitacora.registrar("recordatorios", "cancelar", "Se cancelo la eliminación de "
+                BITACORA.registrar("recordatorios", "cancelar", "Se cancelo la eliminación de "
                                                                 "un recordatorio", SESSION.user.username)
                 print("❎ Acción cancelada.")
                 return
 
             if self.memoria.eliminar_por_id(seleccionado.id):
-                bitacora.registrar("recordatorios", "eliminar", "Recordatorio eliminado por ID"
+                BITACORA.registrar("recordatorios", "eliminar", "Recordatorio eliminado por ID"
                                    , SESSION.user.username)
                 print(f"🗑️ Recordatorio eliminado con éxito.")
             else:
-                bitacora.registrar("recordatorios", "error", "Error al intentar "
+                BITACORA.registrar("recordatorios", "error", "Error al intentar "
                                                              "eliminar un recordatorio", SESSION.user.username)
                 print("❌ Ocurrió un error al eliminar el recordatorio.")
             return

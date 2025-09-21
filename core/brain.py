@@ -12,3 +12,15 @@ class Brain:
 
     def handle_command(self, command):
         return self.router.route(command)
+
+from core.context.session_logger import SessionLogger
+from core.context.global_session import SESSION
+
+logger = SessionLogger(session_id="default")
+
+def route_command(command):
+    try:
+        logger.log("INFO", f"Ejecutando comando: {command}", usuario=SESSION.user.username)
+        # Aquí va la lógica real del comando
+    except Exception as e:
+        logger.log("ERROR", f"Error ejecutando {command}: {str(e)}", usuario=SESSION.user.username)

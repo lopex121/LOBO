@@ -39,3 +39,11 @@ class BitacoraRegistro(Base):
     accion = Column(String, nullable=False)
     descripcion = Column(String)
     usuario = Column(String)
+
+class BitacoraGlobal(Base):
+    __tablename__ = "bitacoraglobal"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    session_id = Column(String)
+    nivel = Column(String)
+    mensaje = Column(String)

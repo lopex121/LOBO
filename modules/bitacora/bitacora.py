@@ -3,14 +3,12 @@
 from datetime import datetime
 from core.db.sessions import SessionLocal
 from core.db.schema import BitacoraRegistro
-from core.security.auth import session
 
 class Bitacora:
     def __init__(self):
         self.db = SessionLocal()
-        self.session = session
 
-    def registrar(self, modulo: str, accion: str, descripcion: str = "", usuario: str = None):
+    def registrar(self, modulo: str, accion: str, descripcion: str = "", usuario: str = "system"):
 
         nuevo_evento = BitacoraRegistro(
             timestamp=datetime.now(),
@@ -23,7 +21,7 @@ class Bitacora:
         self.db.commit()
 
     def ver_entradas(self, limite: int = 10):
-        entradas = self.db.query(BitacoraRegistro).order_by(BitacoraRegistro.timestamp.desc()).limit(limite).all()
+        entradas = self.db.query(BitacoraRegistro).order_by(BitacoraRegistro.timestamp.asc().nullslast()).limit(limite).all()
         return entradas
 
 
