@@ -13,7 +13,7 @@ class Recordatorios:
             print("[LOBO] Especifica qué deseas guardar.")
             return
 
-        etiquetas_validas = ["urgente", "importante", "idea", "nota"]
+        etiquetas_validas = ["urgente", "importante", "idea", "nota", "tarea"]
         posible_etiqueta = args[-1].lower()
 
         if posible_etiqueta in etiquetas_validas:
@@ -36,7 +36,7 @@ class Recordatorios:
     def recordar(self, args):  # <= quitamos el valor por defecto
         SESSION.assert_admin()
         tipo = None
-        if args and args[0].lower() in ["urgente", "importante", "idea", "nota"]:
+        if args and args[0].lower() in ["urgente", "importante", "idea", "nota", "tarea"]:
             tipo = args[0].lower()
 
         notas = self.memoria.recall(mem_type=tipo)
@@ -61,7 +61,7 @@ class Recordatorios:
             print("[LOBO] Uso: eliminar_recuerdo <TEXTO_PARCIAL> <ETIQUETA>")
             return
 
-        etiquetas_validas = ["urgente", "importante", "idea", "nota"]
+        etiquetas_validas = ["urgente", "importante", "idea", "nota", "tarea"]
         posible_etiqueta = args[-1].lower()
         if posible_etiqueta not in etiquetas_validas:
             BITACORA.registrar("recordatorios", "eliminar", "Se intento eliminar un "

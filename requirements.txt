@@ -1,10 +1,4 @@
-bcrypt==4.3.0
-greenlet==3.2.3
-markdown-it-py==3.0.0
-mdurl==0.1.2
-passlib==1.7.4
-Pygments==2.19.2
-python-dotenv==1.1.1
-rich==14.1.0
-SQLAlchemy==2.0.42
-typing_extensions==4.14.1
+bcrypt~=4.3.0
+SQLAlchemy~=2.0.42
+
+gspread~=6.2.1
