@@ -5,3 +5,102 @@
 2025-09-21 18:26:29,205 [INFO] Buscando módulos en 'modules'...
 2025-09-21 18:27:30,296 [INFO] Buscando módulos en 'modules'...
 2025-09-21 18:29:55,229 [INFO] Buscando módulos en 'modules'...
+2025-09-21 19:27:45,720 [INFO] Buscando módulos en 'modules'...
+2025-09-21 19:28:41,810 [INFO] Buscando módulos en 'modules'...
+2025-09-21 19:47:57,535 [INFO] Buscando módulos en 'modules'...
+2025-09-21 19:51:31,935 [INFO] Buscando módulos en 'modules'...
+2025-09-21 20:01:41,759 [INFO] Buscando módulos en 'modules'...
+2025-09-21 20:02:40,879 [INFO] Buscando módulos en 'modules'...
+2025-09-21 20:03:01,832 [INFO] Buscando módulos en 'modules'...
+2025-09-21 20:13:58,879 [INFO] Buscando módulos en 'modules'...
+2025-09-21 20:18:03,451 [INFO] Buscando módulos en 'modules'...
+2025-09-21 20:24:26,384 [ERROR] No se pudo pintar evento 9354d5b5-f814-4735-90b9-fb8e60db9e3a: Hora 09:00 no encontrada en la primera columna del Sheet.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 40, in _time_to_row
+    fila = col1.index(hora_str) + 1
+           ^^^^^^^^^^^^^^^^^^^^
+ValueError: '09:00' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in sync_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 144, in pintar_evento_sheets
+    start_row = _time_to_row(sheet, evento.hora_inicio)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 42, in _time_to_row
+    raise ValueError(f"Hora {hora_str} no encontrada en la primera columna del Sheet.")
+ValueError: Hora 09:00 no encontrada en la primera columna del Sheet.
+2025-09-21 20:39:51,052 [INFO] Buscando módulos en 'modules'...
+2025-09-21 20:44:24,260 [INFO] Borrado evento en Sheets: Clase de Física (B6:B8)
+2025-09-21 20:44:40,289 [INFO] Borrado evento en Sheets: Clase de Física (B6:B8)
+2025-09-21 20:45:22,624 [INFO] Pintado evento en Sheets: Clase de Física (C6 -> C6:C8)
+2025-09-21 20:56:33,733 [INFO] Buscando módulos en 'modules'...
+2025-09-21 21:08:02,527 [INFO] Buscando módulos en 'modules'...
+2025-09-21 21:08:23,376 [ERROR] No se pudo importar celda 6,3: unconverted data remains:  AM
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 314, in importar_eventos_desde_sheets
+    hora_inicio = datetime.strptime(horas[row_idx - 2], "%H:%M").time()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 555, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 336, in _strptime
+    raise ValueError("unconverted data remains: %s" %
+ValueError: unconverted data remains:  AM
+2025-09-21 21:08:24,396 [ERROR] No se pudo importar celda 10,3: unconverted data remains:  AM
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 314, in importar_eventos_desde_sheets
+    hora_inicio = datetime.strptime(horas[row_idx - 2], "%H:%M").time()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 555, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 336, in _strptime
+    raise ValueError("unconverted data remains: %s" %
+ValueError: unconverted data remains:  AM
+2025-09-21 21:08:25,216 [ERROR] No se pudo importar celda 14,3: unconverted data remains:  PM
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 314, in importar_eventos_desde_sheets
+    hora_inicio = datetime.strptime(horas[row_idx - 2], "%H:%M").time()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 555, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 336, in _strptime
+    raise ValueError("unconverted data remains: %s" %
+ValueError: unconverted data remains:  PM
+2025-09-21 21:08:26,034 [ERROR] No se pudo importar celda 18,3: unconverted data remains:  PM
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 314, in importar_eventos_desde_sheets
+    hora_inicio = datetime.strptime(horas[row_idx - 2], "%H:%M").time()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 555, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 336, in _strptime
+    raise ValueError("unconverted data remains: %s" %
+ValueError: unconverted data remains:  PM
+2025-09-21 21:08:26,853 [ERROR] No se pudo importar celda 22,3: unconverted data remains:  PM
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 314, in importar_eventos_desde_sheets
+    hora_inicio = datetime.strptime(horas[row_idx - 2], "%H:%M").time()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 555, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 336, in _strptime
+    raise ValueError("unconverted data remains: %s" %
+ValueError: unconverted data remains:  PM
+2025-09-21 21:08:27,265 [ERROR] No se pudo importar celda 24,3: unconverted data remains:  PM
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 314, in importar_eventos_desde_sheets
+    hora_inicio = datetime.strptime(horas[row_idx - 2], "%H:%M").time()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 555, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 336, in _strptime
+    raise ValueError("unconverted data remains: %s" %
+ValueError: unconverted data remains:  PM

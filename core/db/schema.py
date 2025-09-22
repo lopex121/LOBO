@@ -1,11 +1,14 @@
 # core/db/schema.py
 
-from sqlalchemy import Column, String, Integer, Boolean, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, Integer, Boolean, DateTime, Date, Time, Enum as SAEnum, JSON
+from sqlalchemy.orm import declarative_base
 import datetime
+import enum
+import uuid
 
 Base = declarative_base()
 
+# Usuario
 class User(Base):
     __tablename__ = 'users'
 
@@ -19,6 +22,7 @@ class User(Base):
     def __repr__(self):
         return f"<User(username='{self.username}', active={self.is_active})>"
 
+# Memoria
 class MemoryNote(Base):
     __tablename__ = "memory"
 
@@ -30,6 +34,7 @@ class MemoryNote(Base):
     def __repr__(self):
         return f"<MemoryNote(type='{self.type}', content='{self.content}')>"
 
+# Bitácoras
 class BitacoraRegistro(Base):
     __tablename__ = "bitacora"
 
@@ -47,3 +52,28 @@ class BitacoraGlobal(Base):
     session_id = Column(String)
     nivel = Column(String)
     mensaje = Column(String)
+
+# Recurrencia (para eventos)
+class RecurrenciaEnum(str, enum.Enum):
+    unico = "unico"
+    diario = "diario"
+    semanal = "semanal"
+    mensual = "mensual"
+
+# Modelo Evento (agenda)
+class Evento(Base):
+    __tablename__ = "eventos"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    nombre = Column(String, nullable=False)
+    descripcion = Column(String)
+    fecha_inicio = Column(Date, nullable=False)
+    hora_inicio = Column(Time, nullable=False)
+    hora_fin = Column(Time, nullable=False)
+    recurrencia = Column(SAEnum(RecurrenciaEnum), default=RecurrenciaEnum.unico)
+    etiquetas = Column(JSON, default=list)  # usa callable para evitar mutabilidad compartida
+    creado_en = Column(DateTime, default=datetime.datetime.utcnow)
+    modificado_en = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+    def __repr__(self):
+        return f"<Evento(nombre='{self.nombre}', fecha={self.fecha_inicio}, {self.hora_inicio}-{self.hora_fin})>"
