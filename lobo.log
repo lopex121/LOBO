@@ -104,3 +104,592 @@ Traceback (most recent call last):
   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/_strptime.py", line 336, in _strptime
     raise ValueError("unconverted data remains: %s" %
 ValueError: unconverted data remains:  PM
+2025-09-21 21:19:53,534 [INFO] Buscando módulos en 'modules'...
+2025-09-21 21:25:46,590 [INFO] Buscando módulos en 'modules'...
+2025-09-21 21:51:37,073 [INFO] Buscando módulos en 'modules'...
+2025-09-21 22:00:13,135 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C8)
+2025-09-21 22:00:17,224 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C12)
+2025-09-21 22:00:21,020 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C12)
+2025-09-21 22:00:24,848 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C16)
+2025-09-21 22:00:28,671 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C16)
+2025-09-21 22:00:32,070 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C20)
+2025-09-21 22:00:36,569 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C20)
+2025-09-21 22:00:40,049 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24)
+2025-09-21 22:00:43,681 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24)
+2025-09-21 22:00:47,026 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C26)
+2025-09-21 22:00:50,656 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C26)
+2025-09-21 22:00:54,126 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D12)
+2025-09-21 22:00:57,688 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D12)
+2025-09-21 22:01:00,854 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24)
+2025-09-21 22:01:03,823 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24)
+2025-09-21 22:01:06,124 [ERROR] No se pudo pintar evento bb8ece29-4ca0-486f-afed-b991ba6deffb: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 159, in pintar_evento_sheets
+    sheet.update(first_a1, [[texto]])
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/worksheet.py", line 1246, in update
+    response = self.client.values_update(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 173, in values_update
+    r = self.request("put", url, params=params, json=body)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:01:07,964 [ERROR] No se pudo pintar evento 10f8d5ce-08a8-4b2d-9d57-4dcd6498d1f9: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 153, in pintar_evento_sheets
+    sheet.batch_clear([full_range])
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/worksheet.py", line 2237, in batch_clear
+    response = self.client.values_batch_clear(self.spreadsheet_id, body=body)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 220, in values_batch_clear
+    r = self.request("post", url, params=params, json=body)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:01:11,292 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E12)
+2025-09-21 22:01:14,269 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E12)
+2025-09-21 22:01:17,286 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F8)
+2025-09-21 22:01:20,675 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F8)
+2025-09-21 22:01:23,532 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F16)
+2025-09-21 22:01:26,634 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F16)
+2025-09-21 22:01:30,225 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (F18 -> F18:F20)
+2025-09-21 22:01:34,411 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (F18 -> F18:F20)
+2025-09-21 22:01:37,185 [INFO] Pintado evento en Sheets: Box (F22 -> F22:F24)
+2025-09-21 22:01:39,979 [INFO] Pintado evento en Sheets: Box (F22 -> F22:F24)
+2025-09-21 22:01:42,468 [INFO] Pintado evento en Sheets: Gym (F24 -> F24:F26)
+2025-09-21 22:01:43,451 [ERROR] No se pudo pintar evento 4a9ffd60-ded3-4929-90ab-26e490e94127: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:01:44,674 [ERROR] No se pudo pintar evento e410ed46-7400-4e74-9a15-8f87fe951cd5: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:01:45,904 [ERROR] No se pudo pintar evento 2f4c5930-ba5e-4670-9047-a65cd540dd86: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:02:21,527 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C8)
+2025-09-21 22:02:24,803 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C12)
+2025-09-21 22:02:28,839 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C12)
+2025-09-21 22:02:31,925 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C16)
+2025-09-21 22:02:35,653 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C16)
+2025-09-21 22:02:39,218 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C20)
+2025-09-21 22:02:42,737 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C20)
+2025-09-21 22:02:45,629 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24)
+2025-09-21 22:02:48,838 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24)
+2025-09-21 22:02:52,056 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C26)
+2025-09-21 22:02:55,252 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C26)
+2025-09-21 22:02:58,263 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D12)
+2025-09-21 22:03:01,138 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D12)
+2025-09-21 22:03:04,648 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24)
+2025-09-21 22:03:07,360 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24)
+2025-09-21 22:03:10,211 [INFO] Pintado evento en Sheets: Gym (D24 -> D24:D26)
+2025-09-21 22:03:13,506 [INFO] Pintado evento en Sheets: Gym (D24 -> D24:D26)
+2025-09-21 22:03:16,759 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E12)
+2025-09-21 22:03:19,382 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E12)
+2025-09-21 22:03:22,261 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F8)
+2025-09-21 22:03:25,160 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F8)
+2025-09-21 22:03:27,956 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F16)
+2025-09-21 22:03:30,643 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F16)
+2025-09-21 22:03:33,385 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (F18 -> F18:F20)
+2025-09-21 22:03:36,301 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (F18 -> F18:F20)
+2025-09-21 22:03:39,101 [INFO] Pintado evento en Sheets: Box (F22 -> F22:F24)
+2025-09-21 22:03:40,222 [ERROR] No se pudo pintar evento ad4d2caa-8675-47e5-81b9-b5d372b28ea0: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:03:41,323 [ERROR] No se pudo pintar evento 419148eb-0990-4f3e-8cb1-673005b68efb: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:03:42,236 [ERROR] No se pudo pintar evento 4a9ffd60-ded3-4929-90ab-26e490e94127: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:03:43,465 [ERROR] No se pudo pintar evento e410ed46-7400-4e74-9a15-8f87fe951cd5: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:03:44,807 [ERROR] No se pudo pintar evento 2f4c5930-ba5e-4670-9047-a65cd540dd86: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:05:41,204 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C8)
+2025-09-21 22:05:43,899 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C12)
+2025-09-21 22:05:46,558 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C12)
+2025-09-21 22:05:49,203 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C16)
+2025-09-21 22:05:52,028 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C16)
+2025-09-21 22:05:55,598 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C20)
+2025-09-21 22:05:58,549 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C20)
+2025-09-21 22:06:01,594 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24)
+2025-09-21 22:06:04,331 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24)
+2025-09-21 22:06:07,312 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C26)
+2025-09-21 22:06:09,962 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C26)
+2025-09-21 22:06:12,850 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D12)
+2025-09-21 22:06:15,818 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D12)
+2025-09-21 22:06:18,539 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24)
+2025-09-21 22:06:21,400 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24)
+2025-09-21 22:06:24,379 [INFO] Pintado evento en Sheets: Gym (D24 -> D24:D26)
+2025-09-21 22:06:27,090 [INFO] Pintado evento en Sheets: Gym (D24 -> D24:D26)
+2025-09-21 22:06:30,207 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E12)
+2025-09-21 22:06:33,345 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E12)
+2025-09-21 22:06:36,921 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F8)
+2025-09-21 22:06:40,199 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F8)
+2025-09-21 22:06:45,967 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F16)
+2025-09-21 22:06:46,997 [ERROR] No se pudo pintar evento 79243d5e-3b53-410d-b3ad-d700ad801253: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:48,011 [ERROR] No se pudo pintar evento 5dd483f6-9c1f-46a5-9c64-d498ec55bd28: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:49,216 [ERROR] No se pudo pintar evento 9f0c1ad0-e9c4-4ac6-9b1b-2c32bacfccd2: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:50,142 [ERROR] No se pudo pintar evento 6bae20d4-768e-433b-bf41-2c2f7e8d9f8b: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:51,307 [ERROR] No se pudo pintar evento ad4d2caa-8675-47e5-81b9-b5d372b28ea0: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:52,503 [ERROR] No se pudo pintar evento 419148eb-0990-4f3e-8cb1-673005b68efb: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:53,958 [ERROR] No se pudo pintar evento 4a9ffd60-ded3-4929-90ab-26e490e94127: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:54,858 [ERROR] No se pudo pintar evento e410ed46-7400-4e74-9a15-8f87fe951cd5: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:06:55,959 [ERROR] No se pudo pintar evento 2f4c5930-ba5e-4670-9047-a65cd540dd86: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 283, in clear_sheets
+    pintar_evento_sheets(ev)
+  File "/Users/lopez/PycharmProjects/LOBO/modules/agenda/agenda_logics.py", line 143, in pintar_evento_sheets
+    sheet = get_sheet()
+            ^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/core/lobo_google/lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lopez/PycharmProjects/LOBO/.venv/lib/python3.12/site-packages/gspread/http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-09-21 22:11:10,474 [INFO] Buscando módulos en 'modules'...
+2025-09-21 22:17:01,769 [INFO] Buscando módulos en 'modules'...
+2025-09-21 22:29:33,735 [INFO] Buscando módulos en 'modules'...
+2025-09-21 22:35:28,354 [INFO] Buscando módulos en 'modules'...
+2025-09-21 22:40:54,602 [INFO] Buscando módulos en 'modules'...
+2025-09-21 22:53:13,246 [INFO] Buscando módulos en 'modules'...
+2025-09-21 22:57:42,070 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:01:56,010 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:02:04,378 [INFO] Borrado evento en Sheets: Modelación Matemática Fundamental (2202) (C6:C8)
+2025-09-21 23:02:08,207 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C8)
+2025-09-21 23:07:50,515 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:09:06,053 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:15:40,685 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:16:26,443 [INFO] Borrado evento en Sheets: Modelación Matemática Fundamental (2202) (C6:C10)
+2025-09-21 23:16:29,922 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C8)
+2025-09-21 23:17:19,257 [INFO] Borrado evento en Sheets: Modelación Matemática Fundamental (2202) (C6:C8)
+2025-09-21 23:17:22,680 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C10)
+2025-09-21 23:18:52,328 [INFO] Borrado evento en Sheets: Modelación Matemática Fundamental (2202) (C6:C10)
+2025-09-21 23:18:55,689 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C11)
+2025-09-21 23:19:08,120 [INFO] Borrado evento en Sheets: Modelación Matemática Fundamental (2202) (C6:C11)
+2025-09-21 23:19:11,396 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C9)
+2025-09-21 23:19:53,764 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C9)
+2025-09-21 23:19:56,682 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C12)
+2025-09-21 23:20:00,680 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C16)
+2025-09-21 23:20:03,468 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C20)
+2025-09-21 23:20:07,566 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24)
+2025-09-21 23:20:10,929 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C26)
+2025-09-21 23:20:14,264 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D12)
+2025-09-21 23:20:17,699 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24)
+2025-09-21 23:20:21,633 [INFO] Pintado evento en Sheets: Gym (D24 -> D24:D26)
+2025-09-21 23:20:24,256 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E12)
+2025-09-21 23:20:28,799 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F8)
+2025-09-21 23:20:31,969 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F16)
+2025-09-21 23:20:34,682 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (F18 -> F18:F20)
+2025-09-21 23:20:37,587 [INFO] Pintado evento en Sheets: Box (F22 -> F22:F24)
+2025-09-21 23:20:42,962 [INFO] Pintado evento en Sheets: Gym (F24 -> F24:F26)
+2025-09-21 23:20:45,691 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (G10 -> G10:G12)
+2025-09-21 23:21:58,514 [INFO] Borrado evento en Sheets: Mi plan de Vida (5308) (C10:C12)
+2025-09-21 23:22:01,829 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C11)
+2025-09-21 23:22:23,028 [INFO] Borrado evento en Sheets: Pensamiento Computacional (1401) (C14:C16)
+2025-09-21 23:22:26,774 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C17)
+2025-09-21 23:23:24,320 [INFO] Borrado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18:C20)
+2025-09-21 23:23:27,435 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C21)
+2025-09-21 23:23:58,189 [INFO] Borrado evento en Sheets: Gym (C24:C26)
+2025-09-21 23:24:00,745 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C25)
+2025-09-21 23:27:09,637 [INFO] Pintado evento en Sheets: Taller (C2 -> C2:C3)
+2025-09-21 23:28:01,160 [INFO] Borrado evento en Sheets: Taller (C2:C3)
+2025-09-21 23:33:08,063 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:36:42,773 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:42:17,277 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:46:37,319 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:47:40,508 [INFO] Buscando módulos en 'modules'...
+2025-09-21 23:47:50,115 [INFO] Pintado evento en Sheets: Taller (C2 -> C2:C3)
+2025-09-21 23:48:37,001 [INFO] Borrado evento en Sheets: Taller (C2:C3)
+2025-09-21 23:49:31,897 [INFO] Borrado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10:D12)
+2025-09-21 23:49:34,965 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D17)
+2025-09-21 23:58:55,111 [INFO] Buscando módulos en 'modules'...

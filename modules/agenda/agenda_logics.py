@@ -1,16 +1,12 @@
 # modules/agenda/agenda_logics.py
 from datetime import datetime, date, time, timedelta
-from sqlalchemy import create_engine, or_
-from sqlalchemy.orm import sessionmaker
-from core.db.schema import Base, Evento, RecurrenciaEnum
+from sqlalchemy import or_
+from core.db.schema import Evento, RecurrenciaEnum
+from core.db.sessions import SessionLocal as Session
 from core.lobo_google.lobo_sheets import get_sheet
 from gspread.utils import rowcol_to_a1
 import logging
-
-# DB
-engine = create_engine("sqlite:///lobo_agenda.db", echo=False)
-Session = sessionmaker(bind=engine)
-Base.metadata.create_all(engine)
+from sqlalchemy import and_
 
 # Layout del Sheet
 DIAS = ["Hora", "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
@@ -22,7 +18,7 @@ logger = logging.getLogger(__name__)
 def _ensure_date(obj):
     if isinstance(obj, date):
         return obj
-    return date.fromisoformat(obj)
+    return datetime.strptime(obj, "%Y-%m-%d").date()
 
 def _ensure_time(obj):
     if isinstance(obj, time):
@@ -99,7 +95,7 @@ def editar_evento_db(evento_id, **kwargs):
         kwargs["hora_fin"] = _ensure_time(kwargs["hora_fin"])
     for k, v in kwargs.items():
         setattr(ev, k, v)
-    ev.modificado_en = datetime.utcnow().isoformat()
+    ev.modificado_en = datetime.utcnow()
     session.commit()
     session.refresh(ev)
     session.close()
@@ -134,36 +130,27 @@ def listar_eventos_por_fecha(fecha: date):
 
 # Sheets: pintar, borrar, actualizar, sync
 def pintar_evento_sheets(evento, color_rgb=(0.9, 0.9, 0.9)):
-
-#    Pinta el evento en el Sheet:
-#    - texto solo en primera celda (nombre + descripcion)
-#    - celdas abarcadas con color uniforme
-#    - bordes exteriores SOLID
-
     sheet = get_sheet()
     start_row = _time_to_row(sheet, evento.hora_inicio)
     end_row = _time_to_row(sheet, evento.hora_fin)
     col = _date_to_col(evento.fecha_inicio)
 
-    # a1 ranges
     first_a1 = rowcol_to_a1(start_row, col)
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
 
-    # 1) limpiar contenido en rango (por si edit)
+    # limpiar contenido en rango
     sheet.batch_clear([full_range])
 
-    # 2) escribir texto solo en primera celda
+    # escribir texto solo en primera celda
     texto = evento.nombre
     if evento.descripcion:
         texto = f"{evento.nombre}\n{evento.descripcion}"
     sheet.update(first_a1, [[texto]])
 
-    # 3) aplicar color y bordes mediante batch_update requests
+    # aplicar color y bordes
     sheet_id = sheet._properties["sheetId"]
     r, g, b = color_rgb
-
     requests = [
-        # background
         {
             "repeatCell": {
                 "range": {
@@ -173,16 +160,10 @@ def pintar_evento_sheets(evento, color_rgb=(0.9, 0.9, 0.9)):
                     "startColumnIndex": col - 1,
                     "endColumnIndex": col
                 },
-                "cell": {
-                    "userEnteredFormat": {
-                        "backgroundColor": {"red": r, "green": g, "blue": b},
-                        # Mantener texto tal cual; el texto lo dejamos en la primera celda
-                    }
-                },
+                "cell": {"userEnteredFormat": {"backgroundColor": {"red": r, "green": g, "blue": b}}},
                 "fields": "userEnteredFormat.backgroundColor"
             }
         },
-        # bordes exteriores sólidos
         {
             "updateBorders": {
                 "range": {
@@ -199,17 +180,13 @@ def pintar_evento_sheets(evento, color_rgb=(0.9, 0.9, 0.9)):
             }
         }
     ]
-
     sheet.spreadsheet.batch_update({"requests": requests})
-
-    # 4) dar formato de texto a la primera celda (wrap + bold)
     sheet.format(first_a1, {"wrapStrategy": "WRAP", "textFormat": {"bold": True}})
 
     logger.info(f"Pintado evento en Sheets: {evento.nombre} ({first_a1} -> {full_range})")
     return True
 
 def borrar_evento_sheets(evento):
-    # Limpia contenido, quita color y quita bordes del rango del evento.
     sheet = get_sheet()
     start_row = _time_to_row(sheet, evento.hora_inicio)
     end_row = _time_to_row(sheet, evento.hora_fin)
@@ -217,33 +194,20 @@ def borrar_evento_sheets(evento):
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
     sheet_id = sheet._properties["sheetId"]
 
-    # 1) borrar contenido
     sheet.batch_clear([full_range])
-
-    # 2) quitar formatos (reset userEnteredFormat) y quitar bordes
     requests = [
         {
             "repeatCell": {
-                "range": {
-                    "sheetId": sheet_id,
-                    "startRowIndex": start_row - 1,
-                    "endRowIndex": end_row,
-                    "startColumnIndex": col - 1,
-                    "endColumnIndex": col
-                },
+                "range": {"sheetId": sheet_id, "startRowIndex": start_row-1, "endRowIndex": end_row,
+                          "startColumnIndex": col-1, "endColumnIndex": col},
                 "cell": {"userEnteredFormat": {}},
                 "fields": "userEnteredFormat"
             }
         },
         {
             "updateBorders": {
-                "range": {
-                    "sheetId": sheet_id,
-                    "startRowIndex": start_row - 1,
-                    "endRowIndex": end_row,
-                    "startColumnIndex": col - 1,
-                    "endColumnIndex": col
-                },
+                "range": {"sheetId": sheet_id, "startRowIndex": start_row-1, "endRowIndex": end_row,
+                          "startColumnIndex": col-1, "endColumnIndex": col},
                 "top": {"style": "NONE"},
                 "bottom": {"style": "NONE"},
                 "left": {"style": "NONE"},
@@ -256,7 +220,6 @@ def borrar_evento_sheets(evento):
     return True
 
 def actualizar_evento_sheets(old_evento, new_evento):
-    # Simple: borra el rango anterior y pinta el nuevo.
     try:
         borrar_evento_sheets(old_evento)
     except Exception as e:
@@ -264,14 +227,9 @@ def actualizar_evento_sheets(old_evento, new_evento):
     return pintar_evento_sheets(new_evento)
 
 def clear_sheets():
-    # Limpia por completo el Sheet y repinta desde la DB (útil en reinicio).
     sheet = get_sheet()
-
-    # Obtén número de filas y columnas
-    filas = len(sheet.col_values(1))  # cuántas horas hay
-    columnas = len(sheet.row_values(1))  # cuántos días hay
-
-    # Limpia desde fila 2 y columna 2 (evita horas y encabezados)
+    filas = len(sheet.col_values(1))
+    columnas = len(sheet.row_values(1))
     rango = f"B2:{chr(64+columnas)}{filas}"
     sheet.batch_clear([rango])
 
@@ -286,54 +244,59 @@ def clear_sheets():
     return True
 
 def importar_eventos_desde_sheets():
-    # Lee todos los eventos escritos en el Google Sheets y los inserta en la DB.
-    # Formato esperado:
-    # - Columna A = horas ("08:00", "09:00", ...)
-    # - Fila 1 = días ("Lunes", "Martes", ...)
-    # - Celdas = "Nombre" o "Nombre\\nDescripcion"
-
     sheet = get_sheet()
+    data = sheet.get_all_values()
+    if not data:
+        return "[AGENDA] Hoja vacía."
 
-    horas = sheet.col_values(1)[1:]   # todas las horas menos encabezado "Hora"
-    dias = sheet.row_values(1)[1:]   # todos los días menos encabezado "Hora"
+    encabezados = data[0]
+    horas = [row[0] for row in data]
 
     session = Session()
-    nuevos = 0
-
-    for col_idx, dia in enumerate(dias, start=2):  # columna 2 = Domingo, etc
-        for row_idx, hora in enumerate(horas, start=2):  # fila 2 = primera hora
-            valor = sheet.cell(row_idx, col_idx).value
-            if not valor:
+    creados = 0
+    try:
+        for fila_idx in range(1, len(data)):
+            hora_str = horas[fila_idx]
+            if not hora_str:
                 continue
-
-            partes = valor.split("\n", 1)
-            nombre = partes[0]
-            descripcion = partes[1] if len(partes) > 1 else ""
-
             try:
-                hora_inicio = datetime.strptime(horas[row_idx - 2], "%H:%M").time()
-                if row_idx - 1 < len(horas):
-                    hora_fin = datetime.strptime(horas[row_idx - 1], "%H:%M").time()
-                else:
-                    hora_fin = (datetime.combine(date.today(), hora_inicio) + timedelta(hours=1)).time()
-
-                # Calcular fecha exacta a partir del nombre del día
-                hoy = date.today()
-                weekday_target = list(SPANISH_WEEKDAY.values()).index(dia)
-                # Buscar el próximo día que coincida
-                fecha = hoy + timedelta((weekday_target - hoy.weekday()) % 7)
-
-                # Verificar si ya existe en DB (mismo nombre, fecha y hora)
-                existente = session.query(Evento).filter_by(
-                    nombre=nombre,
-                    fecha_inicio=fecha,
-                    hora_inicio=hora_inicio,
-                    hora_fin=hora_fin
-                ).first()
-
-                if existente:
+                hora_inicio = datetime.strptime(hora_str.strip(), "%H:%M").time()
+            except ValueError:
+                try:
+                    hora_inicio = datetime.strptime(hora_str.strip().upper(), "%I:%M %p").time()
+                except ValueError:
                     continue
+            if fila_idx + 1 < len(horas):
+                next_hora_str = horas[fila_idx + 1].strip()
+                try:
+                    hora_fin = datetime.strptime(next_hora_str, "%H:%M").time()
+                except ValueError:
+                    try:
+                        hora_fin = datetime.strptime(next_hora_str.upper(), "%I:%M %p").time()
+                    except ValueError:
+                        hora_fin = (datetime.combine(datetime.today(), hora_inicio) + timedelta(hours=1)).time()
+            else:
+                hora_fin = (datetime.combine(datetime.today(), hora_inicio) + timedelta(hours=1)).time()
 
+            for col_idx in range(1, len(encabezados)):
+                dia = encabezados[col_idx]
+                if not dia:
+                    continue
+                contenido = data[fila_idx][col_idx] if col_idx < len(data[fila_idx]) else ""
+                if not contenido.strip():
+                    continue
+                partes = contenido.split("\n", 1)
+                nombre = partes[0].strip()
+                descripcion = partes[1].strip() if len(partes) > 1 else ""
+                hoy = datetime.today().date()
+                weekday_map = {
+                    "Lunes": 0, "Martes": 1, "Miércoles": 2,
+                    "Jueves": 3, "Viernes": 4, "Sábado": 5, "Domingo": 6
+                }
+                if dia not in weekday_map:
+                    continue
+                delta = (weekday_map[dia] - hoy.weekday()) % 7
+                fecha = hoy + timedelta(days=delta)
                 ev = Evento(
                     nombre=nombre,
                     descripcion=descripcion,
@@ -343,14 +306,20 @@ def importar_eventos_desde_sheets():
                     recurrencia=RecurrenciaEnum.unico,
                     etiquetas=[],
                     creado_en=datetime.utcnow(),
-                    modificado_en=datetime.utcnow()
+                    modificado_en=datetime.utcnow(),
                 )
                 session.add(ev)
-                nuevos += 1
+                creados += 1
+        session.commit()
+    finally:
+        session.close()
+    return creados
 
-            except Exception as e:
-                logger.exception(f"No se pudo importar celda {row_idx},{col_idx}: {e}")
-
-    session.commit()
-    session.close()
-    return nuevos
+def listar_eventos_por_rango(fecha_inicio: str, fecha_fin: str):
+    with Session() as session:
+        return session.query(Evento).filter(
+            and_(
+                Evento.fecha_inicio >= fecha_inicio,
+                Evento.fecha_inicio <= fecha_fin
+            )
+        ).all()

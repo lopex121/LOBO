@@ -12,28 +12,29 @@ class AgendaAPI:
        # Uso desde LOBO (ejemplo con quotes, por eso shlex.split en router):
        # agregar_evento "Clase de Física" "Modelación" 2025-09-21 09:00 10:00 unico trabajo,estudio
 
-        if len(args) < 5:
-            return "[AGENDA] Uso: agregar_evento \"NOMBRE\" \"DESCRIPCION\" YYYY-MM-DD HH:MM HH:MM \"recurrencia\" \"etiquetas_csv\""
+        if len(args) < 4:
+            return "[AGENDA] Uso: agregar_evento \"NOMBRE\" YYYY-MM-DD HH:MM HH:MM \"DESCRIPCION\" \"recurrencia\" \"etiquetas_csv\""
 
         nombre = args[0]
-        descripcion = args[1]
-        fecha = args[2]
-        hora_inicio = args[3]
-        hora_fin = args[4]
-        recurrencia = args[5] if len(args) > 5 else "único"
-        etiquetas = []
-        if len(args) > 6:
-            etiquetas = args[6].split(",")
+        fecha = args[1]
+        hora_inicio = args[2]
+        hora_fin = args[3]
+        descripcion = args[4] if len(args) > 4 else ""
+        recurrencia = args[5] if len(args) > 5 else "unico"
+        etiquetas = args[6].split(",") if len(args) > 6 else []
 
-        evento = logics.crear_evento_db(
-            nombre=nombre,
-            descripcion=descripcion,
-            fecha_inicio=fecha,
-            hora_inicio=hora_inicio,
-            hora_fin=hora_fin,
-            recurrencia=RecurrenciaEnum(recurrencia),
-            etiquetas=etiquetas
-        )
+        try:
+            evento = logics.crear_evento_db(
+                nombre=nombre,
+                descripcion=descripcion,
+                fecha_inicio=fecha,
+                hora_inicio=hora_inicio,
+                hora_fin=hora_fin,
+                recurrencia=RecurrenciaEnum(recurrencia),
+                etiquetas=etiquetas
+            )
+        except Exception as e:
+            return f"[AGENDA] Error al crear evento en DB: {e}"
 
         # pintar en Sheets
         try:
@@ -73,7 +74,8 @@ class AgendaAPI:
 
         # editar_evento <id> key=value key=value ...
         # Ejemplo:
-        # editar_evento abc-uuid nombre=\"Nueva clase\" hora_inicio=08:00 hora_fin=09:00
+        # editar_evento <id_obtenido> (nombre="Clase Física - cambio") (hora_inicio=09:30) (hora_fin=10:30)
+        # funciona tambien si se pasa un solo argumento, pero el id es escencial
 
         if not args:
             return "[AGENDA] Uso: editar_evento <id> key=value ..."
@@ -106,15 +108,58 @@ class AgendaAPI:
         return "[AGENDA] Evento actualizado (DB + Sheets)."
 
     def ver_eventos(self, args: list):
-        # ver_eventos [YYYY-MM-DD]  -> muestra eventos del dia (si no fecha, hoy)
+        """
+        ver_eventos [dia|semana|mes] [YYYY-MM-DD]
+        - Si no se pasa nada: muestra eventos de HOY.
+        - Si se pasa "semana YYYY-MM-DD": muestra los eventos de esa semana.
+        - Si se pasa "mes YYYY-MM-DD": muestra los eventos de ese mes.
+        """
 
-        fecha = date.today().isoformat() if not args else args[0]
-        eventos = logics.listar_eventos_por_fecha(fecha)
+        from datetime import datetime, timedelta
+        import calendar
+
+        hoy = date.today()
+        modo = "dia"
+        fecha_base = hoy
+
+        if args:
+            if args[0] in ["dia", "semana", "mes"]:
+                modo = args[0]
+                if len(args) > 1:
+                    fecha_base = datetime.strptime(args[1], "%Y-%m-%d").date()
+            else:
+                # si solo viene una fecha, se toma como "dia"
+                fecha_base = datetime.strptime(args[0], "%Y-%m-%d").date()
+
+        # --- calcular rango de fechas según modo ---
+        if modo == "dia":
+            inicio = fecha_base
+            fin = fecha_base
+        elif modo == "semana":
+            inicio = fecha_base - timedelta(days=fecha_base.weekday())  # lunes
+            fin = inicio + timedelta(days=6)  # domingo
+        elif modo == "mes":
+            inicio = fecha_base.replace(day=1)
+            ultimo_dia = calendar.monthrange(fecha_base.year, fecha_base.month)[1]
+            fin = fecha_base.replace(day=ultimo_dia)
+        else:
+            return "[AGENDA] Uso: ver_eventos [dia|semana|mes] [YYYY-MM-DD]"
+
+        # --- obtener eventos de DB ---
+        eventos = logics.listar_eventos_por_rango(inicio.isoformat(), fin.isoformat())
         if not eventos:
-            return "[AGENDA] No hay eventos para esa fecha."
+            return f"[AGENDA] No hay eventos en {modo} ({inicio} → {fin})."
+
+        # --- ordenar por hora ---
+        eventos = sorted(eventos, key=lambda e: e.hora_inicio)
+
+        # --- formatear salida ---
         lines = []
         for ev in eventos:
-            lines.append(f"{ev.id} | {ev.hora_inicio.strftime('%H:%M')}-{ev.hora_fin.strftime('%H:%M')} | {ev.nombre} | {','.join(ev.etiquetas or [])}")
+            lines.append(
+                f"{ev.id} | {ev.fecha_inicio} {ev.hora_inicio.strftime('%H:%M')}-{ev.hora_fin.strftime('%H:%M')} "
+                f"| {ev.nombre} | {','.join(ev.etiquetas or [])}"
+            )
         return "\n".join(lines)
 
     def buscar_evento(self, args: list):
