@@ -264,7 +264,7 @@ def actualizar_evento_sheets(old_evento, new_evento):
     return pintar_evento_sheets(new_evento)
 
 def clear_sheets():
-    # Limpia todo el Sheet y repinta desde la DB (útil en reinicio).
+    # Limpia por completo el Sheet y repinta desde la DB (útil en reinicio).
     sheet = get_sheet()
 
     # Obtén número de filas y columnas
@@ -293,7 +293,6 @@ def importar_eventos_desde_sheets():
     # - Celdas = "Nombre" o "Nombre\\nDescripcion"
 
     sheet = get_sheet()
-
 
     horas = sheet.col_values(1)[1:]   # todas las horas menos encabezado "Hora"
     dias = sheet.row_values(1)[1:]   # todos los días menos encabezado "Hora"
