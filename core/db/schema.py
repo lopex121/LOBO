@@ -27,12 +27,18 @@ class MemoryNote(Base):
     __tablename__ = "memory"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    type = Column(String)
+    type = Column(String) # urgente, importante,idea, nota, tarea
     content = Column(String)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
+    fecha_limite = Column(Date, nullable=True) # Fecha de vencimiento
+    hora_limite = Column(Time, nullable=True) # Hora de entrega/realización
+    prioridad = Column(Integer, default=5) # 1 = urgente / 5 = normal
+    estado = Column(String, default="pendiente") # pendiente, completada, cancelada
+    creado_por =Column(String, default="system") # usuario que lo creó
+
     def __repr__(self):
-        return f"<MemoryNote(type='{self.type}', content='{self.content}')>"
+        return f"<MemoryNote(type='{self.type}', content='{self.content}', estado='{self.estado}')>"
 
 # Bitácoras
 class BitacoraRegistro(Base):

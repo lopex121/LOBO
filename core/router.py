@@ -8,23 +8,25 @@ from modules.agenda.agenda import AgendaAPI
 from modules.alarma.alarma import AlarmManager
 
 bitacora = Bitacora()
-
 recordatorios = Recordatorios()
-
 agenda = AgendaAPI()
 alarmas = AlarmManager()
 
 comandos = {
-    # recordatorios
+    # ===== RECORDATORIOS =====
     "guardar": recordatorios.guardar,
     "recordar": recordatorios.recordar,
+    "completar": recordatorios.completar,
     "eliminar_recuerdo": recordatorios.eliminar,
-    # usuarios
+
+    # ===== USUARIOS =====
     "nuevo_usuario": comando_nuevo_usuario,
     "eliminar_usuario": comando_eliminar_usuario,
-    # bitácora
+
+    # ===== BITÁCORA =====
     "ver_bitacora": comando_ver_bitacora,
-    # agenda
+
+    # ===== AGENDA =====
     "agregar_evento": agenda.agregar_evento,
     "eliminar_evento": agenda.eliminar_evento,
     "editar_evento": agenda.editar_evento,
@@ -32,11 +34,27 @@ comandos = {
     "buscar_evento": agenda.buscar_evento,
     "limpiar_agenda": agenda.clear_sheets,
     "importar_agenda": agenda.importar_desde_sheets,
-    # alarmas
+
+    # ===== ALARMAS =====
     "programar_alarma": lambda args: "[ALARMA] " + (
         str(alarmas.programar_alarma(args[0], int(args[1])) if len(args) >= 2 else alarmas.programar_alarma(args[0]))),
     "cancelar_alarma": lambda args: "[ALARMA] " + (str(alarmas.cancelar_alarma(args[0]))),
+
+    # ===== SINCRONIZACIÓN =====
+    "sync_recordatorios": lambda args: _sync_recordatorios_sheets(),
 }
+
+def _sync_recordatorios_sheets():
+    """Sincroniza recordatorios con Google Sheets"""
+    try:
+        from modules.recordatorios.recordatorios_sheets import actualizar_recordatorios_sheets
+        if actualizar_recordatorios_sheets():
+            return "[LOBO] ✅ Recordatorios sincronizados con Sheets"
+        else:
+            return "[LOBO] ⚠️  Error al sincronizar recordatorios"
+    except Exception as e:
+        return f"[LOBO] ❌ Error: {e}"
+
 
 class Router:
     def __init__(self, brain):
@@ -63,5 +81,39 @@ class Router:
             except Exception as e:
                 bitacora.registrar("router", "error", "Error al ejecutar el comando",
                                    SESSION.user.username)
-                return f"[LOBO] Error al ejecutar el comando '{nombre_comando}': {e}"
-        return f"[LOBO] Comando no reconocido: {nombre_comando}"
+                return f"[LOBO] ❌ Error al ejecutar el comando '{nombre_comando}': {e}"
+
+        # Sugerencias de comandos similares
+        sugerencias = self._sugerir_comando(nombre_comando)
+        if sugerencias:
+            return f"[LOBO] Comando no reconocido: '{nombre_comando}'\n💡 ¿Quisiste decir: {sugerencias}?"
+
+        return f"[LOBO] Comando no reconocido: '{nombre_comando}'\nEscribe 'ayuda' para ver comandos disponibles."
+
+
+    def _sugerir_comando(self, comando_erroneo):
+        """Sugiere comandos similares usando distancia de Levenshtein simple"""
+
+        def distancia(s1, s2):
+            if len(s1) > len(s2):
+                s1, s2 = s2, s1
+            distancias = range(len(s1) + 1)
+            for i2, c2 in enumerate(s2):
+                nuevas_distancias = [i2 + 1]
+                for i1, c1 in enumerate(s1):
+                    if c1 == c2:
+                        nuevas_distancias.append(distancias[i1])
+                    else:
+                        nuevas_distancias.append(1 + min((distancias[i1], distancias[i1 + 1], nuevas_distancias[-1])))
+                distancias = nuevas_distancias
+            return distancias[-1]
+
+        # Buscar comandos similares (distancia <= 3)
+        similares = []
+        for cmd in comandos.keys():
+            if distancia(comando_erroneo, cmd) <= 3:
+                similares.append(cmd)
+
+        if similares:
+            return ", ".join(similares[:3])  # Máximo 3 sugerencias
+        return None

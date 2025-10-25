@@ -33,6 +33,15 @@ lobo.db
 # Memory cache
 memory/*.json
 
+# No subir claves ni credenciales
+config/credentials.json
+
+# Ignorar credenciales y claves
+config/
+*.json
+*.pem
+*.p12
+
 # System specific
 Thumbs.db
 ehthumbs.db

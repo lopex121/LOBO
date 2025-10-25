@@ -693,3 +693,29 @@ gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'R
 2025-09-21 23:49:31,897 [INFO] Borrado evento en Sheets: Modelaci贸n del Movimiento en Ingenier铆a (3303) (D10:D12)
 2025-09-21 23:49:34,965 [INFO] Pintado evento en Sheets: Modelaci贸n del Movimiento en Ingenier铆a (3303) (D10 -> D10:D17)
 2025-09-21 23:58:55,111 [INFO] Buscando m贸dulos en 'modules'...
+2025-09-22 00:06:39,532 [INFO] Pintado evento en Sheets: xd (H6 -> H6:H7)
+2025-09-22 00:06:53,963 [INFO] Pintado evento en Sheets: xd (B6 -> B6:B7)
+2025-09-22 00:07:32,571 [INFO] Borrado evento en Sheets: xd (B6:B7)
+2025-09-22 00:07:47,813 [INFO] Borrado evento en Sheets: xd (H6:H7)
+2025-09-22 13:49:12,644 [INFO] Buscando m贸dulos en 'modules'...
+2025-09-22 13:50:26,367 [INFO] Borrado evento en Sheets: Gym (D24:D26)
+2025-09-22 13:50:30,020 [INFO] Pintado evento en Sheets: Gym (D24 -> D24:D25)
+2025-09-22 13:52:45,486 [INFO] Borrado evento en Sheets: Modelaci贸n del Movimiento en Ingenier铆a (3304) (E10:E12)
+2025-09-22 13:52:47,767 [INFO] Pintado evento en Sheets: Modelaci贸n del Movimiento en Ingenier铆a (3304) (E10 -> E10:E17)
+2025-09-22 13:58:51,310 [INFO] Borrado evento en Sheets: Modelaci贸n Matem谩tica Fundamental (2202) (F6:F8)
+2025-09-22 13:58:53,962 [INFO] Pintado evento en Sheets: Modelaci贸n Matem谩tica Fundamental (2202) (F6 -> F6:F9)
+2025-09-22 20:59:48,245 [INFO] Borrado evento en Sheets: Pensamiento Computacional (1401) (F14:F16)
+2025-09-22 20:59:50,803 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F17)
+2025-09-22 21:16:57,322 [INFO] Borrado evento en Sheets: 脡tica e Inteligencia Artificial (ZOOM) (F18:F20)
+2025-09-22 21:16:59,575 [INFO] Pintado evento en Sheets: 脡tica e Inteligencia Artificial (ZOOM) (F18 -> F18:F21)
+2025-10-25 03:50:36,690 [INFO] Buscando m骴ulos en 'modules'...
+2025-10-25 03:51:14,012 [INFO] Buscando m骴ulos en 'modules'...
+2025-10-25 16:04:59,209 [INFO] Buscando m骴ulos en 'modules'...
+2025-10-25 16:04:59,228 [INFO] Actualizando recordatorios en Sheets...
+2025-10-25 16:04:59,724 [ERROR] Error al actualizar recordatorios en Sheets: ('invalid_grant: Invalid JWT Signature.', {'error': 'invalid_grant', 'error_description': 'Invalid JWT Signature.'})
+2025-10-25 16:09:13,964 [INFO] Actualizando recordatorios en Sheets...
+2025-10-25 16:09:14,402 [ERROR] Error al actualizar recordatorios en Sheets: ('invalid_grant: Invalid JWT Signature.', {'error': 'invalid_grant', 'error_description': 'Invalid JWT Signature.'})
+2025-10-25 16:10:56,998 [INFO] Actualizando recordatorios en Sheets...
+2025-10-25 16:10:57,430 [ERROR] Error al actualizar recordatorios en Sheets: ('invalid_grant: Invalid JWT Signature.', {'error': 'invalid_grant', 'error_description': 'Invalid JWT Signature.'})
+2025-10-25 16:20:33,486 [INFO] Actualizando recordatorios en Sheets...
+2025-10-25 16:20:34,028 [ERROR] Error al actualizar recordatorios en Sheets: ('invalid_grant: Invalid JWT Signature.', {'error': 'invalid_grant', 'error_description': 'Invalid JWT Signature.'})
