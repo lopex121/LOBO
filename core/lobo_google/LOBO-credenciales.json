@@ -1,13 +1,1 @@
-{
-  "type": "service_account",
-  "project_id": "lobo-agenda",
-  "private_key_id": "64dca5b9019f516de187e72bb99e90ff6ad7dd97",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC2/AEurWFAU07J\nD7Ipm/X0foDa/cj3ahMCVYZQZvOhy9k0c77qCUZ7T/hl7dH5RN7nyIScMbjpVaLs\nSRROPgmf6XjPii1AMr7KJzd0lGZQCErt+jems4SttFyCJ/oO86wRo8UgxNk9fniA\nCIbkNxfqCc3Lyyzw0iw9qR1gr0plepBZb8aHfsPyEDVVGGTxtfBzUn2YO+oGVfhL\n32L0OD6LOnfS0dyGYUSm99mApRQRaTgipseWoJNZHkheEMKQYgxjuh1BgQSX5kSG\n6oUUoRfVnZsYMdTRe/6rI+lpdflcxg+lUwJ7mhiaty4Hhpu+Ei8YJxhFp74w/Kx/\nFG14ZxkzAgMBAAECggEADyhCHiW1KpORW8z1tcX6J63a6p5Jvq+GB5QiCMLzvMaa\npWJObCsnMCETCGPHbYiA67OLwzcd2WYt6riwT+g0+o69DSP6/5hfKXZPfP6rQvHi\nPbg+UowIRNiYg8eKn8vGHb1HykvEBaNWQ/TGMl1F7oMFYwjfc3YAEtN8CtLlAhFz\nDtuTB70+2PgD+GI9+qKk4MiXcmdaSkIvTDihvWdzpJ8YT1JiHPLM3pW8I26r2EpA\nv2bcJd04hA+p99h1+/LymkYHM8kSuFCornddW6ubFczYhnmJA23c8ZUNy3hBzyfU\n/o39SYU88zbb2zBbm2WQ6VK02HG5+haUcVaqGyQEIQKBgQDmt0rTk2Vj6dOUTKBu\n2tTR/CYfNRUTLGbRhAq7wP3/qpyJK+KLjfiBVU8BbkteGcKrtoh2wqvXbXiHogc3\nnAsXiCNWZvz/JEDo+lW+fJVI2IWkL5z+w/ozbk7MoG/HfiQM3PFper94N+mReNGJ\nt8bvdoj5UfbxAruJ6Dfgv9tGWwKBgQDLCZvKRguL0LU+dLswrhEl2VkQD0TMZpjX\n8j5xqM//nuBpRbIaBEf7TsUqwvZunt1r/ptVqq0Zq9Hb640mhaJBilrRVMv1ip//\nYfLw5GUmupLvTRYB/TZTM68iGuLsg3q82Ka0uS6TSVDgtn9uVpghqQ4YY9WokGjA\n4jqrggbgCQKBgCB428c7j6GoX2cYAdyYYCvN2W+7AORZ8365nukeGKHLWYzU6GXL\n7ZYGc8A3zdPIvGV+o2ZTr+v6NGSioXFqPQVq285lYGZoq9oeocLVtg0yrFyXdvlE\njAqBFAYo7pKdZmWJE1FNPXWmKPGYl6VSgGVjwZOVvbPeNpcKYBL57drRAoGAVsxf\nxoRVUUtDAFVE5RW1DPoy4fO1FLDTrJXJ7isd6IiSJU7/SbIE18Gf9pzsXvQZcp6g\n52mUoMHccGjtqcc9S0mLc6wNmYXOyo2kHyl0uK7QO+83dlg6ji0tNKZL1pKKuQrh\nkacM6zhPlBFQvunUFafA99pOL8a0kajlLgbjS4kCgYAqMdDis/MDNQpP0MeRE/7l\nbXKZGYfmpR2cvWZ9cYdFC54zzw0KYOP1KkOf27Jz2ql23VMYzCFNf1lac6vmO3Ya\n0/Wo/DRZc3fsyOFEDNWr2I2g7K43K2p4Oajzvky5hikVWn/RpI+fPxIoqVg+5+db\npF5/PEAsuX3WEBGzZPqWRw==\n-----END PRIVATE KEY-----\n",
-  "client_email": "lobo-service@lobo-agenda.iam.gserviceaccount.com",
-  "client_id": "110595279628031789563",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/lobo-service%40lobo-agenda.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
+
