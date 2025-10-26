@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 # Configuración
 FILA_INICIO_RECORDATORIOS = 32  # Después del horario (fila 31)
-COLUMNA_TODOS_PENDIENTES = 9  # Columna I (a la derecha del horario)
+COLUMNA_RECORDATORIOS_FECHA = 9  # Columna I (recordatorios con fecha/hora)
+COLUMNA_PENDIENTES_GENERALES = 10  # Columna J (recordatorios sin fecha)
 
 # Colores según prioridad (RGB 0-1)
 COLORES_PRIORIDAD = {
@@ -131,30 +132,46 @@ def pintar_recordatorios_semana(fecha_inicio_semana=None):
 
 def pintar_todos_pendientes():
     """
-    Pinta TODOS los recordatorios pendientes en la columna lateral derecha
+    Pinta recordatorios pendientes en dos columnas:
+    - Columna I: Recordatorios CON fecha/hora (ordenados por fecha)
+    - Columna J: Pendientes SIN fecha (ordenados por ID)
     """
     sheet = get_sheet()
     memoria = Memory()
 
-    # Obtener TODOS los pendientes ordenados por fecha y prioridad
+    # Obtener TODOS los pendientes
     todos = memoria.recall(estado="pendiente")
 
-    # Filtrar solo los que tienen fecha
+    # Separar en dos grupos
     con_fecha = [r for r in todos if r.fecha_limite]
+    sin_fecha = [r for r in todos if not r.fecha_limite]
+
+    # Ordenar con_fecha por fecha, hora y prioridad
     con_fecha.sort(key=lambda x: (x.fecha_limite, x.hora_limite or datetime.min.time(), x.prioridad))
 
-    # Limpiar columna primero
-    limpiar_columna_todos_pendientes(sheet)
+    # Ordenar sin_fecha por ID (menor a mayor)
+    sin_fecha.sort(key=lambda x: x.id)
 
-    if not con_fecha:
-        logger.info("No hay recordatorios pendientes con fecha")
-        return
+    # Limpiar ambas columnas primero
+    limpiar_columnas_pendientes(sheet)
+
+    # ===== COLUMNA I: RECORDATORIOS CON FECHA =====
+    _pintar_columna_con_fecha(sheet, con_fecha)
+
+    # ===== COLUMNA J: PENDIENTES GENERALES (SIN FECHA) =====
+    _pintar_columna_sin_fecha(sheet, sin_fecha)
+
+    logger.info(f"Recordatorios pintados: {len(con_fecha)} con fecha, {len(sin_fecha)} sin fecha")
+
+
+def _pintar_columna_con_fecha(sheet, recordatorios):
+    """Pinta la columna de recordatorios CON fecha"""
+    col = COLUMNA_RECORDATORIOS_FECHA
+    fila = 1
+    hoy = date.today()
 
     # Encabezado
-    col = COLUMNA_TODOS_PENDIENTES
-    fila = 1
-
-    sheet.update(rowcol_to_a1(fila, col), [["📋 TODOS LOS PENDIENTES"]])
+    sheet.update(rowcol_to_a1(fila, col), [["📅 RECORDATORIOS POR HACER"]])
     sheet.format(rowcol_to_a1(fila, col), {
         "backgroundColor": {"red": 0.2, "green": 0.3, "blue": 0.5},
         "textFormat": {"foregroundColor": {"red": 1, "green": 1, "blue": 1}, "bold": True},
@@ -162,10 +179,17 @@ def pintar_todos_pendientes():
     })
 
     fila += 1
-    hoy = date.today()
+
+    if not recordatorios:
+        sheet.update(rowcol_to_a1(fila, col), [["(Sin recordatorios)"]])
+        sheet.format(rowcol_to_a1(fila, col), {
+            "textFormat": {"italic": True, "fontSize": 9},
+            "horizontalAlignment": "CENTER"
+        })
+        return
 
     # Pintar cada recordatorio
-    for rec in con_fecha[:50]:  # Máximo 50 para no saturar
+    for rec in recordatorios[:50]:  # Máximo 50
         emoji = {
             "urgente": "⚠️",
             "importante": "📌",
@@ -214,7 +238,108 @@ def pintar_todos_pendientes():
 
         fila += 1
 
-    logger.info(f"Todos los pendientes pintados en columna {col}")
+
+def _pintar_columna_sin_fecha(sheet, recordatorios):
+    """Pinta la columna de pendientes SIN fecha (ordenados por ID)"""
+    col = COLUMNA_PENDIENTES_GENERALES
+    fila = 1
+
+    # Encabezado
+    sheet.update(rowcol_to_a1(fila, col), [["📋 PENDIENTES GENERALES"]])
+    sheet.format(rowcol_to_a1(fila, col), {
+        "backgroundColor": {"red": 0.3, "green": 0.3, "blue": 0.3},
+        "textFormat": {"foregroundColor": {"red": 1, "green": 1, "blue": 1}, "bold": True},
+        "horizontalAlignment": "CENTER"
+    })
+
+    fila += 1
+
+    if not recordatorios:
+        sheet.update(rowcol_to_a1(fila, col), [["(Sin pendientes)"]])
+        sheet.format(rowcol_to_a1(fila, col), {
+            "textFormat": {"italic": True, "fontSize": 9},
+            "horizontalAlignment": "CENTER"
+        })
+        return
+
+    # Pintar cada recordatorio
+    for rec in recordatorios[:50]:  # Máximo 50
+        emoji = {
+            "urgente": "⚠️",
+            "importante": "📌",
+            "tarea": "✅",
+            "nota": "📝",
+            "idea": "💡"
+        }.get(rec.type, "•")
+
+        # Texto completo (sin fecha porque no tiene)
+        texto = f"[ID:{rec.id}] [P:{rec.prioridad}]\n"
+        texto += f"{emoji} {rec.content[:35]}"
+
+        if len(rec.content) > 35:
+            texto += "..."
+
+        # Escribir
+        celda = rowcol_to_a1(fila, col)
+        sheet.update(celda, [[texto]])
+
+        # Color según prioridad
+        color = COLORES_PRIORIDAD.get(rec.prioridad, (1.0, 1.0, 1.0))
+
+        sheet.format(celda, {
+            "backgroundColor": {"red": color[0], "green": color[1], "blue": color[2]},
+            "textFormat": {"fontSize": 8},
+            "wrapStrategy": "WRAP",
+            "verticalAlignment": "TOP"
+        })
+
+        fila += 1
+
+
+def limpiar_columnas_pendientes(sheet):
+    """Limpia ambas columnas de pendientes"""
+    col_fecha = COLUMNA_RECORDATORIOS_FECHA
+    col_general = COLUMNA_PENDIENTES_GENERALES
+
+    # Limpiar columna de recordatorios con fecha
+    rango1 = f"{rowcol_to_a1(1, col_fecha)}:{rowcol_to_a1(60, col_fecha)}"
+    sheet.batch_clear([rango1])
+
+    # Limpiar columna de pendientes generales
+    rango2 = f"{rowcol_to_a1(1, col_general)}:{rowcol_to_a1(60, col_general)}"
+    sheet.batch_clear([rango2])
+
+    # Restablecer formato de ambas columnas
+    sheet_id = sheet._properties["sheetId"]
+    requests = [
+        {
+            "repeatCell": {
+                "range": {
+                    "sheetId": sheet_id,
+                    "startRowIndex": 0,
+                    "endRowIndex": 60,
+                    "startColumnIndex": col_fecha - 1,
+                    "endColumnIndex": col_fecha
+                },
+                "cell": {"userEnteredFormat": {}},
+                "fields": "userEnteredFormat"
+            }
+        },
+        {
+            "repeatCell": {
+                "range": {
+                    "sheetId": sheet_id,
+                    "startRowIndex": 0,
+                    "endRowIndex": 60,
+                    "startColumnIndex": col_general - 1,
+                    "endColumnIndex": col_general
+                },
+                "cell": {"userEnteredFormat": {}},
+                "fields": "userEnteredFormat"
+            }
+        }
+    ]
+    sheet.spreadsheet.batch_update({"requests": requests})
 
 
 def limpiar_area_recordatorios(sheet):
@@ -242,27 +367,8 @@ def limpiar_area_recordatorios(sheet):
 
 
 def limpiar_columna_todos_pendientes(sheet):
-    """Limpia la columna de todos los pendientes"""
-    col = COLUMNA_TODOS_PENDIENTES
-    rango = f"{rowcol_to_a1(1, col)}:{rowcol_to_a1(60, col)}"
-    sheet.batch_clear([rango])
-
-    # Restablecer formato
-    sheet_id = sheet._properties["sheetId"]
-    requests = [{
-        "repeatCell": {
-            "range": {
-                "sheetId": sheet_id,
-                "startRowIndex": 0,
-                "endRowIndex": 60,
-                "startColumnIndex": col - 1,
-                "endColumnIndex": col
-            },
-            "cell": {"userEnteredFormat": {}},
-            "fields": "userEnteredFormat"
-        }
-    }]
-    sheet.spreadsheet.batch_update({"requests": requests})
+    """DEPRECATED - Usar limpiar_columnas_pendientes en su lugar"""
+    limpiar_columnas_pendientes(sheet)
 
 
 def actualizar_recordatorios_sheets():

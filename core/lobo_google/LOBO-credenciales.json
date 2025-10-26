@@ -1,1 +1,13 @@
-
+{
+  "type": "service_account",
+  "project_id": "lobo-agenda",
+  "private_key_id": "1eb51c681e5cfd27d260a18502e362762a6353ec",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCpaemjmj/JZpft\nAZ3YkO6G6fFXvGXo6wgUKxJRFztTvNaKOGTI9akJcvfFZx/DsQT2uxXxilUAIhkX\nmS6rCJXMLiFvy+LnJHREqgOoY7DCTr0jVXjL9RuGpbB8zD8IRnx8S8Pb+zTD+sOp\nBF0jQSn4tOD7/RrwjCX2elC/viarDgY0H4tDtAIVtlC5A5aEkeKIDvyGGSWDf3EU\nQAomEJ6yohyLF7wrQurugzUk90n+eD5y0GPy7hSfBV4wvEMmYiOgKRpsYsaqh80+\nNGticVrZgJaqv5pw5JETCH1ykubPyJkOMwXlrgIUAkRZTCgpBYegGFDduNLwkF4B\nicgjOp9JAgMBAAECggEADlNSKh8qOyfVe3laRVyWCur/2TUpYe1z6K6utRQzlFRg\nyN3VaefaBB5IZNUgSr4uhwWRaLQTlXgMqqHtoBFRB2u0MJ2rQXPj8AV3WzcY1Ilv\ndWwuE4MVsYhTuO3Ve6foMWN/u5uNne/XuTRRAuDpAWqcJrrDmykisamsp9YWs3qQ\nDsYRieHkn2HWtUezlf2PwZFWeRVMGQ15nKw5nD6MN/4Z0ld4b7S0g2yk6KwjsLyU\nQYkhp3d5LuEufPiXCEznCplXEaTZQm10HuS2Y40o8MFNAOUr1UHJLoMfFocU+4Nf\nlsu93xa4226kEgDo4Wg57ZYfWZf5saDqyaq4MtbEwQKBgQDe/wAR6JHfgCP0UuxY\nxQYChtWX27khSWEJjvyxp99uL77AzqknDNXi4JavkCUL9NNc/Smu000GNGKehUjZ\nV0UYyUTLsxxaUiE1tUMc2c02KbiOxC4NDUlvxPVaFAPd27o8tNzFrohH8E2UgTap\n3KJsdy/716CzJCDmZeJut070IQKBgQDCfMDx8C8aozlczCmQShnR+otx4YHzJFKw\ndI9D6iFqaiLTt9heBf5uVdGe/EK+mn+dBzpNeyKXVUnXZS9YWjtpQvJpimEvnvz0\nKZ2lgaD9quKXrEM92E/HFZZuQXuZGYzBq2AJUhv4kIp0A+Cm4J8NK+KAwqKCsmNS\nZOyRHkTGKQKBgGGms0YkXTTNbXFBmuQoq0ASAZj1jDWKZ6cC6Z92jv42hEb0eNhz\n43ntta795Ws99A0Fg+pd953e9MzMOyGJ+OUoxiqZrbHTw108mj4ZFqdAT+Sc/jmS\n9vSuAG9I0oSmAwEwhnk+u8kc7yw4BVMPHkV3UBjtzR6FlK6wMR8gwL9hAoGBALFk\n2xSScFSKpuq2qf6bKDv3nDNObppY+jdKydY3ey02C/gzC16PdwgqrN2n2DVEdLvE\n+O/tLZr9RzH5cBrVirUzRCrx9j1adf067DknKLHXqYCQtnB1mibL0P9WKSd3P4Tz\nDNDTnQG2zSKO2t07qrd33Mx3O4Wcsq1XstOW2UIpAoGAauQIWZektO4eEYI1jkXh\n5jJuafHhrXOK/FAgJb4QUu31NlNMB/iVAZ1F6EqaEoMYoSbFQLB2i0b0sNKqwZmo\nEYNVsaAkNujzObIxvTE6BlDeM59uvgRtiRAVF5u4FunLV8aP432yKGYmtkeaZ7/N\nP/7I9LQNiv1pIM9/gM7sMTY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "lobo-service@lobo-agenda.iam.gserviceaccount.com",
+  "client_id": "110595279628031789563",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/lobo-service%40lobo-agenda.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
