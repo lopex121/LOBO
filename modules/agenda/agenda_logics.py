@@ -8,6 +8,37 @@ from gspread.utils import rowcol_to_a1
 import logging
 from sqlalchemy import and_
 
+# Paleta de colores por tipo de evento (RGB 0-1)
+COLORES_TIPO_EVENTO = {
+    "clase": (0.6, 0.8, 1.0),  # Azul claro
+    "trabajo": (1.0, 0.9, 0.6),  # Amarillo
+    "personal": (0.8, 1.0, 0.8),  # Verde claro
+    "deporte": (1.0, 0.8, 0.6),  # Naranja claro
+    "estudio": (0.9, 0.8, 1.0),  # Morado claro
+    "reunion": (1.0, 0.7, 0.7),  # Rosa claro
+    "default": (0.9, 0.9, 0.9)  # Gris claro
+}
+
+
+def calcular_color_texto(color_fondo_rgb):
+    """
+    Calcula si el texto debe ser negro o blanco según el fondo
+
+    Args:
+        color_fondo_rgb: tuple (r, g, b) valores 0-1
+
+    Returns:
+        tuple: (r, g, b) para el color de texto
+    """
+    r, g, b = color_fondo_rgb
+    # Fórmula de luminosidad
+    luminosidad = (0.299 * r + 0.587 * g + 0.114 * b)
+
+    if luminosidad > 0.7:  # Fondo claro
+        return (0, 0, 0)  # Texto negro
+    else:  # Fondo oscuro
+        return (1, 1, 1)  # Texto blanco
+
 # Layout del Sheet
 DIAS = ["Hora", "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 SPANISH_WEEKDAY = {0: "Lunes", 1: "Martes", 2: "Miércoles", 3: "Jueves", 4: "Viernes", 5: "Sábado", 6: "Domingo"}
@@ -50,7 +81,26 @@ def _date_to_col(fecha: date):
 
 # DB: CRUD
 def crear_evento_db(nombre: str, descripcion: str, fecha_inicio, hora_inicio, hora_fin,
-                    recurrencia: RecurrenciaEnum = RecurrenciaEnum.unico, etiquetas=None):
+                    recurrencia: RecurrenciaEnum = RecurrenciaEnum.unico, etiquetas=None,
+                    tipo_evento="personal", alarma_minutos=5, alarma_activa=True):
+    """
+    Crea un evento ÚNICO en la base de datos (actualizado con nuevos campos)
+
+    Args:
+        nombre: Nombre del evento
+        descripcion: Descripción opcional
+        fecha_inicio: date o str YYYY-MM-DD
+        hora_inicio: time o str HH:MM
+        hora_fin: time o str HH:MM
+        recurrencia: RecurrenciaEnum (default: unico)
+        etiquetas: list[str] (default: [])
+        tipo_evento: str - clase, trabajo, personal, deporte, estudio, reunion (default: personal)
+        alarma_minutos: int - Minutos antes para alarma (default: 5)
+        alarma_activa: bool - Si tiene alarma activa (default: True)
+
+    Returns:
+        Evento: objeto evento creado
+    """
     etiquetas = etiquetas or []
     fecha_inicio = _ensure_date(fecha_inicio)
     hora_inicio = _ensure_time(hora_inicio)
@@ -67,6 +117,14 @@ def crear_evento_db(nombre: str, descripcion: str, fecha_inicio, hora_inicio, ho
         etiquetas=etiquetas,
         creado_en=datetime.utcnow(),
         modificado_en=datetime.utcnow(),
+        # NUEVOS CAMPOS
+        tipo_evento=tipo_evento,
+        alarma_minutos=alarma_minutos,
+        alarma_activa=alarma_activa,
+        es_maestro=False,
+        master_id=None,
+        modificado_manualmente=False,
+        color_custom=None
     )
     session.add(evento)
     session.commit()
@@ -121,6 +179,84 @@ def buscar_eventos_db(query_str):
     session.close()
     return results
 
+
+def buscar_evento_por_id_parcial(id_parcial: str):
+    """
+    Busca un evento por ID parcial (mínimo 6 caracteres)
+
+    Args:
+        id_parcial: str - Primeros caracteres del ID (ej: "5776c444")
+
+    Returns:
+        Evento o None: El evento encontrado o None si no existe o hay ambigüedad
+    """
+    if len(id_parcial) < 6:
+        return None
+
+    session = Session()
+
+    try:
+        # Buscar eventos cuyo ID empiece con el fragmento
+        eventos = session.query(Evento).filter(
+            Evento.id.like(f"{id_parcial}%")
+        ).all()
+
+        if len(eventos) == 0:
+            return None
+        elif len(eventos) == 1:
+            # FORZAR CARGA DE TODOS LOS ATRIBUTOS antes de cerrar sesión
+            ev = eventos[0]
+            # Acceder a todos los atributos para cargarlos
+            _ = ev.id, ev.nombre, ev.descripcion, ev.fecha_inicio
+            _ = ev.hora_inicio, ev.hora_fin, ev.recurrencia, ev.etiquetas
+            _ = ev.es_maestro, ev.master_id, ev.tipo_evento
+            session.expunge(ev)  # Desconectar del session pero mantener datos
+            return ev
+        else:
+            # Múltiples coincidencias - retornar None para indicar ambigüedad
+            print(f"⚠️  ID ambiguo '{id_parcial}'. Coincidencias:")
+            for ev in eventos:
+                print(f"   • {ev.id} - {ev.nombre} ({ev.fecha_inicio})")
+            print("   Usa más caracteres del ID para especificar.")
+            return None
+    finally:
+        session.close()
+
+
+# TAMBIÉN AGREGA ESTA FUNCIÓN (wrapper mejorado)
+def get_evento_by_id_flexible(evento_id: str):
+    """
+    Obtiene evento por ID completo o parcial
+
+    Args:
+        evento_id: str - ID completo o parcial (mínimo 6 caracteres)
+
+    Returns:
+        Evento o None
+    """
+    session = Session()
+
+    try:
+        # Primero intentar con ID completo
+        evento = session.query(Evento).filter_by(id=evento_id).first()
+
+        if evento:
+            # FORZAR CARGA de atributos
+            _ = evento.id, evento.nombre, evento.descripcion
+            _ = evento.fecha_inicio, evento.hora_inicio, evento.hora_fin
+            _ = evento.recurrencia, evento.etiquetas, evento.es_maestro
+            _ = evento.master_id, evento.tipo_evento
+            session.expunge(evento)
+            return evento
+
+        # Si no se encuentra, intentar con ID parcial
+        if len(evento_id) >= 6:
+            return buscar_evento_por_id_parcial(evento_id)
+
+        return None
+    finally:
+        session.close()
+
 def listar_eventos_por_fecha(fecha: date):
     fecha = _ensure_date(fecha)
     session = Session()
@@ -129,7 +265,14 @@ def listar_eventos_por_fecha(fecha: date):
     return results
 
 # Sheets: pintar, borrar, actualizar, sync
-def pintar_evento_sheets(evento, color_rgb=(0.9, 0.9, 0.9)):
+def pintar_evento_sheets(evento, color_rgb=None):
+    """
+    Pinta un evento en Google Sheets con color según tipo
+
+    Args:
+        evento: Objeto Evento
+        color_rgb: tuple (r, g, b) opcional. Si None, usa color según tipo_evento
+    """
     sheet = get_sheet()
     start_row = _time_to_row(sheet, evento.hora_inicio)
     end_row = _time_to_row(sheet, evento.hora_fin)
@@ -138,18 +281,29 @@ def pintar_evento_sheets(evento, color_rgb=(0.9, 0.9, 0.9)):
     first_a1 = rowcol_to_a1(start_row, col)
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
 
-    # limpiar contenido en rango
+    # Limpiar contenido en rango
     sheet.batch_clear([full_range])
 
-    # escribir texto solo en primera celda
+    # Escribir texto solo en primera celda
     texto = evento.nombre
     if evento.descripcion:
         texto = f"{evento.nombre}\n{evento.descripcion}"
     sheet.update(first_a1, [[texto]])
 
-    # aplicar color y bordes
+    # ===== DETERMINAR COLOR =====
+    if color_rgb is None:
+        # Usar color según tipo de evento
+        tipo = getattr(evento, 'tipo_evento', 'personal')
+        color_rgb = COLORES_TIPO_EVENTO.get(tipo, COLORES_TIPO_EVENTO['default'])
+
+    # Calcular color de texto
+    color_texto = calcular_color_texto(color_rgb)
+
+    # Aplicar color de fondo y texto
     sheet_id = sheet._properties["sheetId"]
     r, g, b = color_rgb
+    tr, tg, tb = color_texto
+
     requests = [
         {
             "repeatCell": {
@@ -160,8 +314,16 @@ def pintar_evento_sheets(evento, color_rgb=(0.9, 0.9, 0.9)):
                     "startColumnIndex": col - 1,
                     "endColumnIndex": col
                 },
-                "cell": {"userEnteredFormat": {"backgroundColor": {"red": r, "green": g, "blue": b}}},
-                "fields": "userEnteredFormat.backgroundColor"
+                "cell": {
+                    "userEnteredFormat": {
+                        "backgroundColor": {"red": r, "green": g, "blue": b},
+                        "textFormat": {
+                            "foregroundColor": {"red": tr, "green": tg, "blue": tb},
+                            "bold": True
+                        }
+                    }
+                },
+                "fields": "userEnteredFormat(backgroundColor,textFormat)"
             }
         },
         {
@@ -181,9 +343,9 @@ def pintar_evento_sheets(evento, color_rgb=(0.9, 0.9, 0.9)):
         }
     ]
     sheet.spreadsheet.batch_update({"requests": requests})
-    sheet.format(first_a1, {"wrapStrategy": "WRAP", "textFormat": {"bold": True}})
+    sheet.format(first_a1, {"wrapStrategy": "WRAP"})
 
-    logger.info(f"Pintado evento en Sheets: {evento.nombre} ({first_a1} -> {full_range})")
+    logger.info(f"Pintado evento en Sheets: {evento.nombre} ({first_a1} -> {full_range}) - Color: {evento.tipo_evento}")
     return True
 
 def borrar_evento_sheets(evento):

@@ -66,7 +66,7 @@ class RecurrenciaEnum(str, enum.Enum):
     semanal = "semanal"
     mensual = "mensual"
 
-# Modelo Evento (agenda)
+# Modelo Evento (agenda) - CON SOPORTE PARA RECURRENTES
 class Evento(Base):
     __tablename__ = "eventos"
 
@@ -81,5 +81,17 @@ class Evento(Base):
     creado_en = Column(DateTime, default=datetime.datetime.utcnow)
     modificado_en = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
+    # NUEVOS CAMPOS PARA RECURRENTES (Opción C)
+    es_maestro = Column(Boolean, default=False)  # True si es evento maestro
+    master_id = Column(String, nullable=True)  # ID del evento maestro (si es instancia)
+    modificado_manualmente = Column(Boolean, default=False)  # True si instancia fue editada
+    tipo_evento = Column(String, default="personal")  # clase, trabajo, personal, deporte, estudio, reunion
+    alarma_minutos = Column(Integer, default=5)  # Minutos antes para alarma
+    alarma_activa = Column(Boolean, default=True)  # Si tiene alarma programada
+
+    # Color personalizado (opcional, si no usa tipo_evento)
+    color_custom = Column(String, nullable=True)  # Formato: "0.6,0.8,1.0" (RGB)
+
     def __repr__(self):
-        return f"<Evento(nombre='{self.nombre}', fecha={self.fecha_inicio}, {self.hora_inicio}-{self.hora_fin})>"
+        tipo = "MAESTRO" if self.es_maestro else f"INSTANCIA({self.master_id[:8]})" if self.master_id else "ÚNICO"
+        return f"<Evento[{tipo}](nombre='{self.nombre}', fecha={self.fecha_inicio}, {self.hora_inicio}-{self.hora_fin})>"

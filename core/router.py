@@ -32,8 +32,8 @@ comandos = {
     "editar_evento": agenda.editar_evento,
     "ver_eventos": agenda.ver_eventos,
     "buscar_evento": agenda.buscar_evento,
-    "limpiar_agenda": agenda.clear_sheets,
     "importar_agenda": agenda.importar_desde_sheets,
+    "ver_disponibilidad": lambda args: _ver_disponibilidad(args),
 
     # ===== ALARMAS =====
     "programar_alarma": lambda args: "[ALARMA] " + (
@@ -42,6 +42,7 @@ comandos = {
 
     # ===== SINCRONIZACIÓN =====
     "sync_recordatorios": lambda args: _sync_recordatorios_sheets(),
+    "limpiar_agenda": agenda.clear_sheets,
 }
 
 def _sync_recordatorios_sheets():
@@ -55,6 +56,29 @@ def _sync_recordatorios_sheets():
     except Exception as e:
         return f"[LOBO] ❌ Error: {e}"
 
+
+def _ver_disponibilidad(args):
+    """Muestra disponibilidad de un día"""
+    from modules.agenda.disponibilidad import DISPONIBILIDAD
+    from datetime import date, datetime
+
+    if not args:
+        # Hoy por defecto
+        fecha = date.today()
+    else:
+        try:
+            fecha = datetime.strptime(args[0], "%Y-%m-%d").date()
+        except ValueError:
+            try:
+                fecha = datetime.strptime(args[0], "%d/%m/%Y").date()
+            except ValueError:
+                return "[LOBO] ❌ Formato inválido. Usa: ver_disponibilidad [YYYY-MM-DD o DD/MM/YYYY]"
+
+    try:
+        DISPONIBILIDAD.mostrar_disponibilidad_dia(fecha)
+        return ""  # Ya imprime all
+    except Exception as e:
+        return f"[LOBO] ❌ Error: {e}"
 
 class Router:
     def __init__(self, brain):

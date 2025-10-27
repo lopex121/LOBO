@@ -741,3 +741,540 @@ gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'R
 2025-10-25 20:29:38,201 [INFO] Recordatorios de la semana pintados (filas 34-37)
 2025-10-25 20:29:46,277 [INFO] Recordatorios pintados: 4 con fecha, 13 sin fecha
 2025-10-25 20:29:46,280 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-26 00:00:26,342 [INFO] Buscando módulos en 'modules'...
+2025-10-26 00:00:26,361 [INFO] Actualizando recordatorios en Sheets...
+2025-10-26 00:00:31,015 [INFO] Recordatorios de la semana pintados (filas 34-37)
+2025-10-26 00:00:38,962 [INFO] Recordatorios pintados: 4 con fecha, 13 sin fecha
+2025-10-26 00:00:38,965 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-26 15:41:35,993 [INFO] Buscando módulos en 'modules'...
+2025-10-26 15:41:36,010 [INFO] Actualizando recordatorios en Sheets...
+2025-10-26 15:41:42,430 [INFO] Recordatorios de la semana pintados (filas 34-37)
+2025-10-26 15:41:56,808 [INFO] Recordatorios pintados: 4 con fecha, 13 sin fecha
+2025-10-26 15:41:56,811 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-26 20:51:09,604 [INFO] Buscando módulos en 'modules'...
+2025-10-26 20:51:09,655 [INFO] Actualizando recordatorios en Sheets...
+2025-10-26 20:51:18,451 [INFO] Recordatorios de la semana pintados (filas 34-37)
+2025-10-26 20:51:31,147 [INFO] Recordatorios pintados: 4 con fecha, 13 sin fecha
+2025-10-26 20:51:31,151 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-26 20:51:56,773 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26)
+2025-10-26 20:51:56,779 [INFO] Alarma programada para 2025-10-28T17:55:00 (evento 48795ccb-3545-4820-b212-e9eb73b5e558)
+2025-10-26 20:56:01,314 [INFO] Serie creada: Clase Test con 13 instancias
+2025-10-26 20:56:05,604 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:05,609 [INFO] Alarma programada para 2025-10-28T18:55:00 (evento c8a42e34-596b-427c-bb77-5edfde061abb)
+2025-10-26 20:56:09,393 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:09,398 [INFO] Alarma programada para 2025-11-04T18:55:00 (evento 55d2c43e-7dfb-4b57-bb70-b8c2562fd83b)
+2025-10-26 20:56:12,962 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:12,967 [INFO] Alarma programada para 2025-11-11T18:55:00 (evento 1f5a06af-7378-4560-8c63-456bdd1e9492)
+2025-10-26 20:56:16,892 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:16,898 [INFO] Alarma programada para 2025-11-18T18:55:00 (evento 1331e4d8-4838-42cb-8415-e10ef1291aef)
+2025-10-26 20:56:21,051 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:21,057 [INFO] Alarma programada para 2025-11-25T18:55:00 (evento 785bbe1d-ae81-4fa5-a538-16ce21b68922)
+2025-10-26 20:56:24,969 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:24,976 [INFO] Alarma programada para 2025-12-02T18:55:00 (evento cdbe4682-6c11-4779-bc92-9b1e80cc0bb2)
+2025-10-26 20:56:28,902 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:28,908 [INFO] Alarma programada para 2025-12-09T18:55:00 (evento af3e9663-1cc6-4528-ac94-fea07aea8863)
+2025-10-26 20:56:32,736 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:32,742 [INFO] Alarma programada para 2025-12-16T18:55:00 (evento 3cc73b91-c2a7-4c70-9370-f9aaed66e43c)
+2025-10-26 20:56:36,436 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:36,442 [INFO] Alarma programada para 2025-12-23T18:55:00 (evento 5817255b-4647-43c0-b823-eed89a57c9dd)
+2025-10-26 20:56:40,051 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:40,056 [INFO] Alarma programada para 2025-12-30T18:55:00 (evento d4f1664e-26a4-46bf-b434-2e56e409b335)
+2025-10-26 20:56:43,476 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:43,480 [INFO] Alarma programada para 2026-01-06T18:55:00 (evento 4650c8be-4d00-4b6f-aa97-3eef54d6a164)
+2025-10-26 20:56:46,990 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:46,998 [INFO] Alarma programada para 2026-01-13T18:55:00 (evento 6588e36d-108b-4827-a98e-dfd6964e64c1)
+2025-10-26 20:56:50,625 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29)
+2025-10-26 20:56:50,631 [INFO] Alarma programada para 2026-01-20T18:55:00 (evento 2e72426e-0704-44ca-b251-e791bc0a35a0)
+2025-10-26 21:09:18,434 [INFO] Buscando módulos en 'modules'...
+2025-10-26 21:09:18,461 [INFO] Actualizando recordatorios en Sheets...
+2025-10-26 21:09:25,736 [INFO] Recordatorios de la semana pintados (filas 34-37)
+2025-10-26 21:09:41,313 [INFO] Recordatorios pintados: 4 con fecha, 13 sin fecha
+2025-10-26 21:09:41,317 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-26 21:10:40,719 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-26 21:10:40,723 [INFO] Alarma programada para 2025-10-29T17:55:00 (evento 9b034033-fc35-4b8a-821e-a53dbc3f2e73)
+2025-10-26 21:11:02,801 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (C6 -> C6:C9) - Color: personal
+2025-10-26 21:11:07,125 [INFO] Pintado evento en Sheets: Mi plan de Vida (5308) (C10 -> C10:C11) - Color: personal
+2025-10-26 21:11:11,604 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (C14 -> C14:C17) - Color: personal
+2025-10-26 21:11:15,550 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (C18 -> C18:C21) - Color: personal
+2025-10-26 21:11:19,882 [INFO] Pintado evento en Sheets: Box (C22 -> C22:C24) - Color: personal
+2025-10-26 21:11:24,166 [INFO] Pintado evento en Sheets: Gym (C24 -> C24:C25) - Color: personal
+2025-10-26 21:11:28,089 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (D10 -> D10:D17) - Color: personal
+2025-10-26 21:11:32,093 [INFO] Pintado evento en Sheets: Box (D22 -> D22:D24) - Color: personal
+2025-10-26 21:11:36,531 [INFO] Pintado evento en Sheets: Gym (D24 -> D24:D25) - Color: personal
+2025-10-26 21:11:40,505 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3304) (E10 -> E10:E17) - Color: personal
+2025-10-26 21:11:45,773 [INFO] Pintado evento en Sheets: Modelación Matemática Fundamental (2202) (F6 -> F6:F9) - Color: personal
+2025-10-26 21:11:54,257 [INFO] Pintado evento en Sheets: Pensamiento Computacional (1401) (F14 -> F14:F17) - Color: personal
+2025-10-26 21:11:58,518 [INFO] Pintado evento en Sheets: Ética e Inteligencia Artificial (ZOOM) (F18 -> F18:F21) - Color: personal
+2025-10-26 21:12:02,244 [INFO] Pintado evento en Sheets: Box (F22 -> F22:F24) - Color: personal
+2025-10-26 21:12:06,178 [INFO] Pintado evento en Sheets: Gym (F24 -> F24:F26) - Color: personal
+2025-10-26 21:12:10,361 [INFO] Pintado evento en Sheets: Modelación del Movimiento en Ingeniería (3303) (G10 -> G10:G12) - Color: personal
+2025-10-26 21:12:14,094 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C7) - Color: personal
+2025-10-26 21:12:17,776 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D7) - Color: personal
+2025-10-26 21:12:22,071 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26) - Color: deporte
+2025-10-26 21:12:25,931 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:12:29,851 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:12:33,817 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E7) - Color: personal
+2025-10-26 21:12:37,836 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-26 21:12:41,827 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F7) - Color: personal
+2025-10-26 21:12:45,707 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: personal
+2025-10-26 21:12:49,911 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G7) - Color: personal
+2025-10-26 21:12:53,951 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:12:57,868 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:01,913 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:06,107 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:09,920 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:13,674 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:17,364 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:21,297 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:25,086 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:28,890 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:32,567 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:13:35,090 [ERROR] No se pudo pintar evento 2e72426e-0704-44ca-b251-e791bc0a35a0: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 325, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 199, in pintar_evento_sheets
+    start_row = _time_to_row(sheet, evento.hora_inicio)
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 65, in _time_to_row
+    col1 = sheet.col_values(1)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 719, in col_values
+    data = self.client.values_get(
+        self.spreadsheet_id,
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 236, in values_get
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-26 21:17:48,579 [INFO] Actualizando recordatorios en Sheets...
+2025-10-26 21:17:54,853 [INFO] Recordatorios de la semana pintados (filas 34-37)
+2025-10-26 21:18:08,050 [INFO] Recordatorios pintados: 4 con fecha, 13 sin fecha
+2025-10-26 21:18:08,053 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-26 21:21:20,489 [INFO] Actualizando recordatorios en Sheets...
+2025-10-26 21:21:22,906 [INFO] No hay recordatorios para esta semana
+2025-10-26 21:21:33,990 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-26 21:21:33,995 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-26 21:22:18,267 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C7) - Color: clase
+2025-10-26 21:22:22,633 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D7) - Color: clase
+2025-10-26 21:22:26,668 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26) - Color: deporte
+2025-10-26 21:22:30,393 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:22:34,219 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:22:38,003 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E7) - Color: clase
+2025-10-26 21:22:41,741 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-26 21:22:45,613 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F7) - Color: clase
+2025-10-26 21:22:49,403 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: personal
+2025-10-26 21:22:54,313 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G7) - Color: clase
+2025-10-26 21:22:58,854 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:03,185 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:06,925 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:10,647 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:14,246 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:18,369 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:22,327 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:26,084 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:29,548 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:33,137 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:23:35,032 [ERROR] No se pudo pintar evento 6588e36d-108b-4827-a98e-dfd6964e64c1: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 325, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 198, in pintar_evento_sheets
+    sheet = get_sheet()
+  File "C:\Users\elali\Desktop\LOBO\LOBO\core\lobo_google\lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-26 21:23:37,055 [ERROR] No se pudo pintar evento 2e72426e-0704-44ca-b251-e791bc0a35a0: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 325, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 198, in pintar_evento_sheets
+    sheet = get_sheet()
+  File "C:\Users\elali\Desktop\LOBO\LOBO\core\lobo_google\lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-26 21:25:33,260 [INFO] Borrado evento en Sheets: Emprende con Propósito (5202) (G6:G7)
+2025-10-26 21:25:37,207 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G9) - Color: clase
+2025-10-26 21:28:55,742 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C9) - Color: clase
+2025-10-26 21:28:59,275 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D9) - Color: clase
+2025-10-26 21:29:03,196 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26) - Color: deporte
+2025-10-26 21:29:06,776 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:10,191 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:13,802 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E9) - Color: clase
+2025-10-26 21:29:17,413 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-26 21:29:21,093 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F9) - Color: clase
+2025-10-26 21:29:24,628 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: personal
+2025-10-26 21:29:28,214 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G9) - Color: clase
+2025-10-26 21:29:31,832 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:35,457 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:39,152 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:42,765 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:46,181 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:49,695 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:53,208 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:29:56,831 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:30:00,333 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:30:03,876 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:30:07,496 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:30:11,846 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:34:14,047 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C11) - Color: clase
+2025-10-26 21:34:17,769 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D11) - Color: clase
+2025-10-26 21:34:21,735 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26) - Color: deporte
+2025-10-26 21:34:25,338 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:34:29,114 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:34:32,724 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E11) - Color: clase
+2025-10-26 21:34:36,334 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-26 21:34:39,844 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F11) - Color: clase
+2025-10-26 21:34:43,237 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: personal
+2025-10-26 21:34:46,799 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G11) - Color: clase
+2025-10-26 21:34:50,266 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:34:53,866 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:34:57,303 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:00,795 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:04,306 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:07,708 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:11,174 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:14,564 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:18,228 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:21,557 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:24,857 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:28,176 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:35:46,427 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C11) - Color: clase
+2025-10-26 21:35:49,834 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D11) - Color: clase
+2025-10-26 21:35:53,157 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26) - Color: deporte
+2025-10-26 21:35:56,841 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:00,201 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:03,641 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E11) - Color: clase
+2025-10-26 21:36:06,969 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-26 21:36:10,344 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F11) - Color: clase
+2025-10-26 21:36:13,624 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: reunion
+2025-10-26 21:36:17,172 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G11) - Color: clase
+2025-10-26 21:36:20,532 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:23,923 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:27,250 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:30,482 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:32,757 [ERROR] No se pudo pintar evento cdbe4682-6c11-4779-bc92-9b1e80cc0bb2: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 325, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 199, in pintar_evento_sheets
+    start_row = _time_to_row(sheet, evento.hora_inicio)
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 65, in _time_to_row
+    col1 = sheet.col_values(1)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 719, in col_values
+    data = self.client.values_get(
+        self.spreadsheet_id,
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 236, in values_get
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-26 21:36:34,717 [ERROR] No se pudo pintar evento af3e9663-1cc6-4528-ac94-fea07aea8863: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 325, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 198, in pintar_evento_sheets
+    sheet = get_sheet()
+  File "C:\Users\elali\Desktop\LOBO\LOBO\core\lobo_google\lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-26 21:36:37,130 [ERROR] No se pudo pintar evento 3cc73b91-c2a7-4c70-9370-f9aaed66e43c: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 325, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 198, in pintar_evento_sheets
+    sheet = get_sheet()
+  File "C:\Users\elali\Desktop\LOBO\LOBO\core\lobo_google\lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-26 21:36:40,831 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:44,249 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:47,666 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:51,010 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:36:55,127 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D29) - Color: clase
+2025-10-26 21:37:52,183 [INFO] Actualizando recordatorios en Sheets...
+2025-10-26 21:37:54,186 [INFO] No hay recordatorios para esta semana
+2025-10-26 21:38:03,166 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-26 21:38:03,168 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 01:33:23,623 [INFO] Buscando módulos en 'modules'...
+2025-10-27 01:33:23,652 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 01:33:28,094 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 01:33:36,823 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-27 01:33:36,826 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 01:34:12,276 [INFO] Serie 3d18e4fa-bc13-4000-976d-a08a750e9159 editada: maestro + 13 instancias
+2025-10-27 01:34:43,521 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C11) - Color: clase
+2025-10-27 01:34:46,357 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D11) - Color: clase
+2025-10-27 01:34:49,173 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26) - Color: deporte
+2025-10-27 01:34:52,168 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:34:55,581 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:34:58,322 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E11) - Color: clase
+2025-10-27 01:35:01,160 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-27 01:35:04,168 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F11) - Color: clase
+2025-10-27 01:35:06,910 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: reunion
+2025-10-27 01:35:10,067 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G11) - Color: clase
+2025-10-27 01:35:15,610 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:18,287 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:21,319 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:23,912 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:27,221 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:29,832 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:32,541 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:35,169 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:38,222 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:40,877 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:43,483 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:35:46,253 [INFO] Pintado evento en Sheets: Clase Test (D26 -> D26:D31) - Color: clase
+2025-10-27 01:39:04,316 [INFO] Buscando módulos en 'modules'...
+2025-10-27 01:39:04,335 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 01:39:07,717 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 01:39:14,909 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-27 01:39:14,911 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 01:42:17,336 [INFO] Pintado evento en Sheets: Capacitación Electrónica (C12 -> C12:C13) - Color: clase
+2025-10-27 01:42:17,342 [INFO] Alarma programada para 2025-10-27T11:55:00 (evento 82e9ab59-b571-4357-8d80-d98a8ca2bd92)
+2025-10-27 01:43:03,655 [INFO] Serie 3d18e4fa-bc13-4000-976d-a08a750e9159 editada: maestro + 13 instancias
+2025-10-27 01:43:19,944 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C11) - Color: clase
+2025-10-27 01:43:22,774 [INFO] Pintado evento en Sheets: Capacitación Electrónica (C12 -> C12:C13) - Color: clase
+2025-10-27 01:43:25,425 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D11) - Color: clase
+2025-10-27 01:43:28,155 [INFO] Pintado evento en Sheets: Prueba Gym (D24 -> D24:D26) - Color: deporte
+2025-10-27 01:43:30,929 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:43:33,974 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:43:36,894 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E11) - Color: clase
+2025-10-27 01:43:39,552 [INFO] Pintado evento en Sheets: Gym Test (E24 -> E24:E26) - Color: deporte
+2025-10-27 01:43:42,254 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F11) - Color: clase
+2025-10-27 01:43:45,095 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: reunion
+2025-10-27 01:43:47,946 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G11) - Color: clase
+2025-10-27 01:43:50,717 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:43:53,570 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:43:56,548 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:43:59,361 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:44:02,439 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:44:05,195 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:44:07,378 [ERROR] No se pudo pintar evento 3cc73b91-c2a7-4c70-9370-f9aaed66e43c: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 385, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 259, in pintar_evento_sheets
+    start_row = _time_to_row(sheet, evento.hora_inicio)
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 65, in _time_to_row
+    col1 = sheet.col_values(1)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 719, in col_values
+    data = self.client.values_get(
+        self.spreadsheet_id,
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 236, in values_get
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 01:44:09,287 [ERROR] No se pudo pintar evento 5817255b-4647-43c0-b823-eed89a57c9dd: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 385, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 259, in pintar_evento_sheets
+    start_row = _time_to_row(sheet, evento.hora_inicio)
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 65, in _time_to_row
+    col1 = sheet.col_values(1)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 719, in col_values
+    data = self.client.values_get(
+        self.spreadsheet_id,
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 236, in values_get
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 01:44:11,171 [ERROR] No se pudo pintar evento d4f1664e-26a4-46bf-b434-2e56e409b335: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 385, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 259, in pintar_evento_sheets
+    start_row = _time_to_row(sheet, evento.hora_inicio)
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 65, in _time_to_row
+    col1 = sheet.col_values(1)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 719, in col_values
+    data = self.client.values_get(
+        self.spreadsheet_id,
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 236, in values_get
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 01:44:13,102 [ERROR] No se pudo pintar evento 4650c8be-4d00-4b6f-aa97-3eef54d6a164: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 385, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 259, in pintar_evento_sheets
+    start_row = _time_to_row(sheet, evento.hora_inicio)
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 65, in _time_to_row
+    col1 = sheet.col_values(1)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 719, in col_values
+    data = self.client.values_get(
+        self.spreadsheet_id,
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 236, in values_get
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 01:44:14,672 [ERROR] No se pudo pintar evento 6588e36d-108b-4827-a98e-dfd6964e64c1: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 385, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 258, in pintar_evento_sheets
+    sheet = get_sheet()
+  File "C:\Users\elali\Desktop\LOBO\LOBO\core\lobo_google\lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 01:44:16,215 [ERROR] No se pudo pintar evento 2e72426e-0704-44ca-b251-e791bc0a35a0: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 385, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 258, in pintar_evento_sheets
+    sheet = get_sheet()
+  File "C:\Users\elali\Desktop\LOBO\LOBO\core\lobo_google\lobo_sheets.py", line 20, in get_sheet
+    sheet = client.open("Horarios semanales").sheet1
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\client.py", line 157, in open
+    return Spreadsheet(self.http_client, properties)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 29, in __init__
+    metadata = self.fetch_sheet_metadata()
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\spreadsheet.py", line 230, in fetch_sheet_metadata
+    return self.client.fetch_sheet_metadata(self.id, params=params)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 305, in fetch_sheet_metadata
+    r = self.request("get", url, params=params)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 01:52:55,142 [INFO] Buscando módulos en 'modules'...
+2025-10-27 01:52:55,160 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 01:52:59,327 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 01:53:06,963 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-27 01:53:06,966 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 01:54:17,967 [INFO] Buscando módulos en 'modules'...
+2025-10-27 01:54:17,984 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 01:54:21,049 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 01:54:28,308 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-27 01:54:28,311 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 01:56:03,686 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C11) - Color: clase
+2025-10-27 01:56:06,473 [INFO] Pintado evento en Sheets: Capacitación Electrónica (C12 -> C12:C13) - Color: clase
+2025-10-27 01:56:09,313 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D11) - Color: clase
+2025-10-27 01:56:12,083 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:15,045 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:18,090 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E11) - Color: clase
+2025-10-27 01:56:21,038 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F11) - Color: clase
+2025-10-27 01:56:23,836 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: reunion
+2025-10-27 01:56:27,085 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G11) - Color: clase
+2025-10-27 01:56:30,041 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:33,002 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:39,670 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:42,609 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:45,229 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:47,938 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:51,340 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:54,167 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:56:57,151 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:57:00,199 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:57:02,989 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:57:05,869 [INFO] Pintado evento en Sheets: Clase Test (D27 -> D27:D31) - Color: clase
+2025-10-27 01:57:13,442 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 01:57:16,748 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 01:57:18,573 [ERROR] Error al actualizar recordatorios en Sheets: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 01:57:38,299 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 01:57:41,713 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 01:57:49,459 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-27 01:57:49,462 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 17:13:37,754 [INFO] Buscando módulos en 'modules'...
+2025-10-27 17:13:37,802 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 17:13:42,458 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 17:13:50,014 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-27 17:13:50,017 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 17:14:43,316 [INFO] Serie 3d18e4fa-bc13-4000-976d-a08a750e9159 eliminada: maestro + 13 instancias
+2025-10-27 17:20:28,863 [INFO] Pintado evento en Sheets: pruena 1 (D11 -> D11:D17) - Color: deporte
+2025-10-27 17:20:28,872 [INFO] Alarma programada para 2025-10-28T11:25:00 (evento 3d27aa54-cc40-4d56-abb2-41f3c923b3a0)
+2025-10-27 17:21:43,121 [INFO] Borrado evento en Sheets: pruena 1 (D11:D17)

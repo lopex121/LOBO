@@ -59,28 +59,48 @@ class Dashboard:
         print("📅 AGENDA HOY:")
 
         if not eventos:
-            print("   • Sin eventos programados\n")
-            return
+            print("   • Sin eventos programados")
+        else:
+            eventos_ordenados = sorted(eventos, key=lambda e: e.hora_inicio)
 
-        eventos_ordenados = sorted(eventos, key=lambda e: e.hora_inicio)
+            for evento in eventos_ordenados:
+                hora_inicio = evento.hora_inicio.strftime("%H:%M")
+                hora_fin = evento.hora_fin.strftime("%H:%M")
 
-        for evento in eventos_ordenados:
-            hora_inicio = evento.hora_inicio.strftime("%H:%M")
-            hora_fin = evento.hora_fin.strftime("%H:%M")
+                # Emoji según tipo
+                emoji_map = {
+                    "clase": "📚",
+                    "trabajo": "💼",
+                    "personal": "🏠",
+                    "deporte": "🏋️",
+                    "estudio": "📖",
+                    "reunion": "👥"
+                }
+                emoji = emoji_map.get(evento.tipo_evento, "📌")
 
-            # Emoji según etiquetas
-            emoji = "📌"
-            if evento.etiquetas:
-                if "trabajo" in evento.etiquetas:
-                    emoji = "💼"
-                elif "estudio" in evento.etiquetas or "clase" in evento.etiquetas:
-                    emoji = "📚"
-                elif "personal" in evento.etiquetas:
-                    emoji = "🏠"
-                elif "deporte" in evento.etiquetas or "gym" in evento.etiquetas:
-                    emoji = "🏋️"
+                print(f"   {emoji} {hora_inicio} - {hora_fin}  {evento.nombre}")
 
-            print(f"   {emoji} {hora_inicio} - {hora_fin}  {evento.nombre}")
+        # Agregar disponibilidad
+        try:
+            from modules.agenda.disponibilidad import DISPONIBILIDAD
+            resumen = DISPONIBILIDAD.disponibilidad_resumen(self.hoy)
+
+            if resumen['horas_libres'] > 0:
+                mayor_bloque_h = resumen['mayor_bloque_min'] // 60
+                mayor_bloque_m = resumen['mayor_bloque_min'] % 60
+
+                if mayor_bloque_h > 0:
+                    bloque_str = f"{mayor_bloque_h}h {mayor_bloque_m}min" if mayor_bloque_m else f"{mayor_bloque_h}h"
+                else:
+                    bloque_str = f"{mayor_bloque_m}min"
+
+                inicio_str = resumen['mayor_bloque_inicio'].strftime("%H:%M")
+                fin_str = resumen['mayor_bloque_fin'].strftime("%H:%M")
+
+                print(f"\n   🕐 Horas libres hoy: {resumen['horas_libres']:.1f}h")
+                print(f"   🎯 Mayor bloque: {inicio_str}-{fin_str} ({bloque_str})")
+        except Exception as e:
+            pass  # Si falla disponibilidad, continuar sin ella
 
         print()
 
