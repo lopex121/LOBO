@@ -138,6 +138,7 @@ class Router:
             if distancia(comando_erroneo, cmd) <= 3:
                 similares.append(cmd)
 
+
         if similares:
             return ", ".join(similares[:3])  # Máximo 3 sugerencias
         return None
