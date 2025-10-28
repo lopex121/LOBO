@@ -1,0 +1,168 @@
+# ==================================
+# PYTHON
+# ==================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==================================
+# VIRTUAL ENVIRONMENTS
+# ==================================
+venv/
+ENV/
+env/
+.venv/
+
+# ==================================
+# LOGS
+# ==================================
+*.log
+logs/
+*.log.*
+
+# ==================================
+# BASES DE DATOS
+# ==================================
+*.sqlite3
+*.db
+lobo.db
+
+# ==================================
+# ENVIRONMENT FILES
+# ==================================
+.env
+.env.*
+*.env
+!.env.example
+!.env.template
+
+# ==================================
+# 🚨 CREDENCIALES - CRÍTICO 🚨
+# ==================================
+
+# Google Cloud
+**/credentials.json
+**/*credentials*.json
+**/*service-account*.json
+**/*serviceaccount*.json
+**/gcloud-*.json
+**/*-key.json
+**/*-private-key.json
+.gcloud/
+gcloud-service-key.json
+
+# Llaves privadas generales
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+id_rsa
+id_rsa.*
+id_dsa
+id_dsa.*
+id_ecdsa
+id_ecdsa.*
+id_ed25519
+id_ed25519.*
+
+# AWS
+.aws/
+**/aws-credentials*.json
+**/.aws/credentials
+
+# Azure
+.azure/
+
+# Configuración que puede tener secretos
+**/config/secrets/
+**/config/credentials/
+**/auth/secrets/*
+!/auth/secrets/backups/
+secrets.yaml
+secrets.yml
+secrets.json
+
+# ==================================
+# SYSTEM
+# ==================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==================================
+# EDITORS
+# ==================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# ==================================
+# CACHE
+# ==================================
+memory/*.json
+.cache/
+*.cache
+
+# ==================================
+# BACKUPS
+# ==================================
+*.bak
+*.backup
+
+# Logs
+lobo.log
+
+# SQLite and other DBs
+core/database/*.db
+
+# macOS
+**/.DS_Store
+
+# Auth secrets and backups
+/auth/secrets/*
+
+# Editor folders
+**/.idea/
+
+
+# 🚨 CREDENCIALES CRÍTICAS
+tests/credentials.json
+**/*-credenciales.json
+**/*credenciales*.json
+**/LOBO-credenciales.json
+core/lobo_google/LOBO-credenciales.json
+**/*-service-account.json
+
+
+# Python cache
+**/__pycache__/
