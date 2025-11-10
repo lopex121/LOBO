@@ -1284,3 +1284,274 @@ gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'R
 2025-10-27 18:22:45,107 [INFO] Buscando módulos en 'modules'...
 2025-10-27 18:22:45,163 [INFO] Actualizando recordatorios en Sheets...
 2025-10-27 18:22:45,995 [ERROR] Error al actualizar recordatorios en Sheets: ('invalid_grant: Invalid JWT Signature.', {'error': 'invalid_grant', 'error_description': 'Invalid JWT Signature.'})
+2025-10-27 19:54:35,315 [INFO] Buscando módulos en 'modules'...
+2025-10-27 19:54:35,353 [INFO] Actualizando recordatorios en Sheets...
+2025-10-27 19:54:41,343 [INFO] Recordatorios de la semana pintados (filas 34-34)
+2025-10-27 19:54:51,472 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-27 19:54:51,475 [INFO] \u2705 Recordatorios actualizados en Sheets
+2025-10-27 19:55:04,705 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C11) - Color: clase
+2025-10-27 19:55:08,307 [INFO] Pintado evento en Sheets: Capacitación Electrónica (C12 -> C12:C13) - Color: clase
+2025-10-27 19:55:12,060 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D11) - Color: clase
+2025-10-27 19:55:15,586 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E11) - Color: clase
+2025-10-27 19:55:18,850 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F11) - Color: clase
+2025-10-27 19:55:21,579 [ERROR] No se pudo pintar evento 8f975994-33df-4e17-be0e-bc45a38f7f53: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 403, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 285, in pintar_evento_sheets
+    sheet.batch_clear([full_range])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 2237, in batch_clear
+    response = self.client.values_batch_clear(self.spreadsheet_id, body=body)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 220, in values_batch_clear
+    r = self.request("post", url, params=params, json=body)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 19:55:24,158 [ERROR] No se pudo pintar evento 37c43dee-0136-40a5-ba97-d897b5df46fe: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 403, in clear_sheets
+    pintar_evento_sheets(ev)
+    ~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\agenda_logics.py", line 285, in pintar_evento_sheets
+    sheet.batch_clear([full_range])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\worksheet.py", line 2237, in batch_clear
+    response = self.client.values_batch_clear(self.spreadsheet_id, body=body)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 220, in values_batch_clear
+    r = self.request("post", url, params=params, json=body)
+  File "C:\Users\elali\miniconda3\envs\LOBO\Lib\site-packages\gspread\http_client.py", line 128, in request
+    raise APIError(response)
+gspread.exceptions.APIError: APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-27 19:55:53,810 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (C6 -> C6:C11) - Color: clase
+2025-10-27 19:55:57,270 [INFO] Pintado evento en Sheets: Capacitación Electrónica (C12 -> C12:C13) - Color: clase
+2025-10-27 19:56:00,568 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (D6 -> D6:D11) - Color: clase
+2025-10-27 19:56:04,185 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (E6 -> E6:E11) - Color: clase
+2025-10-27 19:56:07,431 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (F6 -> F6:F11) - Color: clase
+2025-10-27 19:56:10,809 [INFO] Pintado evento en Sheets: Workshop Vive TEC ( (F12 -> F12:F13) - Color: reunion
+2025-10-27 19:56:14,017 [INFO] Pintado evento en Sheets: Emprende con Propósito (5202) (G6 -> G6:G11) - Color: clase
+2025-10-27 21:28:19,220 [INFO] Pintado evento en Sheets: Embotellar chelas (lab chelas) (E19 -> E19:E21) - Color: trabajo
+2025-10-27 21:28:19,225 [INFO] Alarma programada para 2025-10-29T15:25:00 (evento 1086c70e-5ded-497d-80ae-9ed65965558e)
+2025-10-28 23:46:20,965 [INFO] Buscando módulos en 'modules'...
+2025-10-28 23:46:23,495 [INFO] Template encontrado: Copia de Copia de Copia de Copia de Copia de 21-27
+2025-10-28 23:46:23,658 [INFO] Actualizando recordatorios en hoja: 27 Oct-02 Nov
+2025-10-28 23:46:31,397 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-28 23:46:31,397 [INFO] Actualizando recordatorios en hoja: 03-09 Nov
+2025-10-28 23:46:38,471 [WARNING] No se pudo actualizar hoja '03-09 Nov': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:38,472 [INFO] Actualizando recordatorios en hoja: 10-16 Nov
+2025-10-28 23:46:38,723 [WARNING] No se pudo actualizar hoja '10-16 Nov': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:38,723 [INFO] Actualizando recordatorios en hoja: 17-23 Nov
+2025-10-28 23:46:38,804 [WARNING] No se pudo actualizar hoja '17-23 Nov': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:38,804 [INFO] Actualizando recordatorios en hoja: 24-30 Nov
+2025-10-28 23:46:38,885 [WARNING] No se pudo actualizar hoja '24-30 Nov': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:38,885 [INFO] Actualizando recordatorios en hoja: 01-07 Dec
+2025-10-28 23:46:38,970 [WARNING] No se pudo actualizar hoja '01-07 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:38,970 [INFO] Actualizando recordatorios en hoja: 08-14 Dec
+2025-10-28 23:46:39,047 [WARNING] No se pudo actualizar hoja '08-14 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:39,047 [INFO] Actualizando recordatorios en hoja: 15-21 Dec
+2025-10-28 23:46:39,131 [WARNING] No se pudo actualizar hoja '15-21 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:39,131 [INFO] Actualizando recordatorios en hoja: 22-28 Dec
+2025-10-28 23:46:39,215 [WARNING] No se pudo actualizar hoja '22-28 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:39,215 [INFO] Actualizando recordatorios en hoja: 29 Dec-04 Jan
+2025-10-28 23:46:39,297 [WARNING] No se pudo actualizar hoja '29 Dec-04 Jan': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:39,297 [INFO] Actualizando recordatorios en hoja: 05-11 Jan
+2025-10-28 23:46:39,385 [WARNING] No se pudo actualizar hoja '05-11 Jan': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:46:39,385 [INFO] Actualizando recordatorios en hoja: 12-18 Jan
+2025-10-28 23:47:09,387 [WARNING] No se pudo actualizar hoja '12-18 Jan': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:47:09,388 [INFO] Recordatorios actualizados en 1 hojas
+2025-10-28 23:48:44,818 [INFO] Actualizando recordatorios en hoja: 27 Oct-02 Nov
+2025-10-28 23:49:14,847 [WARNING] No se pudo actualizar hoja '27 Oct-02 Nov': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:49:14,848 [INFO] Actualizando recordatorios en hoja: 10-16 Nov
+2025-10-28 23:49:44,850 [WARNING] No se pudo actualizar hoja '10-16 Nov': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:49:44,850 [INFO] Actualizando recordatorios en hoja: 03-09 Nov
+2025-10-28 23:50:14,854 [WARNING] No se pudo actualizar hoja '03-09 Nov': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:50:14,854 [INFO] Actualizando recordatorios en hoja: 17-23 Nov
+2025-10-28 23:50:44,866 [WARNING] No se pudo actualizar hoja '17-23 Nov': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:50:44,866 [INFO] Actualizando recordatorios en hoja: 24-30 Nov
+2025-10-28 23:51:14,868 [WARNING] No se pudo actualizar hoja '24-30 Nov': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:51:14,868 [INFO] Actualizando recordatorios en hoja: 01-07 Dec
+2025-10-28 23:51:44,883 [WARNING] No se pudo actualizar hoja '01-07 Dec': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:51:44,883 [INFO] Actualizando recordatorios en hoja: 08-14 Dec
+2025-10-28 23:52:14,891 [WARNING] No se pudo actualizar hoja '08-14 Dec': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:52:14,891 [INFO] Actualizando recordatorios en hoja: 15-21 Dec
+2025-10-28 23:52:44,905 [WARNING] No se pudo actualizar hoja '15-21 Dec': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:52:44,906 [INFO] Actualizando recordatorios en hoja: 22-28 Dec
+2025-10-28 23:53:14,911 [WARNING] No se pudo actualizar hoja '22-28 Dec': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:53:14,912 [INFO] Actualizando recordatorios en hoja: 29 Dec-04 Jan
+2025-10-28 23:53:44,913 [WARNING] No se pudo actualizar hoja '29 Dec-04 Jan': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:53:44,913 [INFO] Actualizando recordatorios en hoja: 05-11 Jan
+2025-10-28 23:54:14,923 [WARNING] No se pudo actualizar hoja '05-11 Jan': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:54:14,923 [INFO] Actualizando recordatorios en hoja: 12-18 Jan
+2025-10-28 23:58:03,922 [INFO] Buscando módulos en 'modules'...
+2025-10-28 23:58:06,378 [INFO] Template encontrado: Copia de Copia de Copia de Copia de Copia de 21-27
+2025-10-28 23:58:06,529 [INFO] Actualizando recordatorios en hoja: 27 Oct-02 Nov
+2025-10-28 23:58:14,182 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-28 23:58:14,182 [INFO] Actualizando recordatorios en hoja: 10-16 Nov
+2025-10-28 23:58:21,419 [INFO] Recordatorios pintados: 1 con fecha, 12 sin fecha
+2025-10-28 23:58:21,419 [INFO] Actualizando recordatorios en hoja: 03-09 Nov
+2025-10-28 23:58:21,680 [WARNING] No se pudo actualizar hoja '03-09 Nov': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:21,681 [INFO] Actualizando recordatorios en hoja: 17-23 Nov
+2025-10-28 23:58:21,766 [WARNING] No se pudo actualizar hoja '17-23 Nov': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:21,766 [INFO] Actualizando recordatorios en hoja: 24-30 Nov
+2025-10-28 23:58:21,860 [WARNING] No se pudo actualizar hoja '24-30 Nov': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:21,861 [INFO] Actualizando recordatorios en hoja: 01-07 Dec
+2025-10-28 23:58:21,942 [WARNING] No se pudo actualizar hoja '01-07 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:21,942 [INFO] Actualizando recordatorios en hoja: 08-14 Dec
+2025-10-28 23:58:22,027 [WARNING] No se pudo actualizar hoja '08-14 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:22,027 [INFO] Actualizando recordatorios en hoja: 15-21 Dec
+2025-10-28 23:58:22,104 [WARNING] No se pudo actualizar hoja '15-21 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:22,104 [INFO] Actualizando recordatorios en hoja: 22-28 Dec
+2025-10-28 23:58:22,185 [WARNING] No se pudo actualizar hoja '22-28 Dec': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:22,185 [INFO] Actualizando recordatorios en hoja: 29 Dec-04 Jan
+2025-10-28 23:58:22,283 [WARNING] No se pudo actualizar hoja '29 Dec-04 Jan': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:22,294 [INFO] Actualizando recordatorios en hoja: 05-11 Jan
+2025-10-28 23:58:22,374 [WARNING] No se pudo actualizar hoja '05-11 Jan': APIError: [429]: Quota exceeded for quota metric 'Write requests' and limit 'Write requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:988041605677'.
+2025-10-28 23:58:22,374 [INFO] Actualizando recordatorios en hoja: 12-18 Jan
+2025-10-28 23:58:52,376 [WARNING] No se pudo actualizar hoja '12-18 Jan': QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+2025-10-28 23:58:52,377 [INFO] Recordatorios actualizados en 2 hojas
+2025-11-09 22:46:52,871 [INFO] Buscando módulos en 'modules'...
+2025-11-09 22:46:56,169 [INFO] Template encontrado: Copia de Copia de Copia de Copia de Copia de 21-27
+2025-11-09 22:46:57,121 [INFO] Hoja renombrada: 03-09 nov. \u2192 03-09 nov.
+2025-11-09 22:46:57,462 [INFO] Hoja '03-09 nov.' ya existe
+2025-11-09 22:46:58,329 [INFO] Hoja creada: 10-16 nov.
+2025-11-09 22:46:59,170 [INFO] Hoja creada: 17-23 nov.
+2025-11-09 22:46:59,995 [INFO] Hoja creada: 24-30 nov.
+2025-11-09 22:47:00,860 [INFO] Hoja creada: 01-07 dic.
+2025-11-09 22:47:01,673 [INFO] Hoja creada: 08-14 dic.
+2025-11-09 22:47:02,488 [INFO] Hoja creada: 15-21 dic.
+2025-11-09 22:47:03,291 [INFO] Hoja creada: 22-28 dic.
+2025-11-09 22:47:04,218 [INFO] Hoja creada: 29 dic.-04 ene.
+2025-11-09 22:47:05,168 [INFO] Hoja creada: 05-11 ene.
+2025-11-09 22:47:06,020 [INFO] Hoja creada: 12-18 ene.
+2025-11-09 22:47:06,904 [INFO] Hoja creada: 19-25 ene.
+2025-11-09 22:47:06,904 [INFO] 11 hojas nuevas creadas
+2025-11-09 22:47:53,399 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:48:34,703 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:48:43,639 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:49:11,847 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:49:20,467 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:50:28,074 [INFO] Buscando módulos en 'modules'...
+2025-11-09 22:50:30,523 [INFO] Template encontrado: Copia de Copia de Copia de Copia de Copia de 21-27
+2025-11-09 22:50:31,710 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:51:38,303 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:51:45,580 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'
+2025-11-09 22:52:39,823 [ERROR] Error al renombrar hoja actual: APIError: [400]: Invalid requests[0].updateSheetProperties: A sheet with the name "03-09 nov." already exists. Please enter another name.
+2025-11-09 22:52:40,254 [INFO] Hoja '03-09 nov.' ya existe
+2025-11-09 22:52:40,592 [INFO] Hoja '10-16 nov.' ya existe
+2025-11-09 22:52:40,958 [INFO] Hoja '17-23 nov.' ya existe
+2025-11-09 22:52:41,302 [INFO] Hoja '24-30 nov.' ya existe
+2025-11-09 22:52:41,467 [INFO] Hoja '01-07 dic.' ya existe
+2025-11-09 22:52:41,776 [INFO] Hoja '08-14 dic.' ya existe
+2025-11-09 22:52:42,286 [INFO] Hoja '15-21 dic.' ya existe
+2025-11-09 22:52:42,628 [INFO] Hoja '22-28 dic.' ya existe
+2025-11-09 22:52:42,999 [INFO] Hoja '29 dic.-04 ene.' ya existe
+2025-11-09 22:52:43,307 [INFO] Hoja '05-11 ene.' ya existe
+2025-11-09 22:52:43,725 [INFO] Hoja '12-18 ene.' ya existe
+2025-11-09 22:52:44,065 [INFO] Hoja '19-25 ene.' ya existe
+2025-11-09 22:52:44,065 [INFO] 0 hojas nuevas creadas
+2025-11-09 22:55:12,821 [INFO] Hoja renombrada: 03-09 nov. \u2192 03-09 nov.
+2025-11-09 22:55:13,186 [INFO] Hoja '03-09 nov.' ya existe
+2025-11-09 22:55:13,992 [INFO] Hoja creada: 10-16 nov.
+2025-11-09 22:55:14,632 [INFO] Hoja creada: 17-23 nov.
+2025-11-09 22:55:15,230 [INFO] Hoja creada: 24-30 nov.
+2025-11-09 22:55:16,013 [INFO] Hoja creada: 01-07 dic.
+2025-11-09 22:55:16,470 [INFO] Hoja creada: 08-14 dic.
+2025-11-09 22:55:16,919 [INFO] Hoja creada: 15-21 dic.
+2025-11-09 22:55:17,377 [INFO] Hoja creada: 22-28 dic.
+2025-11-09 22:55:17,833 [INFO] Hoja creada: 29 dic.-04 ene.
+2025-11-09 22:55:18,329 [INFO] Hoja creada: 05-11 ene.
+2025-11-09 22:55:18,813 [INFO] Hoja creada: 12-18 ene.
+2025-11-09 22:55:19,487 [INFO] Hoja creada: 19-25 ene.
+2025-11-09 22:55:19,487 [INFO] 11 hojas nuevas creadas
+2025-11-09 22:56:03,010 [ERROR] Error al actualizar recordatorios: 'HTTPClient' object has no attribute 'open_by_key'
+Traceback (most recent call last):
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\recordatorios\recordatorios_sheets.py", line 73, in actualizar_recordatorios_todas_las_hojas
+    batch_manager = SheetsBatchManager(
+        spreadsheet.client,
+        spreadsheet.id
+    )
+  File "C:\Users\elali\Desktop\LOBO\LOBO\modules\agenda\sheets_batch_manager.py", line 29, in __init__
+    self.spreadsheet = client.open_by_key(spreadsheet_id)
+                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HTTPClient' object has no attribute 'open_by_key'

@@ -1,12 +1,15 @@
 # modules/agenda/agenda_logics.py
 from datetime import datetime, date, time, timedelta
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 from core.db.schema import Evento, RecurrenciaEnum
 from core.db.sessions import SessionLocal as Session
 from core.lobo_google.lobo_sheets import get_sheet
 from gspread.utils import rowcol_to_a1
 import logging
-from sqlalchemy import and_
+
+from modules.agenda.sheets_manager import get_sheets_manager
+
+logger = logging.getLogger(__name__)
 
 # Paleta de colores por tipo de evento (RGB 0-1)
 COLORES_TIPO_EVENTO = {
@@ -23,27 +26,20 @@ COLORES_TIPO_EVENTO = {
 def calcular_color_texto(color_fondo_rgb):
     """
     Calcula si el texto debe ser negro o blanco según el fondo
-
-    Args:
-        color_fondo_rgb: tuple (r, g, b) valores 0-1
-
-    Returns:
-        tuple: (r, g, b) para el color de texto
     """
     r, g, b = color_fondo_rgb
-    # Fórmula de luminosidad
     luminosidad = (0.299 * r + 0.587 * g + 0.114 * b)
 
-    if luminosidad > 0.7:  # Fondo claro
+    if luminosidad > 0.7:
         return (0, 0, 0)  # Texto negro
-    else:  # Fondo oscuro
+    else:
         return (1, 1, 1)  # Texto blanco
+
 
 # Layout del Sheet
 DIAS = ["Hora", "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 SPANISH_WEEKDAY = {0: "Lunes", 1: "Martes", 2: "Miércoles", 3: "Jueves", 4: "Viernes", 5: "Sábado", 6: "Domingo"}
 
-logger = logging.getLogger(__name__)
 
 # Utils internos
 def _ensure_date(obj):
@@ -51,13 +47,14 @@ def _ensure_date(obj):
         return obj
     return datetime.strptime(obj, "%Y-%m-%d").date()
 
+
 def _ensure_time(obj):
     if isinstance(obj, time):
         return obj
     return datetime.strptime(obj, "%H:%M").time()
 
+
 def _time_to_row(sheet, hora):
-    # Recibe datetime.time o 'HH:MM' y devuelve la fila en la hoja (1-indexed)
     if isinstance(hora, str):
         hora_str = hora
     else:
@@ -69,9 +66,9 @@ def _time_to_row(sheet, hora):
         raise ValueError(f"Hora {hora_str} no encontrada en la primera columna del Sheet.")
     return fila
 
+
 def _date_to_col(fecha: date):
-    # Devuelve la columna numérica (1-indexed) de acuerdo al DIAS
-    weekday = fecha.weekday()  # 0 = Lunes
+    weekday = fecha.weekday()
     dia = SPANISH_WEEKDAY[weekday]
     try:
         col = DIAS.index(dia) + 1
@@ -79,27 +76,13 @@ def _date_to_col(fecha: date):
         raise ValueError(f"El día {dia} no existe en la configuración DIAS.")
     return col
 
+
 # DB: CRUD
 def crear_evento_db(nombre: str, descripcion: str, fecha_inicio, hora_inicio, hora_fin,
                     recurrencia: RecurrenciaEnum = RecurrenciaEnum.unico, etiquetas=None,
                     tipo_evento="personal", alarma_minutos=5, alarma_activa=True):
     """
-    Crea un evento ÚNICO en la base de datos (actualizado con nuevos campos)
-
-    Args:
-        nombre: Nombre del evento
-        descripcion: Descripción opcional
-        fecha_inicio: date o str YYYY-MM-DD
-        hora_inicio: time o str HH:MM
-        hora_fin: time o str HH:MM
-        recurrencia: RecurrenciaEnum (default: unico)
-        etiquetas: list[str] (default: [])
-        tipo_evento: str - clase, trabajo, personal, deporte, estudio, reunion (default: personal)
-        alarma_minutos: int - Minutos antes para alarma (default: 5)
-        alarma_activa: bool - Si tiene alarma activa (default: True)
-
-    Returns:
-        Evento: objeto evento creado
+    Crea un evento ÚNICO en la base de datos
     """
     etiquetas = etiquetas or []
     fecha_inicio = _ensure_date(fecha_inicio)
@@ -117,7 +100,6 @@ def crear_evento_db(nombre: str, descripcion: str, fecha_inicio, hora_inicio, ho
         etiquetas=etiquetas,
         creado_en=datetime.utcnow(),
         modificado_en=datetime.utcnow(),
-        # NUEVOS CAMPOS
         tipo_evento=tipo_evento,
         alarma_minutos=alarma_minutos,
         alarma_activa=alarma_activa,
@@ -132,11 +114,13 @@ def crear_evento_db(nombre: str, descripcion: str, fecha_inicio, hora_inicio, ho
     session.close()
     return evento
 
+
 def get_evento_by_id(evento_id):
     session = Session()
     ev = session.query(Evento).filter_by(id=evento_id).first()
     session.close()
     return ev
+
 
 def editar_evento_db(evento_id, **kwargs):
     session = Session()
@@ -144,7 +128,6 @@ def editar_evento_db(evento_id, **kwargs):
     if not ev:
         session.close()
         raise ValueError("Evento no encontrado")
-    # aceptar strings para fecha/hora si vienen así
     if "fecha_inicio" in kwargs:
         kwargs["fecha_inicio"] = _ensure_date(kwargs["fecha_inicio"])
     if "hora_inicio" in kwargs:
@@ -159,6 +142,7 @@ def editar_evento_db(evento_id, **kwargs):
     session.close()
     return ev
 
+
 def eliminar_evento_db(evento_id):
     session = Session()
     ev = session.query(Evento).filter_by(id=evento_id).first()
@@ -169,6 +153,7 @@ def eliminar_evento_db(evento_id):
     session.commit()
     session.close()
     return True
+
 
 def buscar_eventos_db(query_str):
     session = Session()
@@ -183,12 +168,6 @@ def buscar_eventos_db(query_str):
 def buscar_evento_por_id_parcial(id_parcial: str):
     """
     Busca un evento por ID parcial (mínimo 6 caracteres)
-
-    Args:
-        id_parcial: str - Primeros caracteres del ID (ej: "5776c444")
-
-    Returns:
-        Evento o None: El evento encontrado o None si no existe o hay ambigüedad
     """
     if len(id_parcial) < 6:
         return None
@@ -196,7 +175,6 @@ def buscar_evento_por_id_parcial(id_parcial: str):
     session = Session()
 
     try:
-        # Buscar eventos cuyo ID empiece con el fragmento
         eventos = session.query(Evento).filter(
             Evento.id.like(f"{id_parcial}%")
         ).all()
@@ -204,16 +182,13 @@ def buscar_evento_por_id_parcial(id_parcial: str):
         if len(eventos) == 0:
             return None
         elif len(eventos) == 1:
-            # FORZAR CARGA DE TODOS LOS ATRIBUTOS antes de cerrar sesión
             ev = eventos[0]
-            # Acceder a todos los atributos para cargarlos
             _ = ev.id, ev.nombre, ev.descripcion, ev.fecha_inicio
             _ = ev.hora_inicio, ev.hora_fin, ev.recurrencia, ev.etiquetas
             _ = ev.es_maestro, ev.master_id, ev.tipo_evento
-            session.expunge(ev)  # Desconectar del session pero mantener datos
+            session.expunge(ev)
             return ev
         else:
-            # Múltiples coincidencias - retornar None para indicar ambigüedad
             print(f"⚠️  ID ambiguo '{id_parcial}'. Coincidencias:")
             for ev in eventos:
                 print(f"   • {ev.id} - {ev.nombre} ({ev.fecha_inicio})")
@@ -223,25 +198,16 @@ def buscar_evento_por_id_parcial(id_parcial: str):
         session.close()
 
 
-# TAMBIÉN AGREGA ESTA FUNCIÓN (wrapper mejorado)
 def get_evento_by_id_flexible(evento_id: str):
     """
     Obtiene evento por ID completo o parcial
-
-    Args:
-        evento_id: str - ID completo o parcial (mínimo 6 caracteres)
-
-    Returns:
-        Evento o None
     """
     session = Session()
 
     try:
-        # Primero intentar con ID completo
         evento = session.query(Evento).filter_by(id=evento_id).first()
 
         if evento:
-            # FORZAR CARGA de atributos
             _ = evento.id, evento.nombre, evento.descripcion
             _ = evento.fecha_inicio, evento.hora_inicio, evento.hora_fin
             _ = evento.recurrencia, evento.etiquetas, evento.es_maestro
@@ -249,13 +215,13 @@ def get_evento_by_id_flexible(evento_id: str):
             session.expunge(evento)
             return evento
 
-        # Si no se encuentra, intentar con ID parcial
         if len(evento_id) >= 6:
             return buscar_evento_por_id_parcial(evento_id)
 
         return None
     finally:
         session.close()
+
 
 def listar_eventos_por_fecha(fecha: date):
     fecha = _ensure_date(fecha)
@@ -264,16 +230,21 @@ def listar_eventos_por_fecha(fecha: date):
     session.close()
     return results
 
-# Sheets: pintar, borrar, actualizar, sync
+
+# ===== SHEETS: OPTIMIZADO CON BATCH + RATE LIMITING =====
+
 def pintar_evento_sheets(evento, color_rgb=None):
     """
     Pinta un evento en Google Sheets con color según tipo
-
-    Args:
-        evento: Objeto Evento
-        color_rgb: tuple (r, g, b) opcional. Si None, usa color según tipo_evento
+    Soporta hojas múltiples + Rate limiting automático
     """
-    sheet = get_sheet()
+    try:
+        # ✅ CORRECCIÓN: Agregar () para llamar la función
+        sheet = get_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
+    except Exception as e:
+        logger.error(f"Error al obtener hoja para {evento.fecha_inicio}: {e}")
+        sheet = get_sheet()
+
     start_row = _time_to_row(sheet, evento.hora_inicio)
     end_row = _time_to_row(sheet, evento.hora_fin)
     col = _date_to_col(evento.fecha_inicio)
@@ -281,35 +252,54 @@ def pintar_evento_sheets(evento, color_rgb=None):
     first_a1 = rowcol_to_a1(start_row, col)
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
 
-    # Limpiar contenido en rango
-    sheet.batch_clear([full_range])
-
-    # Escribir texto solo en primera celda
-    texto = evento.nombre
-    if evento.descripcion:
-        texto = f"{evento.nombre}\n{evento.descripcion}"
-    sheet.update(first_a1, [[texto]])
-
-    # ===== DETERMINAR COLOR =====
+    # Determinar color
     if color_rgb is None:
-        # Usar color según tipo de evento
         tipo = getattr(evento, 'tipo_evento', 'personal')
         color_rgb = COLORES_TIPO_EVENTO.get(tipo, COLORES_TIPO_EVENTO['default'])
 
-    # Calcular color de texto
     color_texto = calcular_color_texto(color_rgb)
 
-    # Aplicar color de fondo y texto
+    # Preparar texto
+    texto = evento.nombre
+    if evento.descripcion:
+        texto = f"{evento.nombre}\n{evento.descripcion}"
+
+    # Preparar requests
     sheet_id = sheet._properties["sheetId"]
     r, g, b = color_rgb
     tr, tg, tb = color_texto
 
     requests = [
         {
-            "repeatCell": {
+            "updateCells": {
                 "range": {
                     "sheetId": sheet_id,
                     "startRowIndex": start_row - 1,
+                    "endRowIndex": start_row,
+                    "startColumnIndex": col - 1,
+                    "endColumnIndex": col
+                },
+                "rows": [{
+                    "values": [{
+                        "userEnteredValue": {"stringValue": texto},
+                        "userEnteredFormat": {
+                            "backgroundColor": {"red": r, "green": g, "blue": b},
+                            "textFormat": {
+                                "foregroundColor": {"red": tr, "green": tg, "blue": tb},
+                                "bold": True
+                            },
+                            "wrapStrategy": "WRAP"
+                        }
+                    }]
+                }],
+                "fields": "userEnteredValue,userEnteredFormat"
+            }
+        },
+        {
+            "repeatCell": {
+                "range": {
+                    "sheetId": sheet_id,
+                    "startRowIndex": start_row,
                     "endRowIndex": end_row,
                     "startColumnIndex": col - 1,
                     "endColumnIndex": col
@@ -325,7 +315,7 @@ def pintar_evento_sheets(evento, color_rgb=None):
                 },
                 "fields": "userEnteredFormat(backgroundColor,textFormat)"
             }
-        },
+        } if end_row > start_row else {},
         {
             "updateBorders": {
                 "range": {
@@ -342,34 +332,65 @@ def pintar_evento_sheets(evento, color_rgb=None):
             }
         }
     ]
-    sheet.spreadsheet.batch_update({"requests": requests})
-    sheet.format(first_a1, {"wrapStrategy": "WRAP"})
 
-    logger.info(f"Pintado evento en Sheets: {evento.nombre} ({first_a1} -> {full_range}) - Color: {evento.tipo_evento}")
+    requests = [r for r in requests if r]
+
+    # ===== APLICAR RATE LIMITING =====
+    from core.lobo_google.rate_limiter import RATE_LIMITER
+    RATE_LIMITER.wait_if_needed()
+
+    sheet.spreadsheet.batch_update({"requests": requests})
+
+    logger.info(f"Pintado evento: {evento.nombre} ({first_a1} -> {full_range}) - {evento.tipo_evento}")
     return True
 
+
 def borrar_evento_sheets(evento):
-    sheet = get_sheet()
+    """Borra un evento de Google Sheets con rate limiting"""
+    try:
+        # ✅ CORRECCIÓN: Agregar ()
+        sheet = get_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
+    except Exception as e:
+        logger.error(f"Error al obtener hoja para borrar: {e}")
+        sheet = get_sheet()
+
     start_row = _time_to_row(sheet, evento.hora_inicio)
     end_row = _time_to_row(sheet, evento.hora_fin)
     col = _date_to_col(evento.fecha_inicio)
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
     sheet_id = sheet._properties["sheetId"]
 
+    # ===== RATE LIMITING =====
+    from core.lobo_google.rate_limiter import RATE_LIMITER
+    RATE_LIMITER.wait_if_needed()
+
     sheet.batch_clear([full_range])
+
+    RATE_LIMITER.wait_if_needed()
+
     requests = [
         {
             "repeatCell": {
-                "range": {"sheetId": sheet_id, "startRowIndex": start_row-1, "endRowIndex": end_row,
-                          "startColumnIndex": col-1, "endColumnIndex": col},
+                "range": {
+                    "sheetId": sheet_id,
+                    "startRowIndex": start_row - 1,
+                    "endRowIndex": end_row,
+                    "startColumnIndex": col - 1,
+                    "endColumnIndex": col
+                },
                 "cell": {"userEnteredFormat": {}},
                 "fields": "userEnteredFormat"
             }
         },
         {
             "updateBorders": {
-                "range": {"sheetId": sheet_id, "startRowIndex": start_row-1, "endRowIndex": end_row,
-                          "startColumnIndex": col-1, "endColumnIndex": col},
+                "range": {
+                    "sheetId": sheet_id,
+                    "startRowIndex": start_row - 1,
+                    "endRowIndex": end_row,
+                    "startColumnIndex": col - 1,
+                    "endColumnIndex": col
+                },
                 "top": {"style": "NONE"},
                 "bottom": {"style": "NONE"},
                 "left": {"style": "NONE"},
@@ -378,36 +399,78 @@ def borrar_evento_sheets(evento):
         }
     ]
     sheet.spreadsheet.batch_update({"requests": requests})
-    logger.info(f"Borrado evento en Sheets: {evento.nombre} ({full_range})")
+    logger.info(f"Borrado evento: {evento.nombre} ({full_range})")
     return True
 
+
 def actualizar_evento_sheets(old_evento, new_evento):
+    """Actualiza un evento en Sheets"""
     try:
         borrar_evento_sheets(old_evento)
     except Exception as e:
         logger.warning("No se pudo borrar evento antiguo en sheets: %s", e)
     return pintar_evento_sheets(new_evento)
 
-def clear_sheets():
-    sheet = get_sheet()
-    filas = len(sheet.col_values(1))
-    columnas = len(sheet.row_values(1))
-    rango = f"B2:{chr(64+columnas)}{filas}"
-    sheet.batch_clear([rango])
 
+def clear_sheets():
+    """Limpia y sincroniza TODAS las hojas semanales con rate limiting"""
     session = Session()
-    eventos = session.query(Evento).order_by(Evento.fecha_inicio, Evento.hora_inicio).all()
+    eventos = session.query(Evento).filter(
+        Evento.es_maestro == False
+    ).order_by(Evento.fecha_inicio, Evento.hora_inicio).all()
     session.close()
+
+    # Agrupar eventos por semana
+    eventos_por_semana = {}
+
     for ev in eventos:
+        # ✅ CORRECCIÓN: Agregar ()
+        lunes = get_sheets_manager().obtener_lunes_semana(ev.fecha_inicio)
+        if lunes not in eventos_por_semana:
+            eventos_por_semana[lunes] = []
+        eventos_por_semana[lunes].append(ev)
+
+    hojas_procesadas = 0
+    eventos_pintados = 0
+
+    for lunes, eventos_semana in eventos_por_semana.items():
         try:
-            pintar_evento_sheets(ev)
+            # ✅ CORRECCIÓN: Agregar ()
+            sheet = get_sheets_manager().obtener_hoja_por_fecha(lunes)
+
+            # ===== RATE LIMITING =====
+            from core.lobo_google.rate_limiter import RATE_LIMITER
+            RATE_LIMITER.wait_if_needed()
+
+            rango = f"B2:H31"
+            sheet.batch_clear([rango])
+
+            logger.info(f"Limpiando hoja '{sheet.title}'")
+
+            # Repintar eventos de esta semana
+            for ev in eventos_semana:
+                try:
+                    pintar_evento_sheets(ev)
+                    eventos_pintados += 1
+                except Exception as e:
+                    logger.exception(f"Error al pintar evento {ev.id}: {e}")
+
+            hojas_procesadas += 1
+
         except Exception as e:
-            logger.exception("No se pudo pintar evento %s: %s", ev.id, e)
+            logger.exception(f"Error al procesar semana {lunes}: {e}")
+
+    logger.info(f"Clear sheets completado: {hojas_procesadas} hojas, {eventos_pintados} eventos")
     return True
 
+
 def importar_eventos_desde_sheets():
-    sheet = get_sheet()
+    """Importa eventos desde la hoja actual"""
+    hoy = date.today()
+    # ✅ CORRECCIÓN: Agregar ()
+    sheet = get_sheets_manager().obtener_hoja_por_fecha(hoy)
     data = sheet.get_all_values()
+
     if not data:
         return "[AGENDA] Hoja vacía."
 
@@ -428,6 +491,7 @@ def importar_eventos_desde_sheets():
                     hora_inicio = datetime.strptime(hora_str.strip().upper(), "%I:%M %p").time()
                 except ValueError:
                     continue
+
             if fila_idx + 1 < len(horas):
                 next_hora_str = horas[fila_idx + 1].strip()
                 try:
@@ -450,15 +514,17 @@ def importar_eventos_desde_sheets():
                 partes = contenido.split("\n", 1)
                 nombre = partes[0].strip()
                 descripcion = partes[1].strip() if len(partes) > 1 else ""
-                hoy = datetime.today().date()
+
                 weekday_map = {
                     "Lunes": 0, "Martes": 1, "Miércoles": 2,
                     "Jueves": 3, "Viernes": 4, "Sábado": 5, "Domingo": 6
                 }
                 if dia not in weekday_map:
                     continue
+
                 delta = (weekday_map[dia] - hoy.weekday()) % 7
                 fecha = hoy + timedelta(days=delta)
+
                 ev = Evento(
                     nombre=nombre,
                     descripcion=descripcion,
@@ -476,6 +542,7 @@ def importar_eventos_desde_sheets():
     finally:
         session.close()
     return creados
+
 
 def listar_eventos_por_rango(fecha_inicio: str, fecha_fin: str):
     with Session() as session:

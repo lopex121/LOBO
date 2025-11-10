@@ -1,3 +1,4 @@
+# main.py
 if __name__ == "__main__":
     from core.brain import Brain
     from interface.cli import CLI
@@ -19,6 +20,33 @@ if __name__ == "__main__":
     # Cargar módulos
     from core import loader
     loader.load_modules()
+
+    # main.py - AGREGAR DESPUÉS DE LÍNEA 21 (después de crear tablas)
+
+    # ===== INICIALIZAR SISTEMA DE HOJAS MÚLTIPLES (FASE 2) =====
+    try:
+        from modules.agenda.sheets_manager import SHEETS_MANAGER
+
+        # Verificar si el sistema ya fue inicializado
+        # (esto evita re-crear hojas cada vez que se inicia LOBO)
+        # Puedes agregar un flag en config.json para controlarlo
+
+        from core.config import Config
+
+        config = Config()
+
+        if not config.data.get('hojas_inicializadas', False):
+            print("🔧 Inicializando sistema de hojas múltiples...")
+            resultado = SHEETS_MANAGER.inicializar_sistema()
+
+            if resultado['hojas_creadas'] > 0:
+                print(f"   ✅ {resultado['hojas_creadas']} hojas creadas")
+                config.data['hojas_inicializadas'] = True
+                config.save_config()
+
+    except Exception as e:
+        print(f"⚠️  Error al inicializar hojas múltiples: {e}")
+        print("   Puedes ejecutar 'inicializar_hojas' manualmente después.")
 
     # Inicializar brain y CLI
     brain = Brain()

@@ -32,8 +32,14 @@ comandos = {
     "editar_evento": agenda.editar_evento,
     "ver_eventos": agenda.ver_eventos,
     "buscar_evento": agenda.buscar_evento,
+    "limpiar_agenda": agenda.clear_sheets,
     "importar_agenda": agenda.importar_desde_sheets,
     "ver_disponibilidad": lambda args: _ver_disponibilidad(args),
+
+    # ===== GESTIÓN DE HOJAS =====
+    "inicializar_hojas": lambda args: _inicializar_hojas(),
+    "crear_hojas_futuras": lambda args: _crear_hojas_futuras(),
+    "archivar_semana": lambda args: _archivar_semana(args),
 
     # ===== ALARMAS =====
     "programar_alarma": lambda args: "[ALARMA] " + (
@@ -42,17 +48,28 @@ comandos = {
 
     # ===== SINCRONIZACIÓN =====
     "sync_recordatorios": lambda args: _sync_recordatorios_sheets(),
-    "limpiar_agenda": agenda.clear_sheets,
+    "sync_recordatorios_todas": lambda args: _sync_recordatorios_todas_hojas(),
 }
 
+
 def _sync_recordatorios_sheets():
-    """Sincroniza recordatorios con Google Sheets"""
+    """Sincroniza recordatorios con Google Sheets (solo hoja actual)"""
     try:
         from modules.recordatorios.recordatorios_sheets import actualizar_recordatorios_sheets
         if actualizar_recordatorios_sheets():
-            return "[LOBO] ✅ Recordatorios sincronizados con Sheets"
+            return "[LOBO] ✅ Recordatorios sincronizados con Sheets (hoja actual)"
         else:
             return "[LOBO] ⚠️  Error al sincronizar recordatorios"
+    except Exception as e:
+        return f"[LOBO] ❌ Error: {e}"
+
+
+def _sync_recordatorios_todas_hojas():
+    """Sincroniza recordatorios en TODAS las hojas semanales"""
+    try:
+        from modules.recordatorios.recordatorios_sheets import actualizar_recordatorios_todas_las_hojas
+        hojas = actualizar_recordatorios_todas_las_hojas()
+        return f"[LOBO] ✅ Recordatorios sincronizados en {hojas} hojas"
     except Exception as e:
         return f"[LOBO] ❌ Error: {e}"
 
@@ -80,13 +97,77 @@ def _ver_disponibilidad(args):
     except Exception as e:
         return f"[LOBO] ❌ Error: {e}"
 
+
+def _inicializar_hojas():
+    """Inicializa el sistema de hojas múltiples"""
+    from modules.agenda.sheets_manager import SHEETS_MANAGER
+
+    try:
+        resultado = SHEETS_MANAGER.inicializar_sistema()
+
+        msg = "[LOBO] ✅ Sistema de hojas inicializado:\n"
+
+        if resultado['hoja_renombrada']:
+            msg += "   ✅ Hoja actual renombrada\n"
+
+        if resultado['hojas_creadas'] > 0:
+            msg += f"   ✅ {resultado['hojas_creadas']} hojas futuras creadas\n"
+
+        if resultado['errores']:
+            msg += "\n⚠️  Errores:\n"
+            for error in resultado['errores']:
+                msg += f"   • {error}\n"
+
+        return msg
+
+    except Exception as e:
+        return f"[LOBO] ❌ Error: {e}"
+
+
+def _crear_hojas_futuras():
+    """Crea hojas para las próximas 12 semanas"""
+    from modules.agenda.sheets_manager import SHEETS_MANAGER
+
+    try:
+        hojas_creadas = SHEETS_MANAGER.crear_hojas_futuras()
+        return f"[LOBO] ✅ {hojas_creadas} hojas futuras creadas"
+    except Exception as e:
+        return f"[LOBO] ❌ Error: {e}"
+
+
+def _archivar_semana(args):
+    """Archiva una semana específica"""
+    from modules.agenda.sheets_manager import SHEETS_MANAGER
+
+    if not args:
+        # Archivar automáticamente hojas antiguas
+        try:
+            hojas = SHEETS_MANAGER.archivar_semanas_antiguas()
+            if hojas:
+                return f"[LOBO] ✅ Archivadas: {', '.join(hojas)}"
+            else:
+                return "[LOBO] ℹ️  No hay hojas antiguas para archivar"
+        except Exception as e:
+            return f"[LOBO] ❌ Error: {e}"
+    else:
+        # Archivar hoja específica
+        nombre_hoja = " ".join(args)
+        try:
+            if SHEETS_MANAGER.archivar_hoja(nombre_hoja):
+                return f"[LOBO] ✅ Hoja '{nombre_hoja}' archivada"
+            else:
+                return f"[LOBO] ❌ No se pudo archivar '{nombre_hoja}'"
+        except Exception as e:
+            return f"[LOBO] ❌ Error: {e}"
+
+
 class Router:
     def __init__(self, brain):
         self.brain = brain
 
     def route(self, command):
         if not command.strip():
-            bitacora.registrar("router", "comando vacío", "Se recibío un comando vacío",
+            bitacora.registrar("router", "comando vacío", "Se recibió un comando vacío",
                                SESSION.user.username)
             return "[LOBO] Comando vacío."
 
@@ -100,12 +181,12 @@ class Router:
         if nombre_comando in comandos:
             funcion = comandos[nombre_comando]
             try:
-                resultado = funcion(argumentos)  # capturamos el return
+                resultado = funcion(argumentos)
                 return resultado if resultado is not None else "[LOBO] ✅ Comando ejecutado."
             except Exception as e:
-                bitacora.registrar("router", "error", "Error al ejecutar el comando",
+                bitacora.registrar("router", "error", f"Error al ejecutar {nombre_comando}: {str(e)}",
                                    SESSION.user.username)
-                return f"[LOBO] ❌ Error al ejecutar el comando '{nombre_comando}': {e}"
+                return f"[LOBO] ❌ Error al ejecutar '{nombre_comando}': {e}"
 
         # Sugerencias de comandos similares
         sugerencias = self._sugerir_comando(nombre_comando)
@@ -113,7 +194,6 @@ class Router:
             return f"[LOBO] Comando no reconocido: '{nombre_comando}'\n💡 ¿Quisiste decir: {sugerencias}?"
 
         return f"[LOBO] Comando no reconocido: '{nombre_comando}'\nEscribe 'ayuda' para ver comandos disponibles."
-
 
     def _sugerir_comando(self, comando_erroneo):
         """Sugiere comandos similares usando distancia de Levenshtein simple"""
@@ -137,7 +217,6 @@ class Router:
         for cmd in comandos.keys():
             if distancia(comando_erroneo, cmd) <= 3:
                 similares.append(cmd)
-
 
         if similares:
             return ", ".join(similares[:3])  # Máximo 3 sugerencias
