@@ -239,10 +239,11 @@ def pintar_evento_sheets(evento, color_rgb=None):
     Soporta hojas múltiples + Rate limiting automático
     """
     try:
-        # ✅ CORRECCIÓN: Agregar () para llamar la función
-        sheet = get_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
+        from modules.agenda.agenda_optimizer import get_safe_sheets_manager
+        sheet = get_safe_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
     except Exception as e:
         logger.error(f"Error al obtener hoja para {evento.fecha_inicio}: {e}")
+        # Fallback a sheet actual
         sheet = get_sheet()
 
     start_row = _time_to_row(sheet, evento.hora_inicio)
@@ -335,11 +336,9 @@ def pintar_evento_sheets(evento, color_rgb=None):
 
     requests = [r for r in requests if r]
 
-    # ===== APLICAR RATE LIMITING =====
-    from core.lobo_google.rate_limiter import RATE_LIMITER
-    RATE_LIMITER.wait_if_needed()
-
-    sheet.spreadsheet.batch_update({"requests": requests})
+    # ===== USAR WRAPPER SEGURO =====
+    from modules.agenda.agenda_optimizer import SAFE_SHEETS
+    SAFE_SHEETS.safe_batch_update(sheet, requests)
 
     logger.info(f"Pintado evento: {evento.nombre} ({first_a1} -> {full_range}) - {evento.tipo_evento}")
     return True
@@ -348,8 +347,8 @@ def pintar_evento_sheets(evento, color_rgb=None):
 def borrar_evento_sheets(evento):
     """Borra un evento de Google Sheets con rate limiting"""
     try:
-        # ✅ CORRECCIÓN: Agregar ()
-        sheet = get_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
+        from modules.agenda.agenda_optimizer import get_safe_sheets_manager
+        sheet = get_safe_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
     except Exception as e:
         logger.error(f"Error al obtener hoja para borrar: {e}")
         sheet = get_sheet()
@@ -360,14 +359,13 @@ def borrar_evento_sheets(evento):
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
     sheet_id = sheet._properties["sheetId"]
 
-    # ===== RATE LIMITING =====
-    from core.lobo_google.rate_limiter import RATE_LIMITER
-    RATE_LIMITER.wait_if_needed()
+    # ===== USAR WRAPPER SEGURO =====
+    from modules.agenda.agenda_optimizer import SAFE_SHEETS
 
-    sheet.batch_clear([full_range])
+    # Batch clear CON rate limiting
+    SAFE_SHEETS.safe_batch_clear(sheet, [full_range])
 
-    RATE_LIMITER.wait_if_needed()
-
+    # Preparar requests de formato
     requests = [
         {
             "repeatCell": {
@@ -398,10 +396,12 @@ def borrar_evento_sheets(evento):
             }
         }
     ]
-    sheet.spreadsheet.batch_update({"requests": requests})
+
+    # Batch update CON rate limiting
+    SAFE_SHEETS.safe_batch_update(sheet, requests)
+
     logger.info(f"Borrado evento: {evento.nombre} ({full_range})")
     return True
-
 
 def actualizar_evento_sheets(old_evento, new_evento):
     """Actualiza un evento en Sheets"""
@@ -411,9 +411,11 @@ def actualizar_evento_sheets(old_evento, new_evento):
         logger.warning("No se pudo borrar evento antiguo en sheets: %s", e)
     return pintar_evento_sheets(new_evento)
 
-
 def clear_sheets():
-    """Limpia y sincroniza TODAS las hojas semanales con rate limiting"""
+    """
+    Limpia y sincroniza TODAS las hojas semanales
+    OPTIMIZADO: Usa batch operations + rate limiting consistente
+    """
     session = Session()
     eventos = session.query(Evento).filter(
         Evento.es_maestro == False
@@ -423,9 +425,11 @@ def clear_sheets():
     # Agrupar eventos por semana
     eventos_por_semana = {}
 
+    from modules.agenda.agenda_optimizer import get_safe_sheets_manager
+    sheets_mgr = get_safe_sheets_manager()
+
     for ev in eventos:
-        # ✅ CORRECCIÓN: Agregar ()
-        lunes = get_sheets_manager().obtener_lunes_semana(ev.fecha_inicio)
+        lunes = sheets_mgr.obtener_lunes_semana(ev.fecha_inicio)
         if lunes not in eventos_por_semana:
             eventos_por_semana[lunes] = []
         eventos_por_semana[lunes].append(ev)
@@ -433,24 +437,21 @@ def clear_sheets():
     hojas_procesadas = 0
     eventos_pintados = 0
 
+    # ===== USAR WRAPPER SEGURO PARA TODAS LAS OPERACIONES =====
+    from modules.agenda.agenda_optimizer import SAFE_SHEETS
+
     for lunes, eventos_semana in eventos_por_semana.items():
         try:
-            # ✅ CORRECCIÓN: Agregar ()
-            sheet = get_sheets_manager().obtener_hoja_por_fecha(lunes)
-
-            # ===== RATE LIMITING =====
-            from core.lobo_google.rate_limiter import RATE_LIMITER
-            RATE_LIMITER.wait_if_needed()
-
+            sheet = sheets_mgr.obtener_hoja_por_fecha(lunes)
+            # Limpiar CON rate limiting
             rango = f"B2:H31"
-            sheet.batch_clear([rango])
-
+            SAFE_SHEETS.safe_batch_clear(sheet, [rango])
             logger.info(f"Limpiando hoja '{sheet.title}'")
 
             # Repintar eventos de esta semana
             for ev in eventos_semana:
                 try:
-                    pintar_evento_sheets(ev)
+                    pintar_evento_sheets(ev)  # Ya tiene rate limiting interno
                     eventos_pintados += 1
                 except Exception as e:
                     logger.exception(f"Error al pintar evento {ev.id}: {e}")

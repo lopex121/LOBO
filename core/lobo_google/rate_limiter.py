@@ -115,4 +115,9 @@ class GoogleSheetsRateLimiter:
 
 
 # ===== INSTANCIA GLOBAL =====
-RATE_LIMITER = GoogleSheetsRateLimiter(max_requests_per_minute=5)
+# Plan FREE de Google Sheets API:
+# - 60 requests/minuto
+# - 100 requests/100 segundos (no te preocupes por este)
+
+# Usar 55 para margen de seguridad (muy cerca del límite)
+RATE_LIMITER = GoogleSheetsRateLimiter(max_requests_per_minute=55)

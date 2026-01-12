@@ -13,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Configuración
-NOMBRE_TEMPLATE = "Copia de Copia de Copia de Copia de Copia de 21-27"
+NOMBRE_TEMPLATE = "Hoja 1"
 NOMBRE_HISTORIAL = "Horarios pasados"
 SEMANAS_FUTURAS = 12
 
@@ -221,38 +221,126 @@ class SheetsManager:
 
     def archivar_semanas_antiguas(self):
         """
-        Archiva automáticamente hojas de semanas que ya pasaron
+        Archiva automáticamente hojas de semanas que YA PASARON
+        MEJORADO: Usa fechas completas en lugar de solo días
 
         Returns:
             list: Nombres de hojas archivadas
         """
+        from datetime import date, timedelta
+
         hoy = date.today()
+        # Calcular el lunes de la semana actual
+        lunes_semana_actual = hoy - timedelta(days=hoy.weekday())
+
         hojas_archivadas = []
 
         # Obtener todas las hojas
         hojas = self.spreadsheet.worksheets()
+
+        logger.info(f"🔍 Buscando hojas antiguas (anteriores a {lunes_semana_actual.strftime('%d/%m/%Y')})")
 
         for hoja in hojas:
             # Saltar template y hojas especiales
             if hoja.title in [NOMBRE_TEMPLATE, "Sheet1"]:
                 continue
 
-            # Intentar parsear el nombre como fecha
+            # Intentar calcular la fecha de la hoja
             try:
-                # Extraer fecha del nombre (ej: "21-27 Oct" → 21 Oct)
-                partes = hoja.title.split()
-                dia_inicio = int(partes[0].split('-')[0])
+                fecha_lunes_hoja = self._parsear_fecha_desde_nombre_hoja(hoja.title)
 
-                # Simplificación: si el día es menor que hoy.day - 7, archivar
-                if dia_inicio < hoy.day - 7:
+                if not fecha_lunes_hoja:
+                    logger.debug(f"⏭️  No se pudo parsear '{hoja.title}', saltando")
+                    continue
+
+                # Verificar si la semana YA PASÓ (lunes de la hoja < lunes actual)
+                if fecha_lunes_hoja < lunes_semana_actual:
+                    logger.info(f"📦 Archivando '{hoja.title}' (semana del {fecha_lunes_hoja.strftime('%d/%m/%Y')})")
+
                     if self.archivar_hoja(hoja.title):
                         hojas_archivadas.append(hoja.title)
+                    else:
+                        logger.warning(f"⚠️  No se pudo archivar '{hoja.title}'")
+                else:
+                    logger.debug(f"✅ '{hoja.title}' es actual o futura, no archivar")
 
             except Exception as e:
-                logger.warning(f"No se pudo procesar hoja '{hoja.title}': {e}")
+                logger.warning(f"⚠️  Error al procesar '{hoja.title}': {e}")
                 continue
 
+        if hojas_archivadas:
+            logger.info(f"✅ Archivadas {len(hojas_archivadas)} hojas: {', '.join(hojas_archivadas)}")
+        else:
+            logger.info("ℹ️  No hay hojas antiguas para archivar")
+
         return hojas_archivadas
+
+    def _parsear_fecha_desde_nombre_hoja(self, nombre_hoja):
+        """
+        Parsea el nombre de hoja a fecha del lunes
+        REUTILIZA la lógica de recordatorios_sheets
+
+        Args:
+            nombre_hoja: str - Ej: "10-16 nov", "29 dic-04 ene"
+
+        Returns:
+            date: Lunes de esa semana o None
+        """
+        try:
+            # Limpiar el nombre
+            nombre = nombre_hoja.replace(".", "").strip()
+
+            # Mapeo de meses
+            meses_map = {
+                "ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6,
+                "jul": 7, "ago": 8, "sep": 9, "oct": 10, "nov": 11, "dic": 12,
+                "jan": 1, "apr": 4, "aug": 8, "dec": 12
+            }
+
+            # Detectar meses en el nombre
+            meses_encontrados = []
+            nombre_lower = nombre.lower()
+            for mes_str, mes_num in meses_map.items():
+                if mes_str in nombre_lower:
+                    meses_encontrados.append((mes_str, mes_num))
+
+            if not meses_encontrados:
+                return None
+
+            # Caso 1: Un solo mes ("10-16 nov")
+            if len(meses_encontrados) == 1:
+                partes = nombre.split()
+                dia_inicio = int(partes[0].split('-')[0])
+                mes = meses_encontrados[0][1]
+
+            # Caso 2: Dos meses ("29 dic-04 ene")
+            else:
+                import re
+                match = re.search(r'(\d+)\s*(?:' + '|'.join(meses_map.keys()) + ')', nombre_lower)
+                if match:
+                    dia_inicio = int(match.group(1))
+                    mes = meses_encontrados[0][1]  # Primer mes
+                else:
+                    return None
+
+            # Determinar año
+            año = date.today().year
+            mes_actual = date.today().month
+
+            # Ajustar año para cambios de año
+            if mes in [1, 2] and mes_actual in [11, 12]:
+                año += 1
+            elif mes in [11, 12] and mes_actual in [1, 2]:
+                año -= 1
+
+            try:
+                return date(año, mes, dia_inicio)
+            except ValueError:
+                return date(año, mes, 1)
+
+        except Exception as e:
+            logger.debug(f"Error al parsear '{nombre_hoja}': {e}")
+            return None
 
     def inicializar_sistema(self):
         """

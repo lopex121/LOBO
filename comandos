@@ -1,0 +1,125 @@
+# docs/comandos.md
+"""
+GUÍA COMPLETA DE COMANDOS - LOBO
+
+═══════════════════════════════════════════════════════════
+RECORDATORIOS
+═══════════════════════════════════════════════════════════
+
+✅ GUARDAR RECORDATORIO
+   guardar "TEXTO" etiqueta [fecha] [hora] [prioridad=N]
+
+   Etiquetas: urgente, importante, tarea, nota, idea
+   Fecha: DD/MM/YYYY
+   Hora: HH:MM
+   Prioridad: 1 (urgente) a 5 (normal)
+
+   Ejemplos:
+   guardar "Comprar leche" nota
+   guardar "Entregar proyecto" tarea 15/11/2025
+   guardar "Llamar a Juan" importante 15/11/2025 14:30 prioridad=2
+
+✅ VER RECORDATORIOS
+   recordar                    # Todos los pendientes
+   recordar urgente            # Solo urgentes
+   recordar vencidos           # Vencidos
+   recordar proximos 7         # Próximos 7 días
+   recordar completadas        # Historial
+   recordar prioridad 1 2      # Prioridad 1-2
+
+✅ COMPLETAR
+   completar 123               # Por ID
+   completar "texto" etiqueta  # Por búsqueda
+
+✅ ELIMINAR
+   eliminar_recuerdo 123
+   eliminar_recuerdo "texto" etiqueta
+
+═══════════════════════════════════════════════════════════
+AGENDA
+═══════════════════════════════════════════════════════════
+
+✅ AGREGAR EVENTO
+   agregar_evento "NOMBRE" YYYY-MM-DD HH:MM HH:MM ["DESC"] [recurrencia] [tipo]
+
+   Recurrencia: unico, diario, semanal, mensual
+   Tipo: clase, trabajo, personal, deporte, estudio, reunion
+
+   Ejemplos:
+   agregar_evento "Clase" 2025-11-12 07:00 08:30
+   agregar_evento "Gimnasio" 2025-11-12 18:00 19:30 "" semanal deporte
+   agregar_evento "Junta" 2025-11-15 10:00 11:00 "Reunión mensual" mensual trabajo
+
+✅ VER EVENTOS
+   ver_eventos                 # Semana actual
+   ver_eventos dia             # Solo hoy
+   ver_eventos semana +1       # Próxima semana
+   ver_eventos mes             # Mes completo
+   ver_eventos dia 2025-11-15  # Día específico
+
+✅ EDITAR EVENTO
+   editar_evento <id> nombre="Nuevo nombre"
+   editar_evento <id> hora_inicio=10:00 hora_fin=11:00
+   editar_evento <id> tipo_evento=clase
+
+✅ ELIMINAR EVENTO
+   eliminar_evento <id>
+
+   Para series recurrentes, te preguntará:
+   [1] Eliminar solo esta instancia
+   [2] Eliminar esta y futuras
+   [3] Eliminar toda la serie
+
+✅ BUSCAR
+   buscar_evento "química"
+
+✅ DISPONIBILIDAD
+   ver_disponibilidad          # Hoy
+   ver_disponibilidad 2025-11-15
+
+═══════════════════════════════════════════════════════════
+SINCRONIZACIÓN
+═══════════════════════════════════════════════════════════
+
+sync_recordatorios          # Hoja actual
+sync_recordatorios_todas    # Todas las hojas
+limpiar_agenda             # Refresca todas las hojas
+importar_agenda            # Importa desde Sheets
+
+═══════════════════════════════════════════════════════════
+GESTIÓN DE HOJAS (FASE 2)
+═══════════════════════════════════════════════════════════
+
+inicializar_hojas          # Configurar sistema de hojas múltiples
+crear_hojas_futuras        # Generar 12 semanas futuras
+archivar_semana           # Archivar hojas antiguas
+
+═══════════════════════════════════════════════════════════
+USUARIOS (SOLO ADMIN)
+═══════════════════════════════════════════════════════════
+
+nuevo_usuario <username> <password>
+eliminar_usuario <username>
+
+═══════════════════════════════════════════════════════════
+BITÁCORA (SOLO ADMIN)
+═══════════════════════════════════════════════════════════
+
+ver_bitacora [limite]      # Ver últimos 100 registros (default)
+
+═══════════════════════════════════════════════════════════
+ALARMAS
+═══════════════════════════════════════════════════════════
+
+programar_alarma <evento_id> [minutos]  # Default: 10 min antes
+cancelar_alarma <evento_id>
+
+═══════════════════════════════════════════════════════════
+OTROS
+═══════════════════════════════════════════════════════════
+
+ayuda           # Ver comandos (implementar)
+salir / exit    # Cerrar LOBO
+
+═══════════════════════════════════════════════════════════
+"""

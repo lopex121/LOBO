@@ -6,6 +6,7 @@ from modules.bitacora.bitacora import comando_ver_bitacora, Bitacora
 import shlex
 from modules.agenda.agenda import AgendaAPI
 from modules.alarma.alarma import AlarmManager
+from modules.agenda.agenda_optimizer import NUEVOS_COMANDOS
 
 bitacora = Bitacora()
 recordatorios = Recordatorios()
@@ -35,11 +36,14 @@ comandos = {
     "limpiar_agenda": agenda.clear_sheets,
     "importar_agenda": agenda.importar_desde_sheets,
     "ver_disponibilidad": lambda args: _ver_disponibilidad(args),
+    **NUEVOS_COMANDOS,  # Esto agrega: guardar_plantilla, listar_plantillas, aplicar_plantilla, sincronizar_todo
+
 
     # ===== GESTIÓN DE HOJAS =====
     "inicializar_hojas": lambda args: _inicializar_hojas(),
     "crear_hojas_futuras": lambda args: _crear_hojas_futuras(),
     "archivar_semana": lambda args: _archivar_semana(args),
+    "reordenar_hoja": lambda args: _reordenar_hojas(),
 
     # ===== ALARMAS =====
     "programar_alarma": lambda args: "[ALARMA] " + (
@@ -49,6 +53,10 @@ comandos = {
     # ===== SINCRONIZACIÓN =====
     "sync_recordatorios": lambda args: _sync_recordatorios_sheets(),
     "sync_recordatorios_todas": lambda args: _sync_recordatorios_todas_hojas(),
+
+    # ===== AYUDA =====
+    "ayuda": lambda args: _mostrar_ayuda(args),
+    "help": lambda args: _mostrar_ayuda(args),
 }
 
 
@@ -63,16 +71,21 @@ def _sync_recordatorios_sheets():
     except Exception as e:
         return f"[LOBO] ❌ Error: {e}"
 
-
 def _sync_recordatorios_todas_hojas():
     """Sincroniza recordatorios en TODAS las hojas semanales"""
     try:
         from modules.recordatorios.recordatorios_sheets import actualizar_recordatorios_todas_las_hojas
+
+        print("\n🔄 Sincronizando recordatorios en todas las hojas...")
         hojas = actualizar_recordatorios_todas_las_hojas()
-        return f"[LOBO] ✅ Recordatorios sincronizados en {hojas} hojas"
+
+        if hojas > 0:
+            return f"[LOBO] ✅ Recordatorios sincronizados en {hojas} hojas"
+        else:
+            return "[LOBO] ⚠️  No se pudieron sincronizar recordatorios"
+
     except Exception as e:
         return f"[LOBO] ❌ Error: {e}"
-
 
 def _ver_disponibilidad(args):
     """Muestra disponibilidad de un día"""
@@ -160,6 +173,70 @@ def _archivar_semana(args):
         except Exception as e:
             return f"[LOBO] ❌ Error: {e}"
 
+
+def _reordenar_hojas():
+    """Reordena hojas cronológicamente en Google Sheets"""
+    try:
+        from modules.recordatorios.recordatorios_sheets import reordenar_hojas_cronologicamente
+
+        print("\n🔄 Reordenando hojas en Google Sheets...")
+        hojas_movidas = reordenar_hojas_cronologicamente()
+
+        if hojas_movidas > 0:
+            return f"[LOBO] ✅ {hojas_movidas} hojas reordenadas correctamente"
+        else:
+            return "[LOBO] ✅ Hojas ya están en orden correcto"
+
+    except Exception as e:
+        return f"[LOBO] ❌ Error: {e}"
+
+
+def _mostrar_ayuda(args):
+    """Muestra ayuda de comandos"""
+    if not args:
+        # Ayuda general
+        return """
+🐺 LOBO - Comandos Disponibles
+
+═══════════════════════════════════════════════════════════
+RECORDATORIOS
+  guardar "texto" etiqueta [fecha] [hora] [prioridad=N]
+  recordar [filtro]
+  completar <id>
+  eliminar_recuerdo <id>
+
+AGENDA
+  agregar_evento "nombre" YYYY-MM-DD HH:MM HH:MM
+  ver_eventos [dia|semana|mes]
+  editar_evento <id> campo=valor
+  eliminar_evento <id>
+  buscar_evento "texto"
+  ver_disponibilidad [fecha]
+
+SINCRONIZACIÓN
+  sync_recordatorios
+  sync_recordatorios_todas
+  limpiar_agenda
+  importar_agenda
+  listar_plantillas
+  sincronizar_todo
+  guardar_plantilla <nombre>
+  aplicar_plantilla <nombre> [semanas]
+
+HOJAS MÚLTIPLES
+  inicializar_hojas
+  crear_hojas_futuras
+  archivar_semana
+
+SISTEMA
+  ayuda <comando>        # Ayuda específica
+  ver_bitacora [limite]  # Solo admin
+  salir / exit
+
+═══════════════════════════════════════════════════════════
+Usa 'ayuda <comando>' para más detalles
+Ejemplo: ayuda agregar_evento
+"""
 
 class Router:
     def __init__(self, brain):

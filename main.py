@@ -60,15 +60,20 @@ if __name__ == "__main__":
         recordatorios_obj = Recordatorios()
         recordatorios_obj.menu_vencidos()
 
-    # ===== SINCRONIZAR RECORDATORIOS CON SHEETS (opcional, comentar si es lento) =====
+    # ===== SINCRONIZAR RECORDATORIOS CON SHEETS =====
     try:
-        from modules.recordatorios.recordatorios_sheets import actualizar_recordatorios_sheets
+        from modules.recordatorios.recordatorios_sheets import pintar_recordatorios_semana
+        from datetime import date, timedelta
 
-        print("🔄 Sincronizando recordatorios con Google Sheets...")
-        actualizar_recordatorios_sheets()
-        print("✅ Sincronización completa\n")
+        hoy = date.today()
+        lunes = hoy - timedelta(days=hoy.weekday())
+
+        print("🔄 Sincronizando recordatorios en todas las hojas...")
+        pintar_recordatorios_semana(lunes)
+        print(f"✅ Sincronización rápida completada\n")
+
     except Exception as e:
-        print(f"⚠️  No se pudo sincronizar con Sheets: {e}\n")
+        print(f"⚠️  Error al sincronizar: {e}\n")
 
     # Ejecutar CLI
     cli.run()
