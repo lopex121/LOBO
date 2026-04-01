@@ -5,12 +5,9 @@ if __name__ == "__main__":
     from core.dashboard import mostrar_dashboard
     from modules.recordatorios.recordatorios import Recordatorios
 
-    # 💥 Crear las tablas ANTES detodo
-    from core.db.schema import Base
-    from core.db.sessions import engine
-
-    # Crea las tablas en la base de datos
-    Base.metadata.create_all(bind=engine)
+    # Inicializar base de datos desde la única fuente de verdad
+    from core.db.db import init_db
+    init_db()
 
     # Autenticación
     from core.security import auth
@@ -21,16 +18,9 @@ if __name__ == "__main__":
     from core import loader
     loader.load_modules()
 
-    # main.py - AGREGAR DESPUÉS DE LÍNEA 21 (después de crear tablas)
-
-    # ===== INICIALIZAR SISTEMA DE HOJAS MÚLTIPLES (FASE 2) =====
+    # Inicializar sistema de hojas múltiples
     try:
         from modules.agenda.sheets_manager import SHEETS_MANAGER
-
-        # Verificar si el sistema ya fue inicializado
-        # (esto evita re-crear hojas cada vez que se inicia LOBO)
-        # Puedes agregar un flag en config.json para controlarlo
-
         from core.config import Config
 
         config = Config()
@@ -52,28 +42,23 @@ if __name__ == "__main__":
     brain = Brain()
     cli = CLI(brain)
 
-    # ===== MOSTRAR DASHBOARD =====
+    # Mostrar dashboard
     dashboard = mostrar_dashboard()
 
-    # ===== VERIFICAR RECORDATORIOS VENCIDOS =====
+    # Verificar recordatorios vencidos
     if dashboard.tiene_vencidos():
         recordatorios_obj = Recordatorios()
         recordatorios_obj.menu_vencidos()
 
-    # ===== SINCRONIZAR RECORDATORIOS CON SHEETS =====
+    # Sincronizar recordatorios con Sheets
     try:
-        from modules.recordatorios.recordatorios_sheets import pintar_recordatorios_semana
-        from datetime import date, timedelta
+        from modules.recordatorios.recordatorios_sheets import actualizar_recordatorios_sheets
 
-        hoy = date.today()
-        lunes = hoy - timedelta(days=hoy.weekday())
-
-        print("🔄 Sincronizando recordatorios en todas las hojas...")
-        pintar_recordatorios_semana(lunes)
-        print(f"✅ Sincronización rápida completada\n")
-
+        print("🔄 Sincronizando recordatorios con Google Sheets...")
+        actualizar_recordatorios_sheets()
+        print("✅ Sincronización completa\n")
     except Exception as e:
-        print(f"⚠️  Error al sincronizar: {e}\n")
+        print(f"⚠️  No se pudo sincronizar con Sheets: {e}\n")
 
     # Ejecutar CLI
     cli.run()

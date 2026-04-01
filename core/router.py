@@ -7,6 +7,8 @@ import shlex
 from modules.agenda.agenda import AgendaAPI
 from modules.alarma.alarma import AlarmManager
 from modules.agenda.agenda_optimizer import NUEVOS_COMANDOS
+from modules.agenda.agenda_fixes import COMANDOS_FIXES
+
 
 bitacora = Bitacora()
 recordatorios = Recordatorios()
@@ -38,6 +40,7 @@ comandos = {
     "ver_disponibilidad": lambda args: _ver_disponibilidad(args),
     **NUEVOS_COMANDOS,  # Esto agrega: guardar_plantilla, listar_plantillas, aplicar_plantilla, sincronizar_todo
 
+    **COMANDOS_FIXES, # Agrega: sincronizar_real, limpiar_db_pasados, guardar_plantilla_desde, reordenar_hojas
 
     # ===== GESTIÓN DE HOJAS =====
     "inicializar_hojas": lambda args: _inicializar_hojas(),

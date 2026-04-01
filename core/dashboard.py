@@ -8,18 +8,17 @@ from datetime import date, datetime, timedelta
 from core.memory import Memory
 from modules.agenda.agenda_logics import listar_eventos_por_fecha
 from core.context.logs import BITACORA
-from core.db.sessions import SessionLocal
+from core.db.db import SessionLocal  # migrado desde core.db.sessions
 from core.db.schema import BitacoraRegistro
 import locale
 
-# Configurar locale para español
 try:
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 except:
     try:
         locale.setlocale(locale.LC_TIME, 'es_MX.UTF-8')
     except:
-        pass  # Si falla, usar locale por defecto
+        pass
 
 
 class Dashboard:
@@ -28,7 +27,6 @@ class Dashboard:
         self.hoy = date.today()
 
     def mostrar(self):
-        """Muestra el dashboard completo"""
         self._imprimir_encabezado()
         self._mostrar_agenda_hoy()
         self._mostrar_alarmas()
@@ -37,8 +35,6 @@ class Dashboard:
         self._imprimir_pie()
 
     def _imprimir_encabezado(self):
-        """Encabezado del dashboard"""
-        # Fecha formateada
         try:
             fecha_str = self.hoy.strftime("%A, %d de %B de %Y").capitalize()
         except:
@@ -50,7 +46,6 @@ class Dashboard:
         print("═" * 65 + "\n")
 
     def _mostrar_agenda_hoy(self):
-        """Muestra eventos de hoy"""
         try:
             eventos = listar_eventos_por_fecha(self.hoy.isoformat())
         except:
@@ -67,7 +62,6 @@ class Dashboard:
                 hora_inicio = evento.hora_inicio.strftime("%H:%M")
                 hora_fin = evento.hora_fin.strftime("%H:%M")
 
-                # Emoji según tipo
                 emoji_map = {
                     "clase": "📚",
                     "trabajo": "💼",
@@ -80,7 +74,6 @@ class Dashboard:
 
                 print(f"   {emoji} {hora_inicio} - {hora_fin}  {evento.nombre}")
 
-        # Agregar disponibilidad
         try:
             from modules.agenda.disponibilidad import DISPONIBILIDAD
             resumen = DISPONIBILIDAD.disponibilidad_resumen(self.hoy)
@@ -100,16 +93,12 @@ class Dashboard:
                 print(f"\n   🕐 Horas libres hoy: {resumen['horas_libres']:.1f}h")
                 print(f"   🎯 Mayor bloque: {inicio_str}-{fin_str} ({bloque_str})")
         except Exception as e:
-            pass  # Si falla disponibilidad, continuar sin ella
+            pass
 
         print()
 
     def _mostrar_alarmas(self):
-        """Muestra alarmas programadas para hoy"""
         print("🔔 ALARMAS PROGRAMADAS:")
-
-        # All: Integrar con el módulo de alarmas cuando esté completo
-        # Por ahora, mostrar eventos con anticipación de 5 min
 
         try:
             eventos = listar_eventos_por_fecha(self.hoy.isoformat())
@@ -119,7 +108,6 @@ class Dashboard:
                 return
 
             for evento in sorted(eventos, key=lambda e: e.hora_inicio):
-                # Calcular hora de alarma (5 min antes)
                 hora_evento = datetime.combine(self.hoy, evento.hora_inicio)
                 hora_alarma = hora_evento - timedelta(minutes=5)
 
@@ -130,37 +118,27 @@ class Dashboard:
         print()
 
     def _mostrar_recordatorios_urgentes(self):
-        """Muestra recordatorios urgentes y próximos a vencer"""
         print("📝 RECORDATORIOS URGENTES:")
 
-        # Vencidos
         vencidos = self.memoria.recall_vencidos()
-
-        # Próximos 3 días
         proximos = self.memoria.recall_proximos(dias=3)
-
-        # Urgentes sin fecha
         urgentes = self.memoria.recall(mem_type="urgente", estado="pendiente")
         urgentes_sin_fecha = [u for u in urgentes if not u.fecha_limite]
-
-        # Prioridad 1 (sin importar tipo)
         prioridad_1 = self.memoria.recall_por_prioridad(1, 1)
 
         if not vencidos and not proximos and not urgentes_sin_fecha and not prioridad_1:
             print("   ✅ Sin recordatorios urgentes\n")
             return
 
-        # Mostrar vencidos
         if vencidos:
-            for rec in vencidos[:3]:  # Solo primeros 3
+            for rec in vencidos[:3]:
                 dias_vencido = (self.hoy - rec.fecha_limite).days
                 emoji = "⚠️" if rec.type == "urgente" else "✅"
                 print(f"   🔴 [P:{rec.prioridad}] {emoji} {rec.content[:40]}")
                 print(f"      VENCIDO hace {dias_vencido} día(s)")
 
-        # Mostrar próximos
         if proximos:
-            for rec in proximos[:3]:  # Solo primeros 3
+            for rec in proximos[:3]:
                 dias_restantes = (rec.fecha_limite - self.hoy).days
                 emoji = "⚠️" if rec.type == "urgente" else "📌" if rec.type == "importante" else "✅"
 
@@ -176,7 +154,6 @@ class Dashboard:
                 if rec.hora_limite:
                     print(f"      a las {rec.hora_limite.strftime('%H:%M')}")
 
-        # Mostrar urgentes sin fecha
         if urgentes_sin_fecha:
             for rec in urgentes_sin_fecha[:2]:
                 print(f"   ⚠️  [P:{rec.prioridad}] {rec.content[:40]} (sin fecha)")
@@ -184,13 +161,11 @@ class Dashboard:
         print()
 
     def _mostrar_errores_recientes(self):
-        """Muestra errores recientes de la bitácora"""
         print("⚠️  ERRORES RECIENTES:")
 
         try:
             db = SessionLocal()
 
-            # Buscar errores de las últimas 24 horas
             hace_24h = datetime.now() - timedelta(hours=24)
 
             errores = db.query(BitacoraRegistro).filter(
@@ -214,19 +189,16 @@ class Dashboard:
         print()
 
     def _imprimir_pie(self):
-        """Pie del dashboard"""
         print("═" * 65)
         print("Escribe 'ayuda' para ver comandos | 'salir' para cerrar".center(65))
         print("═" * 65 + "\n")
 
     def tiene_vencidos(self):
-        """Retorna True si hay recordatorios vencidos"""
         vencidos = self.memoria.recall_vencidos()
         return len(vencidos) > 0
 
 
 def mostrar_dashboard():
-    """Función rápida para mostrar el dashboard"""
     dashboard = Dashboard()
     dashboard.mostrar()
     return dashboard

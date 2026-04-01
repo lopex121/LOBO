@@ -1,6 +1,6 @@
 # core/services/user_service.py
 from core.db.schema import User
-from core.db.sessions import SessionLocal
+from core.db.db import SessionLocal  # migrado desde core.db.sessions
 
 def get_user_by_username(username: str) -> User | None:
     db = SessionLocal()

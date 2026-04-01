@@ -1,6 +1,6 @@
 # core/context/session_context.py
 from core.db.schema import User as DBUser
-from core.db.sessions import SessionLocal
+from core.db.db import SessionLocal  # migrado desde core.db.sessions
 from core.context.logs import BITACORA
 
 
@@ -14,7 +14,7 @@ class SessionContext:
         if not user:
             BITACORA.registrar("session_logger", "Login fallido",
                                "Se intento  acceder con un nombre de usuario inexistente",
-                               self.user.username)
+                               self.user.username if self.user else "anonimo")
             raise ValueError("❌ Usuario no encontrado.")
         self.user = user
         BITACORA.registrar("session_logger", "Login exitoso",
@@ -34,5 +34,5 @@ class SessionContext:
             print("⚠️ Solo el administrador puede acceder a esta interfaz.")
             BITACORA.registrar("session_logger", "Only Admin",
                                "Se intento realizar una acción permitida solamente a administrador.",
-                               self.user.username)
+                               self.user.username if self.user else "anonimo")
             exit(1)

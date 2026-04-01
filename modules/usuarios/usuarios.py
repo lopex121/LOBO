@@ -1,5 +1,5 @@
 # modules/usuarios/usuarios.py
-from core.db.sessions import SessionLocal
+from core.db.db import SessionLocal  # migrado desde core.db.sessions
 from core.db.schema import User
 from core.security.auth import hash_password, verificar_clave
 from core.services import user_service
@@ -59,7 +59,7 @@ def comando_eliminar_usuario(args):
 
     confirm = input(f"¿Estás seguro que quieres eliminar a '{username}'? [Y/N]: ").strip().upper()
     if confirm != "Y":
-        BITACORA.registrar("usuarios", "cancelar eliminación", "Se canceló la acción de eliminar el usuario" 
+        BITACORA.registrar("usuarios", "cancelar eliminación", "Se canceló la acción de eliminar el usuario"
                                                                f"{username}", SESSION.user.username)
         print("❎ Se canceló la acción.")
         return

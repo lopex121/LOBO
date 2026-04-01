@@ -2,7 +2,7 @@
 from datetime import datetime, date, time, timedelta
 from sqlalchemy import or_, and_
 from core.db.schema import Evento, RecurrenciaEnum
-from core.db.sessions import SessionLocal as Session
+from core.db.db import SessionLocal as Session  # migrado desde core.db.sessions
 from core.lobo_google.lobo_sheets import get_sheet
 from gspread.utils import rowcol_to_a1
 import logging
@@ -11,37 +11,30 @@ from modules.agenda.sheets_manager import get_sheets_manager
 
 logger = logging.getLogger(__name__)
 
-# Paleta de colores por tipo de evento (RGB 0-1)
 COLORES_TIPO_EVENTO = {
-    "clase": (0.6, 0.8, 1.0),  # Azul claro
-    "trabajo": (1.0, 0.9, 0.6),  # Amarillo
-    "personal": (0.8, 1.0, 0.8),  # Verde claro
-    "deporte": (1.0, 0.8, 0.6),  # Naranja claro
-    "estudio": (0.9, 0.8, 1.0),  # Morado claro
-    "reunion": (1.0, 0.7, 0.7),  # Rosa claro
-    "default": (0.9, 0.9, 0.9)  # Gris claro
+    "clase": (0.6, 0.8, 1.0),
+    "trabajo": (1.0, 0.9, 0.6),
+    "personal": (0.8, 1.0, 0.8),
+    "deporte": (1.0, 0.8, 0.6),
+    "estudio": (0.9, 0.8, 1.0),
+    "reunion": (1.0, 0.7, 0.7),
+    "default": (0.9, 0.9, 0.9)
 }
 
 
 def calcular_color_texto(color_fondo_rgb):
-    """
-    Calcula si el texto debe ser negro o blanco según el fondo
-    """
     r, g, b = color_fondo_rgb
     luminosidad = (0.299 * r + 0.587 * g + 0.114 * b)
-
     if luminosidad > 0.7:
-        return (0, 0, 0)  # Texto negro
+        return (0, 0, 0)
     else:
-        return (1, 1, 1)  # Texto blanco
+        return (1, 1, 1)
 
 
-# Layout del Sheet
 DIAS = ["Hora", "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 SPANISH_WEEKDAY = {0: "Lunes", 1: "Martes", 2: "Miércoles", 3: "Jueves", 4: "Viernes", 5: "Sábado", 6: "Domingo"}
 
 
-# Utils internos
 def _ensure_date(obj):
     if isinstance(obj, date):
         return obj
@@ -77,13 +70,9 @@ def _date_to_col(fecha: date):
     return col
 
 
-# DB: CRUD
 def crear_evento_db(nombre: str, descripcion: str, fecha_inicio, hora_inicio, hora_fin,
                     recurrencia: RecurrenciaEnum = RecurrenciaEnum.unico, etiquetas=None,
                     tipo_evento="personal", alarma_minutos=5, alarma_activa=True):
-    """
-    Crea un evento ÚNICO en la base de datos
-    """
     etiquetas = etiquetas or []
     fecha_inicio = _ensure_date(fecha_inicio)
     hora_inicio = _ensure_time(hora_inicio)
@@ -166,9 +155,6 @@ def buscar_eventos_db(query_str):
 
 
 def buscar_evento_por_id_parcial(id_parcial: str):
-    """
-    Busca un evento por ID parcial (mínimo 6 caracteres)
-    """
     if len(id_parcial) < 6:
         return None
 
@@ -199,9 +185,6 @@ def buscar_evento_por_id_parcial(id_parcial: str):
 
 
 def get_evento_by_id_flexible(evento_id: str):
-    """
-    Obtiene evento por ID completo o parcial
-    """
     session = Session()
 
     try:
@@ -231,19 +214,11 @@ def listar_eventos_por_fecha(fecha: date):
     return results
 
 
-# ===== SHEETS: OPTIMIZADO CON BATCH + RATE LIMITING =====
-
 def pintar_evento_sheets(evento, color_rgb=None):
-    """
-    Pinta un evento en Google Sheets con color según tipo
-    Soporta hojas múltiples + Rate limiting automático
-    """
     try:
-        from modules.agenda.agenda_optimizer import get_safe_sheets_manager
-        sheet = get_safe_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
+        sheet = get_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
     except Exception as e:
         logger.error(f"Error al obtener hoja para {evento.fecha_inicio}: {e}")
-        # Fallback a sheet actual
         sheet = get_sheet()
 
     start_row = _time_to_row(sheet, evento.hora_inicio)
@@ -253,19 +228,16 @@ def pintar_evento_sheets(evento, color_rgb=None):
     first_a1 = rowcol_to_a1(start_row, col)
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
 
-    # Determinar color
     if color_rgb is None:
         tipo = getattr(evento, 'tipo_evento', 'personal')
         color_rgb = COLORES_TIPO_EVENTO.get(tipo, COLORES_TIPO_EVENTO['default'])
 
     color_texto = calcular_color_texto(color_rgb)
 
-    # Preparar texto
     texto = evento.nombre
     if evento.descripcion:
         texto = f"{evento.nombre}\n{evento.descripcion}"
 
-    # Preparar requests
     sheet_id = sheet._properties["sheetId"]
     r, g, b = color_rgb
     tr, tg, tb = color_texto
@@ -336,19 +308,18 @@ def pintar_evento_sheets(evento, color_rgb=None):
 
     requests = [r for r in requests if r]
 
-    # ===== USAR WRAPPER SEGURO =====
-    from modules.agenda.agenda_optimizer import SAFE_SHEETS
-    SAFE_SHEETS.safe_batch_update(sheet, requests)
+    from core.lobo_google.rate_limiter import RATE_LIMITER
+    RATE_LIMITER.wait_if_needed()
+
+    sheet.spreadsheet.batch_update({"requests": requests})
 
     logger.info(f"Pintado evento: {evento.nombre} ({first_a1} -> {full_range}) - {evento.tipo_evento}")
     return True
 
 
 def borrar_evento_sheets(evento):
-    """Borra un evento de Google Sheets con rate limiting"""
     try:
-        from modules.agenda.agenda_optimizer import get_safe_sheets_manager
-        sheet = get_safe_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
+        sheet = get_sheets_manager().obtener_hoja_por_fecha(evento.fecha_inicio)
     except Exception as e:
         logger.error(f"Error al obtener hoja para borrar: {e}")
         sheet = get_sheet()
@@ -359,13 +330,13 @@ def borrar_evento_sheets(evento):
     full_range = f"{rowcol_to_a1(start_row, col)}:{rowcol_to_a1(end_row, col)}"
     sheet_id = sheet._properties["sheetId"]
 
-    # ===== USAR WRAPPER SEGURO =====
-    from modules.agenda.agenda_optimizer import SAFE_SHEETS
+    from core.lobo_google.rate_limiter import RATE_LIMITER
+    RATE_LIMITER.wait_if_needed()
 
-    # Batch clear CON rate limiting
-    SAFE_SHEETS.safe_batch_clear(sheet, [full_range])
+    sheet.batch_clear([full_range])
 
-    # Preparar requests de formato
+    RATE_LIMITER.wait_if_needed()
+
     requests = [
         {
             "repeatCell": {
@@ -396,40 +367,30 @@ def borrar_evento_sheets(evento):
             }
         }
     ]
-
-    # Batch update CON rate limiting
-    SAFE_SHEETS.safe_batch_update(sheet, requests)
-
+    sheet.spreadsheet.batch_update({"requests": requests})
     logger.info(f"Borrado evento: {evento.nombre} ({full_range})")
     return True
 
+
 def actualizar_evento_sheets(old_evento, new_evento):
-    """Actualiza un evento en Sheets"""
     try:
         borrar_evento_sheets(old_evento)
     except Exception as e:
         logger.warning("No se pudo borrar evento antiguo en sheets: %s", e)
     return pintar_evento_sheets(new_evento)
 
+
 def clear_sheets():
-    """
-    Limpia y sincroniza TODAS las hojas semanales
-    OPTIMIZADO: Usa batch operations + rate limiting consistente
-    """
     session = Session()
     eventos = session.query(Evento).filter(
         Evento.es_maestro == False
     ).order_by(Evento.fecha_inicio, Evento.hora_inicio).all()
     session.close()
 
-    # Agrupar eventos por semana
     eventos_por_semana = {}
 
-    from modules.agenda.agenda_optimizer import get_safe_sheets_manager
-    sheets_mgr = get_safe_sheets_manager()
-
     for ev in eventos:
-        lunes = sheets_mgr.obtener_lunes_semana(ev.fecha_inicio)
+        lunes = get_sheets_manager().obtener_lunes_semana(ev.fecha_inicio)
         if lunes not in eventos_por_semana:
             eventos_por_semana[lunes] = []
         eventos_por_semana[lunes].append(ev)
@@ -437,21 +398,21 @@ def clear_sheets():
     hojas_procesadas = 0
     eventos_pintados = 0
 
-    # ===== USAR WRAPPER SEGURO PARA TODAS LAS OPERACIONES =====
-    from modules.agenda.agenda_optimizer import SAFE_SHEETS
-
     for lunes, eventos_semana in eventos_por_semana.items():
         try:
-            sheet = sheets_mgr.obtener_hoja_por_fecha(lunes)
-            # Limpiar CON rate limiting
+            sheet = get_sheets_manager().obtener_hoja_por_fecha(lunes)
+
+            from core.lobo_google.rate_limiter import RATE_LIMITER
+            RATE_LIMITER.wait_if_needed()
+
             rango = f"B2:H31"
-            SAFE_SHEETS.safe_batch_clear(sheet, [rango])
+            sheet.batch_clear([rango])
+
             logger.info(f"Limpiando hoja '{sheet.title}'")
 
-            # Repintar eventos de esta semana
             for ev in eventos_semana:
                 try:
-                    pintar_evento_sheets(ev)  # Ya tiene rate limiting interno
+                    pintar_evento_sheets(ev)
                     eventos_pintados += 1
                 except Exception as e:
                     logger.exception(f"Error al pintar evento {ev.id}: {e}")
@@ -466,9 +427,7 @@ def clear_sheets():
 
 
 def importar_eventos_desde_sheets():
-    """Importa eventos desde la hoja actual"""
     hoy = date.today()
-    # ✅ CORRECCIÓN: Agregar ()
     sheet = get_sheets_manager().obtener_hoja_por_fecha(hoy)
     data = sheet.get_all_values()
 

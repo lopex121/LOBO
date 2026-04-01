@@ -2,11 +2,10 @@
 
 import bcrypt
 from core.db.schema import User
-
-from core.db.sessions import SessionLocal
-session = SessionLocal()
-
+from core.db.db import SessionLocal  # migrado desde core.db.sessions
 from core.context.global_session import SESSION
+
+session = SessionLocal()
 
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')

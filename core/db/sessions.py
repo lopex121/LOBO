@@ -1,12 +1,18 @@
 # core/db/sessions.py
+#
+# DEPRECADO — Este archivo será eliminado en la próxima limpieza.
+# Todos los imports deben migrar a:
+#
+#   from core.db.db import SessionLocal, engine
+#
+# Este redirector existe solo para no romper módulos durante la transición.
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import os
+import warnings
 
-DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../database/lobo.db'))
-SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
+warnings.warn(
+    "core.db.sessions está deprecado. Usa 'from core.db.db import SessionLocal, engine' en su lugar.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+from core.db.db import SessionLocal, engine  # noqa: F401, E402

@@ -1,6 +1,6 @@
 # core/memory.py
 
-from core.db.sessions import SessionLocal
+from core.db.db import SessionLocal  # migrado desde core.db.sessions
 from core.db.schema import MemoryNote
 from sqlalchemy import and_, func
 from sqlalchemy.orm.exc import NoResultFound
@@ -25,7 +25,6 @@ class Memory:
             prioridad: int (1=urgente, 5=normal)
             usuario: str username
         """
-        # Convertir fecha si viene como string
         if isinstance(fecha_limite, str):
             try:
                 fecha_limite = datetime.strptime(fecha_limite, "%d/%m/%Y").date()
@@ -33,7 +32,6 @@ class Memory:
                 print(f"⚠️  Formato de fecha inválido: {fecha_limite}. Usa DD/MM/YYYY")
                 fecha_limite = None
 
-        # Convertir hora si viene como string
         if isinstance(hora_limite, str):
             try:
                 hora_limite = datetime.strptime(hora_limite, "%H:%M").time()
@@ -41,7 +39,6 @@ class Memory:
                 print(f"⚠️  Formato de hora inválido: {hora_limite}. Usa HH:MM")
                 hora_limite = None
 
-        # Asignar prioridad por defecto según tipo si no se especifica
         if prioridad is None:
             prioridad_defaults = {
                 "urgente": 1,
@@ -52,7 +49,6 @@ class Memory:
             }
             prioridad = prioridad_defaults.get(mem_type, 5)
 
-        # Usuario actual
         if usuario is None and SESSION.user:
             usuario = SESSION.user.username
 
@@ -75,13 +71,6 @@ class Memory:
         return nota
 
     def recall(self, mem_type=None, estado="pendiente", incluir_completadas=False):
-        """
-        Recupera recordatorios con filtros
-        Args:
-            mem_type: Tipo de recordatorio
-            estado: pendiente, completada, cancelada, o None para todos
-            incluir_completadas: Si es True, ignora el filtro de estado
-        """
         query = self.db.query(MemoryNote)
         if mem_type:
             query = query.filter_by(type=mem_type)
@@ -90,7 +79,6 @@ class Memory:
         return query.order_by(MemoryNote.timestamp.desc()).all()
 
     def recall_vencidos(self):
-        """Retorna recordatorios con fecha límite pasada y estado pendiente"""
         hoy = date.today()
         return self.db.query(MemoryNote).filter(
             and_(
@@ -100,10 +88,7 @@ class Memory:
         ).order_by(MemoryNote.fecha_limite.asc()).all()
 
     def recall_proximos(self, dias=3):
-        """Retorna recordatorios que vencen en los próximos N días"""
         hoy = date.today()
-        fecha_limite = date.today()
-        # Calcular fecha_limite sumando días
         from datetime import timedelta
         fecha_limite = hoy + timedelta(days=dias)
 
@@ -115,7 +100,6 @@ class Memory:
         ).order_by(MemoryNote.fecha_limite.asc(), MemoryNote.prioridad.asc()).all()
 
     def recall_por_fecha(self, fecha):
-        """Retorna recordatorios de una fecha específica"""
         if isinstance(fecha, str):
             fecha = datetime.strptime(fecha, "%d/%m/%Y").date()
 
@@ -127,7 +111,6 @@ class Memory:
         ).order_by(MemoryNote.hora_limite.asc(), MemoryNote.prioridad.asc()).all()
 
     def recall_por_semana(self, fecha_inicio):
-        """Retorna recordatorios de una semana completa"""
         from datetime import timedelta
 
         if isinstance(fecha_inicio, str):
@@ -147,7 +130,6 @@ class Memory:
         ).all()
 
     def recall_por_prioridad(self, prioridad_min=1, prioridad_max=5):
-        """Retorna recordatorios en un rango de prioridad"""
         return self.db.query(MemoryNote).filter(
             and_(
                 MemoryNote.prioridad.between(prioridad_min, prioridad_max),
@@ -156,7 +138,6 @@ class Memory:
         ).order_by(MemoryNote.prioridad.asc(), MemoryNote.fecha_limite.asc()).all()
 
     def completar(self, note_id):
-        """Marca un recordatorio como completado"""
         try:
             nota = self.db.query(MemoryNote).filter(MemoryNote.id == note_id).one()
             nota.estado = "completada"
@@ -170,7 +151,6 @@ class Memory:
             return False
 
     def cancelar(self, note_id):
-        """Marca un recordatorio como cancelado"""
         try:
             nota = self.db.query(MemoryNote).filter(MemoryNote.id == note_id).one()
             nota.estado = "cancelada"
@@ -211,7 +191,6 @@ class Memory:
         return False
 
     def buscar_por_contenido(self, texto: str, mem_type: str = None, estado: str = "pendiente"):
-        """Busca recordatorios por contenido con filtros opcionales"""
         patron = f"%{texto}%"
         query = self.db.query(MemoryNote).filter(
             func.lower(MemoryNote.content).like(func.lower(patron))
@@ -226,7 +205,6 @@ class Memory:
         return query.all()
 
     def eliminar_por_id(self, note_id: int) -> bool:
-        """Elimina permanentemente un recordatorio por ID"""
         try:
             nota = self.db.query(MemoryNote).filter(MemoryNote.id == note_id).one()
             contenido = nota.content
@@ -241,7 +219,6 @@ class Memory:
             return False
 
     def obtener_por_id(self, note_id: int):
-        """Obtiene un recordatorio por ID"""
         try:
             return self.db.query(MemoryNote).filter(MemoryNote.id == note_id).one()
         except NoResultFound:

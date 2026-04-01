@@ -1,7 +1,7 @@
 # modules/bitacora/bitacora.py
 
 from datetime import datetime
-from core.db.sessions import SessionLocal
+from core.db.db import SessionLocal  # migrado desde core.db.sessions
 from core.db.schema import BitacoraRegistro
 
 class Bitacora:
